@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { toast } from "sonner";
+import { renderBlogContent } from "@/utils/blogRenderer";
 
 interface BlogPostData {
   slug: string;
@@ -35,7 +36,7 @@ const BlogPost = () => {
         excerpt: "Entenda todos os custos envolvidos e a burocracia necessária para realizar o sonho da casa própria na Zona Leste de São Paulo de forma segura e tranquila.",
         date: "2024-03-15",
         category: "Compra",
-        thumbnail: "/api/placeholder/800/400",
+        thumbnail: "/src/assets/blog-compra-imovel.webp",
         readTime: "8 min",
         content: `
 <div class="prose prose-lg max-w-none">
@@ -46,50 +47,39 @@ const BlogPost = () => {
   <h2>1. Planejamento Financeiro: O Primeiro Passo</h2>
   <p>Antes de começar a busca pelo imóvel ideal, é fundamental ter clareza sobre sua situação financeira. Na Zona Leste, você encontra opções desde R$ 250.000 até R$ 1.500.000, dependendo do bairro e tipo de imóvel.</p>
 
-  <h3>Custos Principais:</h3>
-  <ul>
-    <li><strong>Entrada:</strong> Normalmente entre 20% a 30% do valor do imóvel</li>
-    <li><strong>Financiamento:</strong> 70% a 80% via banco (com FGTS pode chegar a 90%)</li>
-    <li><strong>ITBI:</strong> 2% a 3% do valor venal do imóvel</li>
-    <li><strong>Cartório:</strong> Cerca de R$ 3.000 a R$ 8.000</li>
-    <li><strong>Avaliação bancária:</strong> R$ 500 a R$ 1.500</li>
-  </ul>
+  <div data-component="Info" data-title="💰 Custos Principais">
+    <ul>
+      <li><strong>Entrada:</strong> Normalmente entre 20% a 30% do valor do imóvel</li>
+      <li><strong>Financiamento:</strong> 70% a 80% via banco (com FGTS pode chegar a 90%)</li>
+      <li><strong>ITBI:</strong> 2% a 3% do valor venal do imóvel</li>
+      <li><strong>Cartório:</strong> Cerca de R$ 3.000 a R$ 8.000</li>
+      <li><strong>Avaliação bancária:</strong> R$ 500 a R$ 1.500</li>
+    </ul>
+  </div>
 
   <h2>2. Documentação Necessária</h2>
   <p>A burocracia pode parecer complexa, mas com organização fica mais simples:</p>
 
-  <h3>Documentos Pessoais:</h3>
-  <ul>
-    <li>CPF e RG atualizados</li>
-    <li>Certidão de nascimento ou casamento</li>
-    <li>Comprovante de renda (últimos 3 meses)</li>
-    <li>Declaração de Imposto de Renda</li>
-    <li>Extrato do FGTS</li>
-  </ul>
+  <div data-component="Checklist" data-title="📋 Documentos Pessoais" data-items='["CPF e RG atualizados", "Certidão de nascimento ou casamento", "Comprovante de renda (últimos 3 meses)", "Declaração de Imposto de Renda", "Extrato do FGTS"]'></div>
 
-  <h3>Documentos do Imóvel:</h3>
-  <ul>
-    <li>Matrícula atualizada</li>
-    <li>IPTU quitado</li>
-    <li>Certidões negativas</li>
-    <li>Habite-se (para imóveis novos)</li>
-  </ul>
+  <div data-component="Checklist" data-title="🏠 Documentos do Imóvel" data-items='["Matrícula atualizada", "IPTU quitado", "Certidões negativas", "Habite-se (para imóveis novos)"]'></div>
 
   <h2>3. Melhores Bairros da Zona Leste para Investir</h2>
   <p>Nossa experiência na região nos permite recomendar:</p>
 
-  <ul>
-    <li><strong>Tatuapé:</strong> Excelente infraestrutura e valorização</li>
-    <li><strong>Vila Formosa:</strong> Crescimento acelerado e bom custo-benefício</li>
-    <li><strong>Anália Franco:</strong> Área nobre com completa infraestrutura</li>
-    <li><strong>Vila Carrão:</strong> Tradicional e bem localizada</li>
-    <li><strong>Penha:</strong> Ótima opção para primeira compra</li>
-  </ul>
+  <div data-component="Tip" data-title="🏘️ Nossas Recomendações">
+    <ul>
+      <li><strong>Tatuapé:</strong> Excelente infraestrutura e valorização</li>
+      <li><strong>Vila Formosa:</strong> Crescimento acelerado e bom custo-benefício</li>
+      <li><strong>Anália Franco:</strong> Área nobre com completa infraestrutura</li>
+      <li><strong>Vila Carrão:</strong> Tradicional e bem localizada</li>
+      <li><strong>Penha:</strong> Ótima opção para primeira compra</li>
+    </ul>
+  </div>
 
   <h2>4. Dicas da Pinheiro Azul para uma Compra Segura</h2>
   
-  <div class="bg-muted p-6 rounded-lg my-8">
-    <h3 class="text-brand-primary mb-4">Nossa Metodologia P.A.Z.© em Ação:</h3>
+  <div data-component="Callout" data-variant="primary" data-title="Nossa Metodologia P.A.Z.© em Ação">
     <ul>
       <li><strong>Planejamento:</strong> Definimos seu orçamento real e objetivos</li>
       <li><strong>Análise:</strong> Verificamos toda documentação e precificação</li>
@@ -98,22 +88,25 @@ const BlogPost = () => {
   </div>
 
   <h2>5. Cronograma Típico de Compra</h2>
-  <ul>
-    <li><strong>Semana 1-2:</strong> Busca e visitas aos imóveis</li>
-    <li><strong>Semana 3:</strong> Proposta e negociação</li>
-    <li><strong>Semana 4-6:</strong> Análise de crédito e documentação</li>
-    <li><strong>Semana 7-8:</strong> Assinatura e transferência</li>
-  </ul>
+  <div data-component="Info" data-title="⏰ Timeline de Compra">
+    <ul>
+      <li><strong>Semana 1-2:</strong> Busca e visitas aos imóveis</li>
+      <li><strong>Semana 3:</strong> Proposta e negociação</li>
+      <li><strong>Semana 4-6:</strong> Análise de crédito e documentação</li>
+      <li><strong>Semana 7-8:</strong> Assinatura e transferência</li>
+    </ul>
+  </div>
 
   <h2>Conclusão</h2>
   <p>Comprar um imóvel na Zona Leste não precisa ser complicado. Com planejamento adequado, documentação organizada e o acompanhamento de profissionais experientes como a equipe Pinheiro Azul, você pode realizar este sonho de forma segura e tranquila.</p>
 
-  <div class="bg-brand-primary/5 border border-brand-primary/20 p-6 rounded-lg mt-8">
-    <p class="text-center text-lg font-medium">
-      <strong>Pronto para dar o próximo passo?</strong><br>
+  <div data-component="Callout" data-variant="primary" data-title="Pronto para dar o próximo passo?">
+    <p class="text-center text-lg">
       Nossa equipe especializada está aqui para transformar seu sonho em realidade.
     </p>
   </div>
+
+  <div data-component="ContactInfo"></div>
 </div>
         `
       },
@@ -123,7 +116,7 @@ const BlogPost = () => {
         excerpt: "Conheça os bairros da Zona Leste que oferecem a melhor qualidade de vida para famílias, incluindo opções pet-friendly e infraestrutura completa.",
         date: "2024-03-10",
         category: "Localização",
-        thumbnail: "/api/placeholder/800/400",
+        thumbnail: "/src/assets/blog-bairros-familias.webp",
         readTime: "6 min",
         content: `
 <div class="prose prose-lg max-w-none">
@@ -132,8 +125,8 @@ const BlogPost = () => {
   </p>
 
   <h2>1. Tatuapé - O Coração Moderno da Zona Leste</h2>
-  <div class="bg-muted/50 p-6 rounded-lg my-6">
-    <h3 class="text-brand-primary mb-3">Por que escolher o Tatuapé:</h3>
+  
+  <div data-component="Info" data-title="🏢 Por que escolher o Tatuapé">
     <ul>
       <li><strong>Transporte:</strong> Estação de metrô e múltiplas linhas de ônibus</li>
       <li><strong>Educação:</strong> Escolas de excelente qualidade e universidades próximas</li>
@@ -146,8 +139,8 @@ const BlogPost = () => {
   </div>
 
   <h2>2. Anália Franco - Sofisticação e Comodidade</h2>
-  <div class="bg-muted/50 p-6 rounded-lg my-6">
-    <h3 class="text-brand-primary mb-3">Por que escolher Anália Franco:</h3>
+  
+  <div data-component="Info" data-title="🌟 Por que escolher Anália Franco">
     <ul>
       <li><strong>Infraestrutura:</strong> Shopping Anália Franco e completa rede de serviços</li>
       <li><strong>Segurança:</strong> Uma das regiões mais seguras da Zona Leste</li>
@@ -160,8 +153,8 @@ const BlogPost = () => {
   </div>
 
   <h2>3. Vila Formosa - Crescimento e Oportunidade</h2>
-  <div class="bg-muted/50 p-6 rounded-lg my-6">
-    <h3 class="text-brand-primary mb-3">Por que escolher Vila Formosa:</h3>
+  
+  <div data-component="Tip" data-title="💡 Por que escolher Vila Formosa">
     <ul>
       <li><strong>Valorização:</strong> Bairro em franco crescimento imobiliário</li>
       <li><strong>Custo-benefício:</strong> Preços ainda acessíveis com boa qualidade</li>
@@ -174,8 +167,8 @@ const BlogPost = () => {
   </div>
 
   <h2>4. Vila Carrão - Tradição e Modernidade</h2>
-  <div class="bg-muted/50 p-6 rounded-lg my-6">
-    <h3 class="text-brand-primary mb-3">Por que escolher Vila Carrão:</h3>
+  
+  <div data-component="Info" data-title="🏛️ Por que escolher Vila Carrão">
     <ul>
       <li><strong>História:</strong> Bairro tradicional com identidade própria</li>
       <li><strong>Transporte:</strong> Estação Carrão do metrô</li>
@@ -188,8 +181,8 @@ const BlogPost = () => {
   </div>
 
   <h2>5. Penha - Acessibilidade e Crescimento</h2>
-  <div class="bg-muted/50 p-6 rounded-lg my-6">
-    <h3 class="text-brand-primary mb-3">Por que escolher Penha:</h3>
+  
+  <div data-component="Tip" data-title="🚀 Por que escolher Penha">
     <ul>
       <li><strong>Primeira compra:</strong> Excelente opção para quem está começando</li>
       <li><strong>Desenvolvimento:</strong> Região em constante melhoria urbana</li>
@@ -202,34 +195,29 @@ const BlogPost = () => {
   </div>
 
   <h2>Dicas Especiais para Famílias com Pets</h2>
-  <div class="bg-green-50 border border-green-200 p-6 rounded-lg my-8">
-    <h3 class="text-green-800 mb-4">🐕 Checklist Pet-Friendly:</h3>
-    <ul class="text-green-700">
-      <li>Parques próximos para passeios diários</li>
-      <li>Veterinários e pet shops na região</li>
-      <li>Condomínios que aceitem animais</li>
-      <li>Transporte público pet-friendly</li>
-      <li>Áreas de lazer específicas para pets</li>
-    </ul>
-  </div>
+  
+  <div data-component="Checklist" data-title="🐕 Checklist Pet-Friendly" data-items='["Parques próximos para passeios diários", "Veterinários e pet shops na região", "Condomínios que aceitem animais", "Transporte público pet-friendly", "Áreas de lazer específicas para pets"]'></div>
 
   <h2>Como a Pinheiro Azul Pode Ajudar</h2>
   <p>Nossa equipe conhece profundamente cada bairro da Zona Leste. Oferecemos:</p>
   
-  <ul>
-    <li>Análise personalizada das suas necessidades familiares</li>
-    <li>Visitas guiadas pelos melhores imóveis</li>
-    <li>Informações detalhadas sobre escolas e serviços locais</li>
-    <li>Negociação especializada para melhor preço</li>
-    <li>Acompanhamento completo até a mudança</li>
-  </ul>
+  <div data-component="Callout" data-variant="primary" data-title="Nossos Serviços Especializados">
+    <ul>
+      <li>Análise personalizada das suas necessidades familiares</li>
+      <li>Visitas guiadas pelos melhores imóveis</li>
+      <li>Informações detalhadas sobre escolas e serviços locais</li>
+      <li>Negociação especializada para melhor preço</li>
+      <li>Acompanhamento completo até a mudança</li>
+    </ul>
+  </div>
 
-  <div class="bg-brand-primary/5 border border-brand-primary/20 p-6 rounded-lg mt-8">
-    <p class="text-center text-lg font-medium">
-      <strong>Encontre o lar perfeito para sua família!</strong><br>
+  <div data-component="Callout" data-variant="primary" data-title="Encontre o lar perfeito para sua família!">
+    <p class="text-center text-lg">
       Converse com nossos especialistas e descubra o bairro ideal para vocês.
     </p>
   </div>
+
+  <div data-component="ContactInfo"></div>
 </div>
         `
       },
@@ -239,7 +227,7 @@ const BlogPost = () => {
         excerpt: "Aprenda estratégias práticas e econômicas para aumentar o valor do seu imóvel na Zona Leste e acelerar a venda com melhor retorno financeiro.",
         date: "2024-03-05",
         category: "Venda",
-        thumbnail: "/api/placeholder/800/400",
+        thumbnail: "/src/assets/blog-valorizar-imovel.webp",
         readTime: "5 min",
         content: `
 <div class="prose prose-lg max-w-none">
@@ -248,87 +236,87 @@ const BlogPost = () => {
   </p>
 
   <h2>1. Primeira Impressão: Fachada e Entrada</h2>
-  <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg my-6">
-    <h3 class="text-blue-800 mb-3">💡 Investimento: R$ 500 - R$ 2.000</h3>
+  
+  <div data-component="Info" data-title="💡 Investimento: R$ 500 - R$ 2.000">
     <h4 class="font-semibold mb-2">O que fazer:</h4>
-    <ul class="text-blue-700">
+    <ul>
       <li>Pintura externa ou limpeza profunda da fachada</li>
       <li>Jardinagem e paisagismo básico</li>
       <li>Iluminação externa adequada</li>
       <li>Portão e campainha em bom estado</li>
     </ul>
-    <p class="mt-4 text-blue-600">
+    <p class="mt-4 text-sm font-medium text-green-600">
       <strong>Retorno esperado:</strong> 3-5% de valorização
     </p>
   </div>
 
   <h2>2. Cozinha: O Coração do Lar</h2>
-  <div class="bg-green-50 border border-green-200 p-6 rounded-lg my-6">
-    <h3 class="text-green-800 mb-3">💡 Investimento: R$ 1.000 - R$ 5.000</h3>
+  
+  <div data-component="Tip" data-title="💰 Investimento: R$ 1.000 - R$ 5.000">
     <h4 class="font-semibold mb-2">Melhorias que fazem diferença:</h4>
-    <ul class="text-green-700">
+    <ul>
       <li>Pintura das paredes em tons neutros e modernos</li>
       <li>Troca de puxadores e dobradiças dos armários</li>
       <li>Bancada limpa e organizada</li>
       <li>Eletrodomésticos funcionando perfeitamente</li>
       <li>Iluminação LED sob os armários</li>
     </ul>
-    <p class="mt-4 text-green-600">
+    <p class="mt-4 text-sm font-medium text-green-600">
       <strong>Retorno esperado:</strong> 4-7% de valorização
     </p>
   </div>
 
   <h2>3. Banheiros: Modernização Inteligente</h2>
-  <div class="bg-purple-50 border border-purple-200 p-6 rounded-lg my-6">
-    <h3 class="text-purple-800 mb-3">💡 Investimento: R$ 800 - R$ 3.000</h3>
+  
+  <div data-component="Info" data-title="🔧 Investimento: R$ 800 - R$ 3.000">
     <h4 class="font-semibold mb-2">Atualizações estratégicas:</h4>
-    <ul class="text-purple-700">
+    <ul>
       <li>Troca de metais (torneiras, registros, chuveiros)</li>
       <li>Rejunte novo ou renovado</li>
       <li>Espelhos sem manchas ou novos</li>
       <li>Iluminação adequada</li>
       <li>Organização e limpeza profunda</li>
     </ul>
-    <p class="mt-4 text-purple-600">
+    <p class="mt-4 text-sm font-medium text-green-600">
       <strong>Retorno esperado:</strong> 3-5% de valorização
     </p>
   </div>
 
   <h2>4. Pintura Geral: Renovação Completa</h2>
-  <div class="bg-orange-50 border border-orange-200 p-6 rounded-lg my-6">
-    <h3 class="text-orange-800 mb-3">💡 Investimento: R$ 1.500 - R$ 4.000</h3>
+  
+  <div data-component="Tip" data-title="🎨 Investimento: R$ 1.500 - R$ 4.000">
     <h4 class="font-semibold mb-2">Estratégia de cores:</h4>
-    <ul class="text-orange-700">
+    <ul>
       <li>Tons neutros que ampliam os ambientes</li>
       <li>Branco, off-white, ou cinza claro nas paredes</li>
       <li>Uma parede de destaque em tom mais forte (opcional)</li>
       <li>Teto sempre em branco para maior altura visual</li>
       <li>Rodapés e esquadrias em bom estado</li>
     </ul>
-    <p class="mt-4 text-orange-600">
+    <p class="mt-4 text-sm font-medium text-green-600">
       <strong>Retorno esperado:</strong> 2-4% de valorização
     </p>
   </div>
 
   <h2>5. Organização e Despersonalização</h2>
-  <div class="bg-red-50 border border-red-200 p-6 rounded-lg my-6">
-    <h3 class="text-red-800 mb-3">💡 Investimento: R$ 0 - R$ 500</h3>
+  
+  <div data-component="Callout" data-variant="success" data-title="✨ Investimento: R$ 0 - R$ 500">
     <h4 class="font-semibold mb-2">Preparação para visitas:</h4>
-    <ul class="text-red-700">
+    <ul>
       <li>Remover objetos pessoais e fotos familiares</li>
       <li>Organizar e reduzir móveis (ambiente mais amplo)</li>
       <li>Limpeza profunda de todos os cômodos</li>
       <li>Aromatização sutil do ambiente</li>
       <li>Iluminação natural maximizada</li>
     </ul>
-    <p class="mt-4 text-red-600">
+    <p class="mt-4 text-sm font-medium text-green-600">
       <strong>Retorno esperado:</strong> 1-3% de valorização + venda mais rápida
     </p>
   </div>
 
   <h2>Cronograma de Execução</h2>
-  <div class="bg-muted p-6 rounded-lg my-8">
-    <h3 class="mb-4">📅 Planejamento de 4 Semanas:</h3>
+  
+  <div data-component="Info" data-title="📅 Planejamento de 4 Semanas">
     <ul>
       <li><strong>Semana 1:</strong> Pintura geral e reparos básicos</li>
       <li><strong>Semana 2:</strong> Melhorias na cozinha e banheiros</li>
@@ -338,9 +326,9 @@ const BlogPost = () => {
   </div>
 
   <h2>Erros Comuns que Você Deve Evitar</h2>
-  <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-lg my-8">
-    <h3 class="text-yellow-800 mb-4">⚠️ Atenção:</h3>
-    <ul class="text-yellow-700">
+  
+  <div data-component="Warning" data-title="⚠️ Atenção">
+    <ul>
       <li>Não faça reformas muito personalizadas</li>
       <li>Evite cores muito fortes ou tendências passageiras</li>
       <li>Não invista em melhorias muito caras se o bairro não suportar</li>
@@ -352,20 +340,23 @@ const BlogPost = () => {
   <h2>Como a Pinheiro Azul Pode Ajudar</h2>
   <p>Nossa experiência na Zona Leste nos permite oferecer:</p>
   
-  <ul>
-    <li><strong>Avaliação gratuita:</strong> Analisamos seu imóvel e sugerimos melhorias</li>
-    <li><strong>Rede de parceiros:</strong> Indicamos profissionais confiáveis para as reformas</li>
-    <li><strong>Estratégia de preço:</strong> Definimos o valor ideal pós-melhorias</li>
-    <li><strong>Marketing direcionado:</strong> Destacamos as melhorias nos anúncios</li>
-    <li><strong>Acompanhamento completo:</strong> Desde a melhoria até a venda</li>
-  </ul>
+  <div data-component="Callout" data-variant="primary" data-title="Nossos Serviços Especializados">
+    <ul>
+      <li><strong>Avaliação gratuita:</strong> Analisamos seu imóvel e sugerimos melhorias</li>
+      <li><strong>Rede de parceiros:</strong> Indicamos profissionais confiáveis para as reformas</li>
+      <li><strong>Estratégia de preço:</strong> Definimos o valor ideal pós-melhorias</li>
+      <li><strong>Marketing direcionado:</strong> Destacamos as melhorias nos anúncios</li>
+      <li><strong>Acompanhamento completo:</strong> Desde a melhoria até a venda</li>
+    </ul>
+  </div>
 
-  <div class="bg-brand-primary/5 border border-brand-primary/20 p-6 rounded-lg mt-8">
-    <p class="text-center text-lg font-medium">
-      <strong>Pronto para valorizar seu imóvel?</strong><br>
+  <div data-component="Callout" data-variant="primary" data-title="Pronto para valorizar seu imóvel?">
+    <p class="text-center text-lg">
       Nossa equipe especializada está pronta para orientar cada passo da sua estratégia de venda.
     </p>
   </div>
+
+  <div data-component="ContactInfo"></div>
 </div>
         `
       }
@@ -490,10 +481,9 @@ const BlogPost = () => {
           <Separator className="mb-8" />
 
           {/* Article Content */}
-          <article 
-            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <article className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground">
+            {renderBlogContent(post.content)}
+          </article>
 
           <Separator className="my-12" />
 

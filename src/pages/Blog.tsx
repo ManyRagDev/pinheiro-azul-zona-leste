@@ -29,7 +29,7 @@ const Blog = () => {
         excerpt: "Entenda todos os custos envolvidos e a burocracia necessária para realizar o sonho da casa própria na Zona Leste de São Paulo de forma segura e tranquila.",
         date: "2024-03-15",
         category: "Compra",
-        thumbnail: "/api/placeholder/400/250",
+        thumbnail: "/src/assets/blog-compra-imovel.webp",
         readTime: "8 min"
       },
       {
@@ -38,7 +38,7 @@ const Blog = () => {
         excerpt: "Conheça os bairros da Zona Leste que oferecem a melhor qualidade de vida para famílias, incluindo opções pet-friendly e infraestrutura completa.",
         date: "2024-03-10",
         category: "Localização",
-        thumbnail: "/api/placeholder/400/250",
+        thumbnail: "/src/assets/blog-bairros-familias.webp",
         readTime: "6 min"
       },
       {
@@ -47,7 +47,7 @@ const Blog = () => {
         excerpt: "Aprenda estratégias práticas e econômicas para aumentar o valor do seu imóvel na Zona Leste e acelerar a venda com melhor retorno financeiro.",
         date: "2024-03-05",
         category: "Venda",
-        thumbnail: "/api/placeholder/400/250",
+        thumbnail: "/src/assets/blog-valorizar-imovel.webp",
         readTime: "5 min"
       }
     ];
