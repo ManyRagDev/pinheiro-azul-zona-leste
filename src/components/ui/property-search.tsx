@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Target } from "lucide-react";
+import { DiagnosticModal } from "./diagnostic-modal";
 
 const PropertySearch = () => {
+  const [showDiagnostic, setShowDiagnostic] = useState(false);
   const neighborhoods = [
     "Tatuapé", "Vila Formosa", "Penha", "Cangaíba", "Vila Matilde",
     "Guilhermina", "Artur Alvim", "Cidade Tiradentes", "Guaianases"
@@ -101,6 +104,33 @@ const PropertySearch = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* CTA Diagnóstico de Perfil */}
+        <div className="max-w-4xl mx-auto mt-8">
+          <Card className="border-2 border-brand-accent/20 bg-gradient-to-r from-brand-primary/5 to-brand-accent/5">
+            <CardContent className="p-6 text-center">
+              <h3 className="text-xl font-bold text-brand-primary mb-2">
+                Cansado de filtrar? 
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Descubra seu Perfil Ideal em 5 Perguntas e receba recomendações personalizadas!
+              </p>
+              <Button 
+                size="lg" 
+                onClick={() => setShowDiagnostic(true)}
+                className="w-full bg-brand-accent hover:bg-brand-accent/90 text-lg font-semibold py-3"
+              >
+                <Target className="mr-2" size={20} />
+                Fazer Diagnóstico Gratuito
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        <DiagnosticModal 
+          open={showDiagnostic} 
+          onOpenChange={setShowDiagnostic} 
+        />
       </div>
     </section>
   );
