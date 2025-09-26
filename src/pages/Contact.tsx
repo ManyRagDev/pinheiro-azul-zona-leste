@@ -35,7 +35,7 @@ const Contact = () => {
                     Envie sua Mensagem
                   </CardTitle>
                   <p className="text-muted-foreground">
-                    Preencha o formulário abaixo e entraremos em contato em até 2 horas úteis
+                    Preencha o formulário abaixo e entraremos em contato em até 48 horas
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-6">
