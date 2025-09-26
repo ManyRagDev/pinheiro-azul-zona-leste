@@ -51,7 +51,7 @@ const Contact = () => {
       const validatedData = contactSchema.parse(formData);
 
       // Insert into Supabase
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('leads_contato')
         .insert({
           nome: validatedData.nome,
@@ -134,90 +134,112 @@ const Contact = () => {
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="firstName" className="text-brand-text font-medium">
+                          Nome *
+                        </Label>
+                        <Input 
+                          id="firstName" 
+                          placeholder="Seu nome"
+                          value={formData.nome}
+                          onChange={(e) => handleInputChange('nome', e.target.value)}
+                          className="focus:ring-brand-accent focus:border-brand-accent"
+                        />
+                        {errors.nome && <p className="text-sm text-red-500 mt-1">{errors.nome}</p>}
+                      </div>
+                      <div>
+                        <Label htmlFor="lastName" className="text-brand-text font-medium">
+                          Sobrenome *
+                        </Label>
+                        <Input 
+                          id="lastName" 
+                          placeholder="Seu sobrenome"
+                          value={formData.sobrenome}
+                          onChange={(e) => handleInputChange('sobrenome', e.target.value)}
+                          className="focus:ring-brand-accent focus:border-brand-accent"
+                        />
+                        {errors.sobrenome && <p className="text-sm text-red-500 mt-1">{errors.sobrenome}</p>}
+                      </div>
+                    </div>
+
                     <div>
-                      <Label htmlFor="firstName" className="text-brand-text font-medium">
-                        Nome *
+                      <Label htmlFor="email" className="text-brand-text font-medium">
+                        E-mail *
                       </Label>
                       <Input 
-                        id="firstName" 
-                        placeholder="Seu nome"
+                        id="email" 
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
                         className="focus:ring-brand-accent focus:border-brand-accent"
                       />
+                      {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
                     </div>
+
                     <div>
-                      <Label htmlFor="lastName" className="text-brand-text font-medium">
-                        Sobrenome *
+                      <Label htmlFor="phone" className="text-brand-text font-medium">
+                        Telefone/WhatsApp *
                       </Label>
                       <Input 
-                        id="lastName" 
-                        placeholder="Seu sobrenome"
+                        id="phone" 
+                        type="tel"
+                        placeholder="(11) 99999-9999"
+                        value={formData.telefone}
+                        onChange={(e) => handleInputChange('telefone', e.target.value)}
                         className="focus:ring-brand-accent focus:border-brand-accent"
                       />
+                      {errors.telefone && <p className="text-sm text-red-500 mt-1">{errors.telefone}</p>}
                     </div>
-                  </div>
 
-                  <div>
-                    <Label htmlFor="email" className="text-brand-text font-medium">
-                      E-mail *
-                    </Label>
-                    <Input 
-                      id="email" 
-                      type="email"
-                      placeholder="seu@email.com"
-                      className="focus:ring-brand-accent focus:border-brand-accent"
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor="subject" className="text-brand-text font-medium">
+                        Assunto
+                      </Label>
+                      <Input 
+                        id="subject" 
+                        placeholder="Como podemos ajudar?"
+                        value={formData.assunto}
+                        onChange={(e) => handleInputChange('assunto', e.target.value)}
+                        className="focus:ring-brand-accent focus:border-brand-accent"
+                      />
+                      {errors.assunto && <p className="text-sm text-red-500 mt-1">{errors.assunto}</p>}
+                    </div>
 
-                  <div>
-                    <Label htmlFor="phone" className="text-brand-text font-medium">
-                      Telefone/WhatsApp *
-                    </Label>
-                    <Input 
-                      id="phone" 
-                      type="tel"
-                      placeholder="(11) 99999-9999"
-                      className="focus:ring-brand-accent focus:border-brand-accent"
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor="message" className="text-brand-text font-medium">
+                        Mensagem *
+                      </Label>
+                      <Textarea 
+                        id="message" 
+                        placeholder="Conte-nos sobre suas necessidades imobiliárias..."
+                        rows={5}
+                        value={formData.mensagem}
+                        onChange={(e) => handleInputChange('mensagem', e.target.value)}
+                        className="focus:ring-brand-accent focus:border-brand-accent"
+                      />
+                      {errors.mensagem && <p className="text-sm text-red-500 mt-1">{errors.mensagem}</p>}
+                    </div>
 
-                  <div>
-                    <Label htmlFor="subject" className="text-brand-text font-medium">
-                      Assunto
-                    </Label>
-                    <Input 
-                      id="subject" 
-                      placeholder="Como podemos ajudar?"
-                      className="focus:ring-brand-accent focus:border-brand-accent"
-                    />
-                  </div>
+                    <Button 
+                      type="submit"
+                      size="lg" 
+                      disabled={isSubmitting}
+                      className="w-full bg-brand-accent hover:bg-brand-accent/90 text-lg py-6"
+                    >
+                      <Mail className="mr-2" size={20} />
+                      {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
+                    </Button>
 
-                  <div>
-                    <Label htmlFor="message" className="text-brand-text font-medium">
-                      Mensagem *
-                    </Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Conte-nos sobre suas necessidades imobiliárias..."
-                      rows={5}
-                      className="focus:ring-brand-accent focus:border-brand-accent"
-                    />
-                  </div>
-
-                  <Button 
-                    size="lg" 
-                    className="w-full bg-brand-accent hover:bg-brand-accent/90 text-lg py-6"
-                  >
-                    <Mail className="mr-2" size={20} />
-                    Enviar Mensagem
-                  </Button>
-
-                  <p className="text-sm text-muted-foreground text-center">
-                    Ao enviar este formulário, você concorda com nossa{" "}
-                    <a href="/privacidade" className="text-brand-accent hover:underline">
-                      Política de Privacidade
-                    </a>
-                  </p>
+                    <p className="text-sm text-muted-foreground text-center">
+                      Ao enviar este formulário, você concorda com nossa{" "}
+                      <a href="/privacidade" className="text-brand-accent hover:underline">
+                        Política de Privacidade
+                      </a>
+                    </p>
+                  </form>
                 </CardContent>
               </Card>
 
