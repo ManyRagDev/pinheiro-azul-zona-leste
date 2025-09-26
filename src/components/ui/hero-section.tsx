@@ -1,17 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import heroImage from "@/assets/hero-couple.jpg";
+import heroVideo from "@/assets/hero_video.mp4";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/80 to-brand-primary/60" />
-      </div>
-      
+      {/* Vídeo de fundo */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        src={heroVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      {/* Gradiente sobre o vídeo */}
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/80 to-brand-primary/60" />
+
+      {/* Conteúdo */}
       <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
           Encontre seu lar na 

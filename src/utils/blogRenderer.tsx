@@ -1,7 +1,7 @@
 import React from 'react';
 import { blogComponents } from '@/components/blog/BlogComponents';
 
-const { Info, Tip, Checklist, Callout, Warning, ContactInfo, Image } = blogComponents;
+const { Info, Tip, Checklist, Callout, Warning, Contactgit, Image } = blogComponents;
 
 export const renderBlogContent = (htmlContent: string): JSX.Element => {
   // Parse HTML and replace data-component attributes with actual React components
