@@ -5,8 +5,103 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, MessageSquare, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  nome: z.string().trim().min(1, "Nome é obrigatório").max(100, "Nome deve ter menos de 100 caracteres"),
+  sobrenome: z.string().trim().min(1, "Sobrenome é obrigatório").max(100, "Sobrenome deve ter menos de 100 caracteres"),
+  email: z.string().trim().email("Email inválido").max(255, "Email deve ter menos de 255 caracteres"),
+  telefone: z.string().trim().min(1, "Telefone é obrigatório").max(20, "Telefone deve ter menos de 20 caracteres"),
+  assunto: z.string().trim().max(200, "Assunto deve ter menos de 200 caracteres").optional(),
+  mensagem: z.string().trim().min(1, "Mensagem é obrigatória").max(1000, "Mensagem deve ter menos de 1000 caracteres")
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState<ContactFormData>({
+    nome: "",
+    sobrenome: "",
+    email: "",
+    telefone: "",
+    assunto: "",
+    mensagem: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
+
+  const handleInputChange = (field: keyof ContactFormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrors({});
+
+    try {
+      // Validate form data
+      const validatedData = contactSchema.parse(formData);
+
+      // Insert into Supabase
+      const { error } = await supabase
+        .from('leads_contato')
+        .insert({
+          nome: validatedData.nome,
+          sobrenome: validatedData.sobrenome,
+          email: validatedData.email,
+          telefone: validatedData.telefone,
+          assunto: validatedData.assunto || null,
+          mensagem: validatedData.mensagem
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      // Success feedback
+      toast({
+        title: "Mensagem enviada com sucesso!",
+        description: "Um consultor Pinheiro Azul entrará em contato em breve.",
+      });
+
+      // Clear form
+      setFormData({
+        nome: "",
+        sobrenome: "",
+        email: "",
+        telefone: "",
+        assunto: "",
+        mensagem: ""
+      });
+
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
+        error.errors.forEach(err => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0] as keyof ContactFormData] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        toast({
+          title: "Erro ao enviar mensagem",
+          description: "Tente novamente ou entre em contato pelo WhatsApp.",
+          variant: "destructive"
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
