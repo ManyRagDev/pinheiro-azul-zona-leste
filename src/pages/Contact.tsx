@@ -5,8 +5,103 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, MessageSquare, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  nome: z.string().trim().min(1, "Nome é obrigatório").max(100, "Nome deve ter menos de 100 caracteres"),
+  sobrenome: z.string().trim().min(1, "Sobrenome é obrigatório").max(100, "Sobrenome deve ter menos de 100 caracteres"),
+  email: z.string().trim().email("Email inválido").max(255, "Email deve ter menos de 255 caracteres"),
+  telefone: z.string().trim().min(1, "Telefone é obrigatório").max(20, "Telefone deve ter menos de 20 caracteres"),
+  assunto: z.string().trim().max(200, "Assunto deve ter menos de 200 caracteres").optional(),
+  mensagem: z.string().trim().min(1, "Mensagem é obrigatória").max(1000, "Mensagem deve ter menos de 1000 caracteres")
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState<ContactFormData>({
+    nome: "",
+    sobrenome: "",
+    email: "",
+    telefone: "",
+    assunto: "",
+    mensagem: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
+
+  const handleInputChange = (field: keyof ContactFormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrors({});
+
+    try {
+      // Validate form data
+      const validatedData = contactSchema.parse(formData);
+
+      // Insert into Supabase
+      const { error } = await (supabase as any)
+        .from('leads_contato')
+        .insert({
+          nome: validatedData.nome,
+          sobrenome: validatedData.sobrenome,
+          email: validatedData.email,
+          telefone: validatedData.telefone,
+          assunto: validatedData.assunto || null,
+          mensagem: validatedData.mensagem
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      // Success feedback
+      toast({
+        title: "Mensagem enviada com sucesso!",
+        description: "Um consultor Pinheiro Azul entrará em contato em breve.",
+      });
+
+      // Clear form
+      setFormData({
+        nome: "",
+        sobrenome: "",
+        email: "",
+        telefone: "",
+        assunto: "",
+        mensagem: ""
+      });
+
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
+        error.errors.forEach(err => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0] as keyof ContactFormData] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        toast({
+          title: "Erro ao enviar mensagem",
+          description: "Tente novamente ou entre em contato pelo WhatsApp.",
+          variant: "destructive"
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -35,94 +130,116 @@ const Contact = () => {
                     Envie sua Mensagem
                   </CardTitle>
                   <p className="text-muted-foreground">
-                    Preencha o formulário abaixo e entraremos em contato em até 2 horas úteis
+                    Preencha o formulário abaixo e entraremos em contato em até 48 horas
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="firstName" className="text-brand-text font-medium">
+                          Nome *
+                        </Label>
+                        <Input 
+                          id="firstName" 
+                          placeholder="Seu nome"
+                          value={formData.nome}
+                          onChange={(e) => handleInputChange('nome', e.target.value)}
+                          className="focus:ring-brand-accent focus:border-brand-accent"
+                        />
+                        {errors.nome && <p className="text-sm text-red-500 mt-1">{errors.nome}</p>}
+                      </div>
+                      <div>
+                        <Label htmlFor="lastName" className="text-brand-text font-medium">
+                          Sobrenome *
+                        </Label>
+                        <Input 
+                          id="lastName" 
+                          placeholder="Seu sobrenome"
+                          value={formData.sobrenome}
+                          onChange={(e) => handleInputChange('sobrenome', e.target.value)}
+                          className="focus:ring-brand-accent focus:border-brand-accent"
+                        />
+                        {errors.sobrenome && <p className="text-sm text-red-500 mt-1">{errors.sobrenome}</p>}
+                      </div>
+                    </div>
+
                     <div>
-                      <Label htmlFor="firstName" className="text-brand-text font-medium">
-                        Nome *
+                      <Label htmlFor="email" className="text-brand-text font-medium">
+                        E-mail *
                       </Label>
                       <Input 
-                        id="firstName" 
-                        placeholder="Seu nome"
+                        id="email" 
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
                         className="focus:ring-brand-accent focus:border-brand-accent"
                       />
+                      {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
                     </div>
+
                     <div>
-                      <Label htmlFor="lastName" className="text-brand-text font-medium">
-                        Sobrenome *
+                      <Label htmlFor="phone" className="text-brand-text font-medium">
+                        Telefone/WhatsApp *
                       </Label>
                       <Input 
-                        id="lastName" 
-                        placeholder="Seu sobrenome"
+                        id="phone" 
+                        type="tel"
+                        placeholder="(11) 99999-9999"
+                        value={formData.telefone}
+                        onChange={(e) => handleInputChange('telefone', e.target.value)}
                         className="focus:ring-brand-accent focus:border-brand-accent"
                       />
+                      {errors.telefone && <p className="text-sm text-red-500 mt-1">{errors.telefone}</p>}
                     </div>
-                  </div>
 
-                  <div>
-                    <Label htmlFor="email" className="text-brand-text font-medium">
-                      E-mail *
-                    </Label>
-                    <Input 
-                      id="email" 
-                      type="email"
-                      placeholder="seu@email.com"
-                      className="focus:ring-brand-accent focus:border-brand-accent"
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor="subject" className="text-brand-text font-medium">
+                        Assunto
+                      </Label>
+                      <Input 
+                        id="subject" 
+                        placeholder="Como podemos ajudar?"
+                        value={formData.assunto}
+                        onChange={(e) => handleInputChange('assunto', e.target.value)}
+                        className="focus:ring-brand-accent focus:border-brand-accent"
+                      />
+                      {errors.assunto && <p className="text-sm text-red-500 mt-1">{errors.assunto}</p>}
+                    </div>
 
-                  <div>
-                    <Label htmlFor="phone" className="text-brand-text font-medium">
-                      Telefone/WhatsApp *
-                    </Label>
-                    <Input 
-                      id="phone" 
-                      type="tel"
-                      placeholder="(11) 99999-9999"
-                      className="focus:ring-brand-accent focus:border-brand-accent"
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor="message" className="text-brand-text font-medium">
+                        Mensagem *
+                      </Label>
+                      <Textarea 
+                        id="message" 
+                        placeholder="Conte-nos sobre suas necessidades imobiliárias..."
+                        rows={5}
+                        value={formData.mensagem}
+                        onChange={(e) => handleInputChange('mensagem', e.target.value)}
+                        className="focus:ring-brand-accent focus:border-brand-accent"
+                      />
+                      {errors.mensagem && <p className="text-sm text-red-500 mt-1">{errors.mensagem}</p>}
+                    </div>
 
-                  <div>
-                    <Label htmlFor="subject" className="text-brand-text font-medium">
-                      Assunto
-                    </Label>
-                    <Input 
-                      id="subject" 
-                      placeholder="Como podemos ajudar?"
-                      className="focus:ring-brand-accent focus:border-brand-accent"
-                    />
-                  </div>
+                    <Button 
+                      type="submit"
+                      size="lg" 
+                      disabled={isSubmitting}
+                      className="w-full bg-brand-accent hover:bg-brand-accent/90 text-lg py-6"
+                    >
+                      <Mail className="mr-2" size={20} />
+                      {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
+                    </Button>
 
-                  <div>
-                    <Label htmlFor="message" className="text-brand-text font-medium">
-                      Mensagem *
-                    </Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Conte-nos sobre suas necessidades imobiliárias..."
-                      rows={5}
-                      className="focus:ring-brand-accent focus:border-brand-accent"
-                    />
-                  </div>
-
-                  <Button 
-                    size="lg" 
-                    className="w-full bg-brand-accent hover:bg-brand-accent/90 text-lg py-6"
-                  >
-                    <Mail className="mr-2" size={20} />
-                    Enviar Mensagem
-                  </Button>
-
-                  <p className="text-sm text-muted-foreground text-center">
-                    Ao enviar este formulário, você concorda com nossa{" "}
-                    <a href="/privacidade" className="text-brand-accent hover:underline">
-                      Política de Privacidade
-                    </a>
-                  </p>
+                    <p className="text-sm text-muted-foreground text-center">
+                      Ao enviar este formulário, você concorda com nossa{" "}
+                      <a href="/privacidade" className="text-brand-accent hover:underline">
+                        Política de Privacidade
+                      </a>
+                    </p>
+                  </form>
                 </CardContent>
               </Card>
 
