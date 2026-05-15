@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { ArrowRight, Calendar, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface BlogPost {
   slug: string;
@@ -15,121 +14,112 @@ interface BlogPost {
   category: string;
   thumbnail: string;
   readTime: string;
+  diagnosticHref: string;
 }
 
-const Blog = () => {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+const posts: BlogPost[] = [
+  {
+    slug: "guia-completo-comprar-imovel-zona-leste",
+    title: "Guia completo para comprar um imóvel na Zona Leste sem dor de cabeça",
+    excerpt: "Entenda custos, financiamento e documentação para realizar a primeira compra com mais segurança.",
+    date: "2024-03-15",
+    category: "Compra",
+    thumbnail: "/src/assets/blog-compra-imovel.webp",
+    readTime: "8 min",
+    diagnosticHref: "/?diagnostico=1&perfil=primeiro_imovel",
+  },
+  {
+    slug: "melhores-bairros-zona-leste-familias",
+    title: "Morar na Zona Leste: bairros para famílias que precisam de mais espaço",
+    excerpt: "Compare rotina, serviços, escolas e mobilidade antes de trocar de endereço.",
+    date: "2024-03-10",
+    category: "Localização",
+    thumbnail: "/src/assets/blog-bairros-familias.webp",
+    readTime: "6 min",
+    diagnosticHref: "/?diagnostico=1&perfil=upgrade_moradia",
+  },
+  {
+    slug: "valorizar-imovel-antes-venda-zona-leste",
+    title: "5 dicas para valorizar seu imóvel antes de colocar à venda",
+    excerpt: "Veja ações práticas para melhorar percepção de valor e preparar uma captação mais inteligente.",
+    date: "2024-03-05",
+    category: "Venda",
+    thumbnail: "/src/assets/blog-valorizar-imovel.webp",
+    readTime: "5 min",
+    diagnosticHref: "/?diagnostico=1&perfil=venda_imovel",
+  },
+];
 
-  useEffect(() => {
-    // Simulando carregamento de posts - em produção seria uma API
-    const mockPosts: BlogPost[] = [
-      {
-        slug: "guia-completo-comprar-imovel-zona-leste",
-        title: "Guia Completo para Comprar um Imóvel na Zona Leste Sem Dor de Cabeça",
-        excerpt: "Entenda todos os custos envolvidos e a burocracia necessária para realizar o sonho da casa própria na Zona Leste de São Paulo de forma segura e tranquila.",
-        date: "2024-03-15",
-        category: "Compra",
-        thumbnail: "/src/assets/blog-compra-imovel.webp",
-        readTime: "8 min"
-      },
-      {
-        slug: "melhores-bairros-zona-leste-familias",
-        title: "Morar na Zona Leste: Descubra os 5 Melhores Bairros para Famílias",
-        excerpt: "Conheça os bairros da Zona Leste que oferecem a melhor qualidade de vida para famílias, incluindo opções pet-friendly e infraestrutura completa.",
-        date: "2024-03-10",
-        category: "Localização",
-        thumbnail: "/src/assets/blog-bairros-familias.webp",
-        readTime: "6 min"
-      },
-      {
-        slug: "valorizar-imovel-antes-venda-zona-leste",
-        title: "5 Dicas Simples para Valorizar o Seu Imóvel Antes de Colocá-lo à Venda",
-        excerpt: "Aprenda estratégias práticas e econômicas para aumentar o valor do seu imóvel na Zona Leste e acelerar a venda com melhor retorno financeiro.",
-        date: "2024-03-05",
-        category: "Venda",
-        thumbnail: "/src/assets/blog-valorizar-imovel.webp",
-        readTime: "5 min"
-      }
-    ];
-    setPosts(mockPosts);
-  }, []);
+const categoryColors: Record<string, string> = {
+  Compra: "bg-brand-primary text-white",
+  Venda: "bg-brand-accent text-white",
+  Localização: "bg-brand-secondary text-white",
+};
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('pt-BR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+const formatDate = (dateString: string) =>
+  new Date(dateString).toLocaleDateString("pt-BR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
-  const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-      'Compra': 'bg-brand-primary text-white',
-      'Venda': 'bg-brand-accent text-white',
-      'Localização': 'bg-brand-secondary text-white'
-    };
-    return colors[category] || 'bg-muted text-muted-foreground';
-  };
-
+export default function Blog() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <main className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold text-foreground mb-4">
-              Blog Pinheiro Azul
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Insights, dicas e guias especializados sobre o mercado imobiliário 
-              da Zona Leste de São Paulo
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 text-center">
+            <h1 className="mb-4 text-4xl font-bold text-foreground">Conhecimento para sua conquista</h1>
+            <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
+              Conteúdos de SEO conectados ao diagnóstico e às landing pages por perfil.
             </p>
           </div>
 
-          {/* Posts Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
-              <Card key={post.slug} className="group hover:shadow-lg transition-all duration-300 border-border">
+              <Card key={post.slug} className="group border-border transition-all duration-300 hover:shadow-lg">
                 <div className="aspect-video overflow-hidden rounded-t-lg">
-                  <img 
-                    src={post.thumbnail} 
+                  <img
+                    src={post.thumbnail}
                     alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                
+
                 <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge className={getCategoryColor(post.category)}>
+                  <div className="mb-2 flex items-center justify-between">
+                    <Badge className={categoryColors[post.category] || "bg-muted text-muted-foreground"}>
                       {post.category}
                     </Badge>
-                    <div className="flex items-center text-muted-foreground text-sm">
+                    <div className="flex items-center text-sm text-muted-foreground">
                       <Clock size={14} className="mr-1" />
                       {post.readTime}
                     </div>
                   </div>
-                  
-                  <CardTitle className="text-xl leading-tight group-hover:text-brand-primary transition-colors">
+
+                  <CardTitle className="text-xl leading-tight transition-colors group-hover:text-brand-primary">
                     {post.title}
                   </CardTitle>
                 </CardHeader>
-                
+
                 <CardContent className="pt-0">
-                  <CardDescription className="text-muted-foreground mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </CardDescription>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-muted-foreground text-sm">
-                      <Calendar size={14} className="mr-1" />
-                      {formatDate(post.date)}
-                    </div>
-                    
+                  <CardDescription className="mb-4 line-clamp-3 text-muted-foreground">{post.excerpt}</CardDescription>
+
+                  <div className="mb-4 flex items-center text-sm text-muted-foreground">
+                    <Calendar size={14} className="mr-1" />
+                    {formatDate(post.date)}
+                  </div>
+
+                  <div className="grid gap-2">
                     <Button asChild variant="outline" size="sm">
-                      <Link to={`/blog/${post.slug}`}>
-                        Ler mais
+                      <Link to={`/blog/${post.slug}`}>Ler artigo</Link>
+                    </Button>
+                    <Button asChild size="sm" className="bg-brand-accent hover:bg-brand-accent/90">
+                      <Link to={post.diagnosticHref}>
+                        Receber diagnóstico
+                        <ArrowRight size={15} />
                       </Link>
                     </Button>
                   </div>
@@ -138,27 +128,27 @@ const Blog = () => {
             ))}
           </div>
 
-          {/* CTA Section */}
-          <div className="mt-16 text-center bg-muted/50 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-foreground mb-4">
-              Precisa de Ajuda Especializada?
-            </h2>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Nossa equipe está pronta para ajudar você em todas as etapas 
-              da sua jornada imobiliária na Zona Leste de São Paulo.
+          <div className="mt-16 rounded-lg bg-muted/50 p-8 text-center">
+            <h2 className="mb-4 text-2xl font-bold text-foreground">Transforme leitura em diagnóstico</h2>
+            <p className="mx-auto mb-6 max-w-2xl text-muted-foreground">
+              Escolha o caminho mais próximo do seu momento e receba uma classificação de perfil.
             </p>
-            <Button asChild className="bg-brand-accent hover:bg-brand-accent/90">
-              <Link to="/contato">
-                Fale Conosco
-              </Link>
-            </Button>
+            <div className="flex flex-col justify-center gap-3 sm:flex-row">
+              <Button asChild className="bg-brand-accent hover:bg-brand-accent/90">
+                <Link to="/?diagnostico=1&perfil=primeiro_imovel">
+                  Receber diagnóstico
+                  <ArrowRight size={16} />
+                </Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link to="/anuncie-seu-imovel">Avaliar meu imóvel</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
-};
-
-export default Blog;
+}

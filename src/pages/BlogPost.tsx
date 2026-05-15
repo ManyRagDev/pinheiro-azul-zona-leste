@@ -386,6 +386,18 @@ const BlogPost = () => {
     return colors[category] || 'bg-muted text-muted-foreground';
   };
 
+  const getDiagnosticHref = (category: string) => {
+    if (category === "Venda") {
+      return "/?diagnostico=1&perfil=venda_imovel";
+    }
+
+    if (category === "Localização") {
+      return "/?diagnostico=1&perfil=upgrade_moradia";
+    }
+
+    return "/?diagnostico=1&perfil=primeiro_imovel";
+  };
+
   const handleShare = () => {
     if (navigator.share && post) {
       navigator.share({
@@ -490,21 +502,20 @@ const BlogPost = () => {
           {/* CTA Section */}
           <div className="bg-muted/50 rounded-lg p-8 text-center">
             <h3 className="text-2xl font-bold text-foreground mb-4">
-              Gostou do que leu?
+              Transforme essa leitura em diagnóstico
             </h3>
             <p className="text-muted-foreground mb-6">
-              Nossa equipe está pronta para transformar essas dicas em realidade para você. 
-              Entre em contato e receba uma consultoria personalizada.
+              O próximo passo é classificar seu perfil e registrar o guia certo para o seu momento.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild className="bg-brand-accent hover:bg-brand-accent/90">
-                <Link to="/contato">
-                  Fale Conosco
+                <Link to={getDiagnosticHref(post.category)}>
+                  Receber diagnóstico
                 </Link>
               </Button>
               <Button asChild variant="outline">
                 <Link to="/blog">
-                  Ver Mais Artigos
+                  Ver mais artigos
                 </Link>
               </Button>
             </div>

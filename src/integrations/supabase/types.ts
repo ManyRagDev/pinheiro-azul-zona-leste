@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      email_delivery_queue: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          guide_key: string
+          id: string
+          lead_id: string
+          payload: Json
+          provider: string
+          recipient_email: string
+          sent_at: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          guide_key: string
+          id?: string
+          lead_id: string
+          payload?: Json
+          provider?: string
+          recipient_email: string
+          sent_at?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          guide_key?: string
+          id?: string
+          lead_id?: string
+          payload?: Json
+          provider?: string
+          recipient_email?: string
+          sent_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_delivery_queue_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads_pinheiro_azul_funnel"
+            referencedColumns: ["id"]
+          },
+        ]
+      },
       leads_diagnostico_pinheiro_azul: {
         Row: {
           acabamento: string | null
@@ -53,6 +100,63 @@ export type Database = {
           nome_lead?: string | null
           prioridade_loc?: string | null
           whatsapp_lead?: string | null
+        }
+        Relationships: []
+      },
+      leads_pinheiro_azul_funnel: {
+        Row: {
+          created_at: string
+          email: string
+          faixa_preco: string | null
+          guia_solicitado: string
+          id: string
+          nome: string
+          objetivo: string | null
+          origem_pagina: string
+          perfil: string
+          prazo: string | null
+          regiao_interesse: string | null
+          respostas_diagnostico: Json
+          status_lead: string
+          tipo_imovel: string | null
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          faixa_preco?: string | null
+          guia_solicitado: string
+          id?: string
+          nome: string
+          objetivo?: string | null
+          origem_pagina: string
+          perfil: string
+          prazo?: string | null
+          regiao_interesse?: string | null
+          respostas_diagnostico?: Json
+          status_lead?: string
+          tipo_imovel?: string | null
+          updated_at?: string
+          whatsapp: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          faixa_preco?: string | null
+          guia_solicitado?: string
+          id?: string
+          nome?: string
+          objetivo?: string | null
+          origem_pagina?: string
+          perfil?: string
+          prazo?: string | null
+          regiao_interesse?: string | null
+          respostas_diagnostico?: Json
+          status_lead?: string
+          tipo_imovel?: string | null
+          updated_at?: string
+          whatsapp?: string
         }
         Relationships: []
       }
