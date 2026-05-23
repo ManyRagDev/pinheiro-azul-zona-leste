@@ -4,7 +4,6 @@ import { Link, useSearchParams } from "react-router-dom";
 import {
   ArrowRight,
   BarChart3,
-  Building2,
   CheckCircle2,
   Compass,
   FileText,
@@ -25,7 +24,6 @@ const profileRoutes: Array<{ profile: LeadProfile; href: string; icon: typeof Ke
   { profile: "primeiro_imovel", href: "/primeiro-imovel", icon: KeyRound },
   { profile: "upgrade_moradia", href: "/upgrade-moradia", icon: Home },
   { profile: "investimento", href: "/investimento", icon: TrendingUp },
-  { profile: "venda_imovel", href: "/anuncie-seu-imovel", icon: Building2 },
 ];
 
 const mapDistricts = [
@@ -67,9 +65,9 @@ const heroSteps = [
 
 const proof = [
   "Diagnóstico antes da lista de imóveis",
-  "Segmentação por perfil e intenção",
-  "Registro unificado na base de leads",
-  "Fila preparada para envio de guias por email",
+  "Curadoria baseada no seu momento real",
+  "Histórico da sua busca sempre à mão",
+  "Guias e materiais enviados conforme seu perfil",
 ];
 
 function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
@@ -78,7 +76,6 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
     { href: "/primeiro-imovel", label: "Primeiro imóvel" },
     { href: "/upgrade-moradia", label: "Upgrade" },
     { href: "/investimento", label: "Investimento" },
-    { href: "/anuncie-seu-imovel", label: "Anuncie" },
     { href: "/blog", label: "Blog" },
   ];
 
@@ -531,16 +528,15 @@ export default function HomeIndex4() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-12 grid gap-6 lg:grid-cols-[.8fr_1fr]">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-[#28c7ba]">LPs por perfil</p>
-                <h2 className="mt-4 text-4xl font-black uppercase leading-none md:text-6xl">Cada clique vira uma hipótese de venda.</h2>
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-[#28c7ba]">Qual é o seu momento?</p>
+                <h2 className="mt-4 text-4xl font-black uppercase leading-none md:text-6xl">Cada pessoa chega com um <span className="text-[#f3d35b]">propósito</span>. A gente tem um <span className="text-[#28c7ba]">caminho</span> para cada um.</h2>
               </div>
               <p className="max-w-2xl self-end text-lg leading-relaxed text-white/70">
-                As landing pages falam com dores diferentes, mas todas alimentam a mesma base de leads e a mesma fila de
-                conteúdo por email.
+                Antes de qualquer indicação, a gente entende quem você é e o que você precisa. O diagnóstico é o primeiro passo — rápido, gratuito e sem compromisso.
               </p>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {profileRoutes.map(({ profile, href, icon: Icon }) => {
                 const summary = profileSummaries[profile];
                 return (
@@ -549,23 +545,27 @@ export default function HomeIndex4() {
                     <p className="mt-10 text-xs font-black uppercase tracking-[0.22em] text-[#28c7ba]">{profileLabels[profile]}</p>
                     <h3 className="mt-3 text-2xl font-black uppercase leading-tight">{summary.title}</h3>
                     <p className="mt-4 flex-1 text-sm leading-relaxed text-white/68">{summary.copy}</p>
-                    <div className="mt-6 grid gap-2">
-                      <Link to={href} className="inline-flex items-center justify-between border border-white/20 px-4 py-3 text-sm font-black uppercase">
-                        Ver LP
+                    <div className="mt-6">
+                      <Link to={href} className="inline-flex w-full items-center justify-between border border-white/20 px-4 py-3 text-sm font-black uppercase">
+                        Conhecer mais
                         <ArrowRight size={16} />
                       </Link>
-                      <button
-                        type="button"
-                        onClick={() => openDiagnostic(profile)}
-                        className="inline-flex items-center justify-between bg-[#f3d35b] px-4 py-3 text-sm font-black uppercase text-[#06192c]"
-                      >
-                        Diagnóstico
-                        <FileText size={16} />
-                      </button>
                     </div>
                   </article>
                 );
               })}
+            </div>
+
+            <div className="mt-12 flex flex-col items-center gap-4 border-t border-white/10 pt-10">
+              <p className="text-sm text-white/60">Ainda não sabe qual perfil é o seu? O diagnóstico leva dois minutos.</p>
+              <button
+                type="button"
+                onClick={() => openDiagnostic()}
+                className="inline-flex items-center gap-3 bg-[#f3d35b] px-8 py-4 text-sm font-black uppercase text-[#06192c] shadow-[6px_6px_0_#e43d30] transition hover:bg-white hover:shadow-[6px_6px_0_#28c7ba]"
+              >
+                Fazer diagnóstico gratuito
+                <FileText size={18} />
+              </button>
             </div>
           </div>
         </section>
@@ -573,11 +573,10 @@ export default function HomeIndex4() {
         <section className="px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[.9fr_1fr] lg:items-center">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#e43d30]">Base de dados</p>
-              <h2 className="mt-4 text-4xl font-black uppercase leading-none md:text-6xl">Captura estruturada antes da abordagem.</h2>
+              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#e43d30]">Como funciona</p>
+              <h2 className="mt-4 text-4xl font-black uppercase leading-none md:text-6xl">O diagnóstico que muda o rumo da sua busca.</h2>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#415064]">
-                O diagnóstico coleta respostas, pede contato antes de revelar o perfil e registra o guia que deverá ser
-                enviado quando Resend ou SMTP próprio estiver definido.
+                Antes de qualquer visita, a gente entende seu momento: o que você precisa, o quanto pode investir, onde quer estar. Com isso, cada indicação é cirúrgica — sem perda de tempo dos dois lados.
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -598,18 +597,17 @@ export default function HomeIndex4() {
           </div>
           <div className="flex items-center px-4 py-16 sm:px-8 lg:px-16">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#28c7ba]">Operação SDR</p>
-              <h2 className="mt-4 text-4xl font-black uppercase leading-none md:text-6xl">Qual perfil chama mais atenção?</h2>
+              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#28c7ba]">Atendimento consultivo</p>
+              <h2 className="mt-4 text-4xl font-black uppercase leading-none md:text-6xl">Você faz o diagnóstico. A gente já chega com as respostas.</h2>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/72">
-                A SDR recebe contexto: origem, perfil, faixa de valor, prazo e guia solicitado. Isso muda a conversa de
-                atendimento genérico para uma abordagem orientada pela melhor rota.
+                Nosso atendimento começa depois do diagnóstico — nunca antes. Assim o papo é direto: sem perguntas básicas, sem perda de tempo. Só o que importa para o seu momento.
               </p>
               <button
                 type="button"
                 onClick={() => openDiagnostic()}
                 className="mt-8 inline-flex items-center gap-3 bg-[#f3d35b] px-6 py-4 text-sm font-black uppercase text-[#06192c]"
               >
-                Testar diagnóstico
+                Fazer diagnóstico
                 <ShieldCheck size={18} />
               </button>
             </div>
@@ -620,7 +618,7 @@ export default function HomeIndex4() {
       <footer className="bg-[#f4f0e8] px-4 py-10 text-[#06192c] sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 border-t border-[#06192c] pt-8 md:flex-row md:items-center md:justify-between">
           <strong className="uppercase tracking-[0.18em]">Pinheiro Azul</strong>
-          <span className="text-sm text-[#415064]">Funil imobiliário para geração de leads na Zona Leste.</span>
+          <span className="text-sm text-[#415064]">Corretagem especializada na Zona Leste de São Paulo.</span>
         </div>
       </footer>
 

@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import {
   classifyLead,
   guideByProfile,
+  guideLabels,
   profileLabels,
   profileSummaries,
   submitLead,
@@ -143,8 +144,8 @@ export function FunnelDiagnosticModal({
 
       setStage("result");
       toast({
-        title: "Diagnóstico registrado",
-        description: "Seu perfil foi salvo e o envio do guia ficou preparado para a régua de email.",
+        title: "Diagnóstico recebido!",
+        description: "Seu perfil foi registrado. A equipe Pinheiro Azul vai entrar em contato em breve.",
       });
     } catch (error) {
       console.error("Lead submit error", error);
@@ -209,12 +210,12 @@ export function FunnelDiagnosticModal({
         {stage === "contact" && (
           <div className="space-y-6">
             <div className="border border-[#06192c] bg-white p-5">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#e43d30]">Resultado pronto</p>
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#e43d30]">Quase lá</p>
               <h3 className="mt-3 text-2xl font-black leading-tight">
-                Deixe seu contato para receber o diagnóstico e o guia do perfil.
+                Deixe seu contato. A gente chega com as respostas certas para o seu momento.
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-[#415064]">
-                A estrutura de email ficará registrada para envio assim que o provedor transacional estiver configurado.
+                Nada de lista genérica. Com base no seu diagnóstico, a Pinheiro Azul vai indicar as opções que fazem sentido de verdade.
               </p>
             </div>
 
@@ -265,12 +266,11 @@ export function FunnelDiagnosticModal({
               <p className="mt-4 text-base leading-relaxed text-[#415064]">{result.copy}</p>
               <div className="mt-5 inline-flex items-center gap-2 bg-[#06192c] px-4 py-3 text-sm font-black uppercase text-white">
                 <Mail size={16} />
-                {guideByProfile[resolvedProfile]}
+                {guideLabels[resolvedProfile]}
               </div>
             </div>
             <p className="text-sm leading-relaxed text-[#415064]">
-              A equipe pode usar esse registro para priorizar a abordagem SDR e enviar o material do perfil quando o
-              provedor de email estiver definido.
+              A equipe Pinheiro Azul vai entrar em contato para dar o próximo passo — sem pressa, sem pressão. Você fez o diagnóstico, a gente faz o trabalho pesado.
             </p>
           </div>
         )}

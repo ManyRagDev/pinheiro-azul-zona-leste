@@ -2,6 +2,7 @@
 
 > Documento gerado a partir da análise completa do repositório e da síntese estratégica desenvolvida em sessão colaborativa.
 > **Status:** Planejamento — nenhuma implementação realizada.
+> **Revisado em 19/05/2026:** ajustes após confronto linha a linha com o código local (HomeIndex4.tsx, funnel.ts, SellerLandingV2.tsx, featured-properties.tsx).
 
 ---
 
@@ -81,12 +82,16 @@ Sem mexer em layout, trocar a linguagem B2B por linguagem do consumidor. É a in
 | Título | "Cada clique vira uma hipótese de venda." | "Cada pessoa chega com um propósito. A gente tem um caminho para cada um." |
 | Subtítulo | "As landing pages falam com dores diferentes, mas todas alimentam a mesma base de leads..." | Remover completamente. O subtítulo novo vem do Princípio 1: "Antes de qualquer indicação, a gente entende quem você é e o que você precisa." |
 
-**Copy dos 4 perfis (cards) — reescrever os summaries:**
+**Copy dos 4 perfis (cards) — apenas os kickers e títulos de seção precisam mudar.**
 
-- **Primeiro Imóvel:** "Está pronto para sair do aluguel? A gente simplifica o caminho: crédito, FGTS, documentação e os bairros certos para o seu orçamento."
-- **Upgrade/Moradia:** "Sua família cresceu ou a rotina mudou. A gente encontra o imóvel que encaixa no novo momento — sem abrir mão do que importa."
-- **Investimento:** "Comprar pra alugar, vender na planta ou reformar e valorizar? A gente analisa liquidez, retorno e potencial de cada região da Zona Leste."
-- **Anuncie:** "Seu imóvel merece o comprador certo, não o primeiro que aparecer. A gente posiciona, divulga e conduz a negociação com inteligência."
+> **Nota (revisão 19/05):** Ao confrontar com o código, os `profileSummaries` em `src/lib/funnel.ts` já estão no tom consumer-facing correto:
+> - "Conquiste seu primeiro imóvel com segurança." — já bom, manter
+> - "Troque de endereço sem errar a rotina." — já bom, manter
+> - Os demais também estão adequados
+>
+> O que precisa mudar é o **container da seção** (kicker "LPs por perfil" e título "Cada clique vira uma hipótese de venda"), não as descrições internas dos cards.
+
+Os CTAs dos botões dentro dos cards (`Ver LP` → `Conhecer mais`, `Diagnóstico` → manter) também merecem revisão para linguagem do consumidor.
 
 **Seção "Base de dados" — atualmente "Captura estruturada antes da abordagem"**
 
@@ -192,9 +197,13 @@ O CTA "Ver imóveis como este" abre o modal de diagnóstico com o perfil corresp
 | 4 | Studio | Tatuapé | ~R$ 310k | Perfil locatário jovem, baixa vacância |
 | 5 | Ap 2 dorms | Carrão | ~R$ 380k | Planta valorizada, liquidez alta |
 
-#### Imagens — solução de curto prazo
+#### Ponto de partida — componente existente
 
-Para não bloquear o desenvolvimento, usar imagens de bancos gratuitos (Unsplash, Pexels) com tipologia e bairro corretos como placeholders. Quando André tiver acesso a fotos reais de imóveis similares, substituir.
+> **Nota (revisão 19/05):** Existe um componente `src/components/ui/featured-properties.tsx` já com 6 imóveis (Unsplash), bairros corretos (Tatuapé, Vila Formosa, Penha, Cangaíba, Vila Matilde) e preços realistas — mas **não está conectado a nenhuma página ativa**. É um ativo abandonado.
+>
+> A Fase 2 pode partir desse componente em vez de começar do zero. O problema é o estilo: ele usa o design system antigo (`brand-primary`, `Card`, `Badge`) enquanto o HomeIndex4 é raw Tailwind no estilo brutal. Será necessário reestilizar para o padrão do Index4 e reorganizar por perfil em tabs.
+
+Quando André tiver acesso a fotos reais de imóveis, substituir as Unsplash — mas elas já são do tipo e bairro certos para começar.
 
 ---
 
@@ -238,6 +247,8 @@ O corretor que conhece a Zona Leste de verdade — esse é mais difícil.
 | Atende qualquer região | Especialista na Zona Leste |
 
 #### 3.2 Radar de Oportunidades
+
+> **Dependência técnica (revisão 19/05):** Antes de qualquer código de frontend, o Radar requer uma **migration no Supabase** — adicionar a coluna `radar_ativo boolean DEFAULT false` na tabela `leads_pinheiro_azul_funnel`. Sem essa migration deployada, o toggle no modal não tem onde gravar.
 
 Adicionar ao final do modal de diagnóstico (tela de resultado) uma proposta de continuidade:
 
@@ -311,9 +322,11 @@ André tem um ativo que nenhum portal grande tem: **conhecimento profundo de um 
 ---
 
 ### FASE 5 — Fechar o Ciclo: Lado da Oferta
-**Impacto: alto · Esforço: baixo (só copy) · Prazo: junto com Fase 1**
+**Impacto: alto · Esforço: baixo (adição cirúrgica) · Prazo: junto com Fase 1**
 
-Reposicionar o SellerLandingV2 com a lógica que veio da conversa: os compradores já existem.
+> **Nota (revisão 19/05):** O SellerLandingV2 está melhor do que o estimado originalmente. Já tem linguagem consumer-facing: "Vender o imóvel da sua vida não pode ser na sorte", "A gente avalia com honestidade", "Três conversas. Uma venda mais tranquila." Não é uma reescrita completa — é uma **adição cirúrgica** do argumento que faltava.
+
+O único gap real é a ausência do argumento central da conversa: os compradores já existem.
 
 **Argumento atual (implícito):** "Anuncie conosco porque somos uma boa imobiliária"
 
@@ -358,13 +371,14 @@ Os leads do diagnóstico (compradores) viram argumento de venda para os propriet
 
 | # | Fase | Ação principal | Impacto | Esforço | Prazo |
 |---|---|---|---|---|---|
-| 1 | Fase 1 | Reposicionamento da copy (home) | 🔴 Alto | 🟢 Baixo | Semana 1 |
-| 2 | Fase 5 | Reposicionar SellerLanding (junto com copy) | 🔴 Alto | 🟢 Baixo | Semana 1 |
-| 3 | Fase 2 | Seção de destaques por perfil (isca visual) | 🔴 Alto | 🟡 Médio | Semanas 2–3 |
+| 1 | Fase 1 | Kickers e títulos de seção da home (não os cards — já estão ok) | 🔴 Alto | 🟢 Baixo | Semana 1 |
+| 2 | Fase 5 | Adicionar argumento "compradores mapeados" no hero do SellerLanding | 🔴 Alto | 🟢 Baixo | Semana 1 |
+| 3 | Fase 2 | Isca visual por perfil — partir do `featured-properties.tsx` existente, reestilizar | 🔴 Alto | 🟡 Médio | Semanas 2–3 |
 | 4 | Fase 3a | Seção diferenciadora ("por que Pinheiro Azul") | 🟠 Alto | 🟡 Médio | Semana 3 |
-| 5 | Fase 3b | Radar de Oportunidades (pós-diagnóstico) | 🟠 Médio | 🟢 Baixo | Semana 3 |
-| 6 | Fase 3c | Prova social com jornadas de clientes | 🟠 Médio | 🟡 Médio | Semana 4 |
-| 7 | Fase 4 | Blog — 6 novos posts em 3 meses | 🟡 Médio | 🟡 Médio | Contínuo |
+| 5 | — | **Pré-requisito:** migration Supabase (`radar_ativo boolean`) antes da Fase 3b | — | 🟢 Baixo | Semana 3 |
+| 6 | Fase 3b | Radar de Oportunidades (pós-diagnóstico) | 🟠 Médio | 🟢 Baixo | Semana 3 |
+| 7 | Fase 3c | Prova social com jornadas de clientes | 🟠 Médio | 🟡 Médio | Semana 4 |
+| 8 | Fase 4 | Blog — 6 novos posts em 3 meses | 🟡 Médio | 🟡 Médio | Contínuo |
 
 ---
 

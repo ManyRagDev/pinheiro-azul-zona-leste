@@ -52,7 +52,6 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
     { href: "/primeiro-imovel", label: "Primeiro imóvel" },
     { href: "/upgrade-moradia", label: "Upgrade" },
     { href: "/investimento", label: "Investimento" },
-    { href: "/anuncie-seu-imovel", label: "Anuncie" },
     { href: "/blog", label: "Blog" },
   ];
 

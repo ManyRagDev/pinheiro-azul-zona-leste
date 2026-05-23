@@ -37,6 +37,13 @@ export const guideByProfile: Record<LeadProfile, string> = {
   venda_imovel: "guia-venda-com-inteligencia",
 };
 
+export const guideLabels: Record<LeadProfile, string> = {
+  primeiro_imovel: "Guia: Seu Primeiro Imóvel na Zona Leste",
+  upgrade_moradia: "Guia: Upgrade de Moradia na Zona Leste",
+  investimento: "Guia: Rentabilidade de Imóveis na Zona Leste",
+  venda_imovel: "Guia: Vender com Inteligência",
+};
+
 export const profileSummaries: Record<LeadProfile, { title: string; copy: string; cta: string }> = {
   primeiro_imovel: {
     title: "Conquiste seu primeiro imóvel com segurança.",

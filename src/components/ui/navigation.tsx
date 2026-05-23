@@ -1,4 +1,4 @@
-import { FileText, Home, Menu, Phone, TrendingUp, User } from "lucide-react";
+import { FileText, Home, Menu, TrendingUp, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -8,7 +8,6 @@ const navItems = [
   { href: "/primeiro-imovel", label: "Primeiro Imóvel", icon: Home },
   { href: "/upgrade-moradia", label: "Upgrade", icon: User },
   { href: "/investimento", label: "Investimento", icon: TrendingUp },
-  { href: "/anuncie-seu-imovel", label: "Anuncie", icon: Phone },
   { href: "/blog", label: "Blog", icon: FileText },
 ];
 

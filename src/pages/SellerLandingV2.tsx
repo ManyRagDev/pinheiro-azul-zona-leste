@@ -56,7 +56,6 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
     { href: "/primeiro-imovel", label: "Primeiro imóvel" },
     { href: "/upgrade-moradia", label: "Upgrade" },
     { href: "/investimento", label: "Investimento" },
-    { href: "/anuncie-seu-imovel", label: "Anuncie" },
     { href: "/blog", label: "Blog" },
   ];
 
@@ -193,10 +192,10 @@ function HeroSection() {
               Venda com inteligência
             </div>
             <h1 className="text-[clamp(2.4rem,5vw,4.2rem)] font-black uppercase leading-[0.95] text-[#06192c]">
-              Vender o imóvel da sua vida não pode ser na sorte.
+              Antes de você anunciar, a gente já tem uma fila de compradores com perfil.
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-[#415064] max-w-lg">
-              Você sabe quanto vale? Sabe para quem vender? Sabe quanto tempo leva? <strong>A gente responde isso antes de colocar no mercado.</strong> Sem promessas vazias, com estratégia e números.
+              A cada semana, novos compradores fazem o diagnóstico na Pinheiro Azul — classificados por momento, orçamento e região de interesse. Quando você anuncia seu imóvel com a gente, ele entra numa busca que já está acontecendo. <strong>Não começa do zero.</strong>
             </p>
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {benefits.map((item) => (

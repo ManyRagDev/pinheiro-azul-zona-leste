@@ -140,9 +140,6 @@ export default function Blog() {
                   <ArrowRight size={16} />
                 </Link>
               </Button>
-              <Button asChild variant="outline">
-                <Link to="/anuncie-seu-imovel">Avaliar meu imóvel</Link>
-              </Button>
             </div>
           </div>
         </div>
