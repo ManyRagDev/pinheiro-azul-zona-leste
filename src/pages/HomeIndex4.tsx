@@ -227,7 +227,7 @@ function HeroMap({ progress, onOpenDiagnostic }: { progress: MotionValue<number>
   } as const;
 
   return (
-    <div className="relative h-[calc(100vh-6.5rem)] min-h-[560px] overflow-hidden border border-[#06192c] bg-[#06192c] text-white shadow-[14px_14px_0_#28c7ba]">
+    <div className="relative h-[250px] md:h-[calc(100vh-6.5rem)] md:min-h-[560px] overflow-hidden border border-[#06192c] bg-[#06192c] text-white shadow-[8px_8px_0_#28c7ba] md:shadow-[14px_14px_0_#28c7ba]">
       <div className="absolute inset-0 index4-grid opacity-20" />
       <div className="absolute inset-0 index4-noise opacity-[0.07]" />
       <div className="absolute inset-x-0 top-0 h-24 index4-scanline" />
@@ -277,7 +277,11 @@ function HeroMap({ progress, onOpenDiagnostic }: { progress: MotionValue<number>
             className={`index4-pulse h-4 w-4 border-2 ${toneClass[node.tone]}`}
             style={{ animationDelay: `${index * 0.24}s` }}
           />
-          <div className="mt-2 -translate-x-2 border border-white/20 bg-[#06192c]/88 px-2 py-1 text-[10px] font-black uppercase tracking-[0.14em] md:text-[11px]">
+          <div className={`absolute -translate-x-2 whitespace-nowrap border border-white/20 bg-[#06192c]/88 px-1 py-0.5 text-[8px] font-black uppercase tracking-[0.06em] md:px-2 md:py-1 md:text-[10px] md:tracking-[0.14em] ${
+            index % 2 === 0
+              ? "top-full mt-2"
+              : "bottom-full mb-2"
+          }`}>
             {node.label}
           </div>
           <div className="mt-1 hidden -translate-x-2 bg-[#f4f0e8] px-2 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#06192c] md:block">
@@ -287,7 +291,7 @@ function HeroMap({ progress, onOpenDiagnostic }: { progress: MotionValue<number>
       ))}
 
       <motion.div
-        className="absolute bottom-6 left-5 right-5 border border-white/20 bg-[#06192c]/80 p-4 backdrop-blur md:left-auto md:w-[360px]"
+        className="absolute bottom-6 left-5 right-5 border border-white/20 bg-[#06192c]/80 p-4 backdrop-blur hidden md:block md:left-auto md:w-[360px]"
         style={{ opacity: pazOpacity }}
       >
         <div className="mb-4 flex items-center justify-between gap-3">
@@ -306,7 +310,7 @@ function HeroMap({ progress, onOpenDiagnostic }: { progress: MotionValue<number>
       <motion.button
         type="button"
         onClick={onOpenDiagnostic}
-        className="absolute bottom-7 right-5 flex max-w-[320px] items-center justify-between gap-5 bg-[#f3d35b] p-5 text-left text-[#06192c] shadow-[8px_8px_0_#e43d30] transition hover:bg-white md:right-8"
+        className="absolute bottom-7 right-5 hidden md:flex max-w-[320px] items-center justify-between gap-5 bg-[#f3d35b] p-5 text-left text-[#06192c] shadow-[8px_8px_0_#e43d30] transition hover:bg-white md:right-8"
         style={{ opacity: finalOpacity, y: finalY }}
       >
         <span className="text-sm font-black uppercase tracking-[0.16em]">Quero encontrar meu imóvel ideal</span>
@@ -332,6 +336,35 @@ function AnimatedHero({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
     restDelta: 0.0005,
   });
 
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % 4);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isMobile, activeStep]);
+
+  useEffect(() => {
+    if (isMobile) {
+      const stepProgressMap = [0.22, 0.45, 0.66, 0.88];
+      targetProgress.set(stepProgressMap[activeStep]);
+    }
+  }, [activeStep, isMobile, targetProgress]);
+
   const mapScale = useTransform(smoothProgress, [0, 0.52, 1], [0.98, 1.025, 1]);
   const titleOpacity = useTransform(smoothProgress, [0, 0.14, 0.3], [1, 1, 0]);
   const titleY = useTransform(smoothProgress, [0, 0.3], [0, -80]);
@@ -347,6 +380,10 @@ function AnimatedHero({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
   const stepYs = [stepOneY, stepTwoY, stepThreeY, stepFourY];
 
   useEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
     const section = sectionRef.current;
     if (!section) {
       return;
@@ -438,7 +475,131 @@ function AnimatedHero({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
       window.removeEventListener("touchend", touchEnd, { capture: true });
       window.removeEventListener("touchcancel", touchEnd, { capture: true });
     };
-  }, [targetProgress]);
+  }, [targetProgress, isMobile]);
+
+  if (isMobile) {
+    const activeStepInfo = heroSteps[activeStep];
+    return (
+      <section ref={sectionRef} id="topo" className="relative bg-[#f4f0e8] text-[#06192c] pt-20 pb-16 px-4">
+        {/* Mouse gradient visual sutil */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-80"
+          style={{
+            background: `radial-gradient(circle at ${mouse.x}% ${mouse.y}%, rgba(40, 199, 186, .15), transparent 35%)`,
+          }}
+        />
+        <div className="absolute inset-0 index4-grid opacity-[0.45]" />
+        <div className="absolute inset-0 index4-noise opacity-[0.035] mix-blend-multiply" />
+
+        <div className="relative z-10 mx-auto w-full max-w-2xl flex flex-col gap-5">
+          {/* Título Principal Compacto */}
+          <div className="text-left">
+            <div className="mb-2.5 inline-flex border border-[#06192c] bg-[#f4f0e8] px-2 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-[#06192c]">
+              Pinheiro Azul / mapa vivo da Zona Leste
+            </div>
+            <h1 className="text-3xl font-black leading-[1.08] text-[#06192c] tracking-tight">
+              Seu próximo endereço pode melhorar sua vida.
+            </h1>
+          </div>
+
+          {/* Mapa Vivo Compacto */}
+          <div className="relative w-full">
+            <HeroMap progress={smoothProgress} onOpenDiagnostic={onOpenDiagnostic} />
+          </div>
+
+          {/* Seletor de Abas Interativas (Tabs) com Indicador de Timer */}
+          <div className="flex flex-col gap-1.5">
+            <div className="grid grid-cols-4 gap-1 border border-[#06192c] bg-white p-1 shadow-[4px_4px_0_#06192c]">
+              {heroSteps.map((step, index) => {
+                const isActive = activeStep === index;
+                const tabNames = ["Territ.", "Rotina", "Critér.", "Diagn."];
+                return (
+                  <button
+                    key={step.kicker}
+                    type="button"
+                    onClick={() => {
+                      setActiveStep(index);
+                    }}
+                    className={`py-2 text-center transition-all ${
+                      isActive
+                        ? "bg-[#f3d35b] text-[#06192c] font-black border border-[#06192c] shadow-[1px_1px_0_#06192c]"
+                        : "text-[#5a6472] font-bold border border-transparent hover:bg-[#06192c]/5"
+                    }`}
+                  >
+                    <span className="block text-[11px] uppercase tracking-wider">
+                      {`0${index + 1}`}
+                    </span>
+                    <span className="block text-[8px] uppercase tracking-tighter opacity-80 leading-none mt-0.5">
+                      {tabNames[index]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Barra de Progresso do Timer (Auto-Play) */}
+            <div className="h-1 w-full bg-[#06192c]/10 overflow-hidden">
+              <motion.div
+                key={activeStep}
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 5, ease: "linear" }}
+                className="h-full bg-[#e43d30]"
+              />
+            </div>
+          </div>
+
+          {/* Cartão de Conteúdo Bento Box Curto */}
+          <div className="relative min-h-[160px] border border-[#06192c] bg-[#f4f0e8] p-5 text-[#06192c] shadow-[6px_6px_0_#28c7ba] flex flex-col justify-center">
+            <motion.article
+              key={activeStepInfo.kicker}
+              initial={{ opacity: 0, x: 8 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -8 }}
+              transition={{ duration: 0.22 }}
+              className="flex flex-col h-full"
+            >
+              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#e43d30]">
+                {activeStepInfo.kicker}
+              </p>
+              <h2 className="mt-2 text-xl font-black uppercase leading-[1.05]">
+                {activeStepInfo.title}
+              </h2>
+              <p className="mt-3 text-xs leading-relaxed text-[#27394d]">
+                {activeStepInfo.copy}
+              </p>
+            </motion.article>
+          </div>
+
+          {/* Botão de Acesso Rápido ao Diagnóstico */}
+          <button
+            type="button"
+            onClick={() => {
+              onOpenDiagnostic();
+            }}
+            className="flex w-full items-center justify-between gap-4 bg-[#f3d35b] p-4 text-[#06192c] border border-[#06192c] shadow-[6px_6px_0_#e43d30] transition active:translate-y-0.5 active:shadow-[4px_4px_0_#e43d30]"
+          >
+            <span className="text-xs font-black uppercase tracking-[0.14em]">
+              Quero encontrar meu imóvel ideal
+            </span>
+            <ArrowRight size={18} />
+          </button>
+        </div>
+
+        {/* Marquee de Bairros */}
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-[#06192c] bg-[#f3d35b] py-2">
+          <div className="index4-marquee flex w-max gap-6 whitespace-nowrap text-[11px] font-black uppercase tracking-[0.2em] text-[#06192c]">
+            {[...mapDistricts, ...mapDistricts].map((district, idx) => (
+              <span key={`${district.label}-${idx}`} className="flex items-center gap-6">
+                <span>{district.label}</span>
+                <span className="h-1.5 w-1.5 bg-[#e43d30]" />
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section ref={sectionRef} id="topo" className="relative min-h-screen overflow-hidden bg-[#f4f0e8] text-[#06192c]">
