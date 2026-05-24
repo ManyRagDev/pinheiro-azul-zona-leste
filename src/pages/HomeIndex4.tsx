@@ -16,9 +16,13 @@ import {
   TrendingUp,
   X,
 } from "lucide-react";
-import consultation from "@/assets/consultation.jpg";
+import andre from "@/assets/andre.jpg";
+import logo from "@/assets/logo.png";
 import { FunnelDiagnosticModal } from "@/components/funnel/FunnelDiagnosticModal";
 import { normalizeProfile, profileLabels, profileSummaries, type LeadProfile } from "@/lib/funnel";
+
+// TODO: atualizar com o número real do WhatsApp do André
+const WHATSAPP_ANDRE = "https://wa.me/5511999999999";
 
 const profileRoutes: Array<{ profile: LeadProfile; href: string; icon: typeof KeyRound }> = [
   { profile: "primeiro_imovel", href: "/primeiro-imovel", icon: KeyRound },
@@ -64,7 +68,7 @@ const heroSteps = [
 ] as const;
 
 const proof = [
-  "Diagnóstico antes da lista de imóveis",
+  "Nenhum imóvel indicado à toa",
   "Curadoria baseada no seu momento real",
   "Histórico da sua busca sempre à mão",
   "Guias e materiais enviados conforme seu perfil",
@@ -83,9 +87,7 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
     <header className="fixed left-0 right-0 top-0 z-50 border-b border-[#06192c]/10 bg-[#f4f0e8]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3" aria-label="Pinheiro Azul">
-          <span className="grid h-10 w-10 place-items-center bg-[#06192c] text-[#f4f0e8]">
-            <Home size={18} />
-          </span>
+          <img src={logo} alt="Logo Pinheiro Azul" className="h-[50px] w-[50px] object-contain" />
           <span>
             <span className="block text-sm font-black uppercase tracking-[0.24em] text-[#06192c]">Pinheiro Azul</span>
             <span className="block text-xs text-[#5a6472]">Zona Leste SP</span>
@@ -590,26 +592,46 @@ export default function HomeIndex4() {
           </div>
         </section>
 
-        <section className="grid bg-[#06192c] text-white lg:grid-cols-2">
-          <div className="relative min-h-[460px]">
-            <img src={consultation} alt="Atendimento consultivo Pinheiro Azul" className="h-full w-full object-cover opacity-72" />
-            <div className="absolute inset-0 bg-[#06192c]/20" />
-          </div>
-          <div className="flex items-center px-4 py-16 sm:px-8 lg:px-16">
-            <div>
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#28c7ba]">Atendimento consultivo</p>
-              <h2 className="mt-4 text-4xl font-black uppercase leading-none md:text-6xl">Você faz o diagnóstico. A gente já chega com as respostas.</h2>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/72">
-                Nosso atendimento começa depois do diagnóstico — nunca antes. Assim o papo é direto: sem perguntas básicas, sem perda de tempo. Só o que importa para o seu momento.
-              </p>
-              <button
-                type="button"
-                onClick={() => openDiagnostic()}
-                className="mt-8 inline-flex items-center gap-3 bg-[#f3d35b] px-6 py-4 text-sm font-black uppercase text-[#06192c]"
-              >
-                Fazer diagnóstico
-                <ShieldCheck size={18} />
-              </button>
+        <section className="bg-[#06192c] text-white">
+          <div className="mx-auto max-w-7xl grid overflow-hidden lg:grid-cols-[450px_1fr] lg:h-[520px]">
+            <div className="relative overflow-hidden lg:h-full">
+              <img
+                src={andre}
+                alt="André F. — Pinheiro Azul"
+                className="h-[320px] w-full object-cover sm:h-[400px] lg:h-full"
+                style={{ objectPosition: "center 15%" }}
+              />
+              <div className="absolute inset-0 bg-[#06192c]/30" />
+              <div className="absolute bottom-4 left-4 border border-white/20 bg-[#06192c]/70 px-3 py-2 backdrop-blur-sm">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#28c7ba]">André F.</p>
+                <p className="text-xs text-white/70">Corretor · Pinheiro Azul</p>
+              </div>
+            </div>
+            <div className="flex items-center px-4 py-10 sm:px-8 lg:px-16 lg:py-12 lg:h-full">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-[#28c7ba]">Atendimento consultivo</p>
+                <h2 className="mt-3 text-3xl font-black uppercase leading-tight md:text-4xl">Uma conversa diferente das outras.</h2>
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-white/72">
+                  Cada pessoa chega com um momento diferente. Eu começo entendendo o seu — o que você precisa, o que faz sentido pra sua vida agora. Só então as indicações fazem sentido de verdade.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => openDiagnostic()}
+                  className="mt-6 inline-flex items-center gap-3 bg-[#f3d35b] px-6 py-4 text-sm font-black uppercase text-[#06192c]"
+                >
+                  Fazer diagnóstico
+                  <ShieldCheck size={18} />
+                </button>
+                <a
+                  href={WHATSAPP_ANDRE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 flex items-center gap-2 text-sm text-white/55 transition hover:text-white"
+                >
+                  Prefere falar direto com o André?
+                  <ArrowRight size={14} />
+                </a>
+              </div>
             </div>
           </div>
         </section>

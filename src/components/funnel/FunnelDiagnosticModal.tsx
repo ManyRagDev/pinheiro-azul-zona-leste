@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { CheckCircle2, ChevronLeft, ChevronRight, Mail, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Mail, Sparkles } from "lucide-react";
+import andre from "@/assets/andre.jpg";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,9 @@ import {
   type FunnelAnswers,
   type LeadProfile,
 } from "@/lib/funnel";
+
+// TODO: atualizar com o número real do WhatsApp do André
+const WHATSAPP_ANDRE = "https://wa.me/5511999999999";
 
 type Stage = "questions" | "contact" | "result";
 
@@ -269,9 +273,29 @@ export function FunnelDiagnosticModal({
                 {guideLabels[resolvedProfile]}
               </div>
             </div>
-            <p className="text-sm leading-relaxed text-[#415064]">
-              A equipe Pinheiro Azul vai entrar em contato para dar o próximo passo — sem pressa, sem pressão. Você fez o diagnóstico, a gente faz o trabalho pesado.
-            </p>
+            <div className="flex items-start gap-4 border border-[#06192c] bg-white p-5">
+              <img
+                src={andre}
+                alt="André F. — Pinheiro Azul"
+                className="h-12 w-12 shrink-0 rounded-full object-cover"
+                style={{ objectPosition: "center 15%" }}
+              />
+              <div>
+                <p className="text-sm font-black uppercase tracking-[0.16em] text-[#06192c]">André F.</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#415064]">
+                  Com esse perfil já tenho algumas direções em mente. Vamos conversar?
+                </p>
+                <a
+                  href={WHATSAPP_ANDRE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-2 bg-[#e43d30] px-4 py-2 text-xs font-black uppercase text-white transition hover:bg-[#06192c]"
+                >
+                  Falar com André
+                  <ArrowRight size={14} />
+                </a>
+              </div>
+            </div>
           </div>
         )}
 
