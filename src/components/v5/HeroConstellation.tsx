@@ -220,7 +220,7 @@ export function HeroConstellation() {
   // Mobile:  autonomous loop (mobileLoop, opacity=1)
   const canvasAnimate = isMobile ? mobileLoop : undefined;
   const canvasTransition = isMobile
-    ? { duration: 6, repeat: Infinity as const, ease: 'easeInOut' as const }
+    ? { duration: 6, repeat: Infinity as const, ease: 'easeInOut' }
     : undefined;
 
   // Canvas style: only apply scroll transforms on desktop/tablet

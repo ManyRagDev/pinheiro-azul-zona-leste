@@ -14,6 +14,7 @@ import PrimeiroImovelV2 from "./pages/PrimeiroImovelV2";
 import UpgradeMoradiaV2 from "./pages/UpgradeMoradiaV2";
 import InvestimentoV2 from "./pages/InvestimentoV2";
 import SellerLandingV2 from "./pages/SellerLandingV2";
+import InteligenciaImobiliaria from "./pages/InteligenciaImobiliaria";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/upgrade-moradia" element={<UpgradeMoradiaV2 />} />
           <Route path="/investimento" element={<InvestimentoV2 />} />
           <Route path="/anuncie-seu-imovel" element={<SellerLandingV2 />} />
+          <Route path="/inteligencia" element={<InteligenciaImobiliaria />} />
           <Route path="/sobre" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
