@@ -15,6 +15,11 @@ import UpgradeMoradiaV2 from "./pages/UpgradeMoradiaV2";
 import InvestimentoV2 from "./pages/InvestimentoV2";
 import SellerLandingV2 from "./pages/SellerLandingV2";
 import InteligenciaImobiliaria from "./pages/InteligenciaImobiliaria";
+import InteligenciaMesaDecisao from "./pages/InteligenciaMesaDecisao";
+import InteligenciaImobiliaria3 from "./pages/InteligenciaImobiliaria3";
+import InteligenciaImobiliaria4 from "./pages/InteligenciaImobiliaria4";
+import Inteligencia5 from "./pages/Inteligencia5";
+import Inteligencia6 from "./pages/Inteligencia6";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +37,11 @@ const App = () => (
           <Route path="/investimento" element={<InvestimentoV2 />} />
           <Route path="/anuncie-seu-imovel" element={<SellerLandingV2 />} />
           <Route path="/inteligencia" element={<InteligenciaImobiliaria />} />
+          <Route path="/inteligencia2" element={<InteligenciaMesaDecisao />} />
+          <Route path="/inteligencia3" element={<InteligenciaImobiliaria3 />} />
+          <Route path="/inteligencia4" element={<InteligenciaImobiliaria4 />} />
+          <Route path="/inteligencia5" element={<Inteligencia5 />} />
+          <Route path="/inteligencia6" element={<Inteligencia6 />} />
           <Route path="/sobre" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
