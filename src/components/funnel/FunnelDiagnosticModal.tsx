@@ -19,7 +19,7 @@ import {
 } from "@/lib/funnel";
 
 // TODO: atualizar com o número real do WhatsApp do André
-const WHATSAPP_ANDRE = "https://wa.me/5511999999999";
+const WHATSAPP_ANDRE = "https://wa.me/5511930418684";
 
 type Stage = "questions" | "contact" | "result";
 

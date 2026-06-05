@@ -52,18 +52,18 @@
 - Exemplo mockado de nota IPA no resultado do scanner
 - Frase: *"O Índice Pinheiro Azul condensa toda a análise em uma nota clara. Quanto mais próximo de 10, mais segura é a compra."*
 
-**Impacto:** Comunica o diferencial proprietário. Cria desejo pelo Dossiê completo.
+**Impacto:** Comunica o diferencial proprietário. Cria desejo pelo relatório completo.
 
 ---
 
 ## 5. Padronização de Nomenclatura
 
-**Problema:** A página usa "Análise", "Laudo", "Relatório", "Auditoria" de forma inconsistente. O `plan_revisado.md` define **"Dossiê de Viabilidade Imobiliária"**.
+**Problema:** A página usa termos de entregável de forma inconsistente. Para manter transparência, o entregável deve ser chamado de **Relatório de Viabilidade Imobiliária**.
 
 **Ação:** Unificar CTAs e referências ao produto:
-- CTAs: "Solicitar Dossiê de Viabilidade — R$ 147"
+- CTAs: "Solicitar Relatório de Viabilidade — R$ 147"
 - Header: manter "Inteligência Imobiliária" (é o nome da operação)
-- Footer: "Dossiê opinativo técnico de viabilidade financeira"
+- Footer: "Relatório orientativo de viabilidade financeira de mercado"
 
 ---
 

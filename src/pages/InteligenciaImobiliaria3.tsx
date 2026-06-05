@@ -25,7 +25,7 @@ export default function InteligenciaImobiliaria3() {
   const whatsappMessage = encodeURIComponent(
     `Olá! Gostaria de solicitar a Análise de Viabilidade Imobiliária para um imóvel de ${fmt(valorImovel)}. Quero o Dossiê completo.`
   );
-  const whatsappUrl = `https://wa.me/5511999999999?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/5511930418684?text=${whatsappMessage}`;
 
   return (
     <div className="min-h-screen bg-[#030712] text-[#9CA3AF] font-sans">

@@ -86,12 +86,12 @@ export default function InteligenciaImobiliaria4() {
   const messageConsultoria = encodeURIComponent(
     `Olá! Gostaria de agendar a Análise de Viabilidade Imobiliária do meu imóvel de ${formatCurrency(valorImovel)}. Quero receber o Dossiê Completo.`
   );
-  const whatsappUrlConsultoria = `https://wa.me/5511999999999?text=${messageConsultoria}`;
+  const whatsappUrlConsultoria = `https://wa.me/5511930418684?text=${messageConsultoria}`;
 
   const messageEbook = encodeURIComponent(
     `Olá! Gostaria de adquirir o Guia Prático de Compra de Imóvel (Ebook).`
   );
-  const whatsappUrlEbook = `https://wa.me/5511999999999?text=${messageEbook}`;
+  const whatsappUrlEbook = `https://wa.me/5511930418684?text=${messageEbook}`;
 
   return (
     <div className="min-h-screen bg-[#fdfbf7] text-[#2a333c] font-sans antialiased selection:bg-[#1f8fff]/10 selection:text-brand-primary">

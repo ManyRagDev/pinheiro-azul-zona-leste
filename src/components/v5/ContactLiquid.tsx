@@ -193,7 +193,7 @@ export function ContactLiquid() {
 
             {/* WhatsApp CTA */}
             <button
-              onClick={() => window.open('https://wa.me/5511987654321', '_blank')}
+              onClick={() => window.open('https://wa.me/5511930418684', '_blank')}
               className="group mt-2 rounded-3xl border border-emerald-500/20 bg-emerald-500/[0.03] backdrop-blur-sm p-6 hover:bg-emerald-500/[0.06] hover:border-emerald-500/30 transition-all duration-300"
             >
               <div className="flex items-center gap-4">

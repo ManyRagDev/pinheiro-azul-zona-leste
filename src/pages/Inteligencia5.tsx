@@ -201,7 +201,7 @@ export default function Inteligencia5() {
     `Olá! Quero solicitar a Análise de Viabilidade Imobiliária (R$ 147). ` +
       `Imóvel: ${brl(valorImovel)}.`
   );
-  const whatsappUrl = `https://wa.me/5511999999999?text=${whatsappMsg}`;
+  const whatsappUrl = `https://wa.me/5511930418684?text=${whatsappMsg}`;
 
   return (
     <>

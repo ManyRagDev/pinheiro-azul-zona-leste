@@ -520,7 +520,7 @@ const HomeV2 = () => {
 
                 <Button 
                   className="w-full mt-6 bg-green-600 hover:bg-green-500 text-white rounded-xl py-6 text-lg"
-                  onClick={() => window.open('https://wa.me/5511987654321', '_blank')}
+                  onClick={() => window.open('https://wa.me/5511930418684', '_blank')}
                 >
                   <MessageSquare className="mr-2" size={20} />
                   Fale pelo WhatsApp

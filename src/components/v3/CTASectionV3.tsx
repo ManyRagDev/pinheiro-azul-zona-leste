@@ -116,7 +116,7 @@ export function CTASectionV3() {
             >
               <Button
                 size="lg"
-                onClick={() => window.open('https://wa.me/5511987654321', '_blank')}
+                onClick={() => window.open('https://wa.me/5511930418684', '_blank')}
                 className="relative bg-green-600 hover:bg-green-500 text-white rounded-full px-8 py-7 text-lg font-semibold group overflow-hidden"
               >
                 {/* Pulse Effect */}

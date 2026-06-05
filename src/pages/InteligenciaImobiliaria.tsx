@@ -30,21 +30,31 @@ import {
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import logo from "@/assets/logo.png";
 
 export default function InteligenciaImobiliaria() {
   // Shared States (Both layouts)
   const [valorImovel, setValorImovel] = useState<number>(550000);
+  const [valorEntrada, setValorEntrada] = useState<number>(110000);
   const [rendaMensal, setRendaMensal] = useState<number>(14000);
   const [isScanning, setIsScanning] = useState<boolean>(false);
   const [showResults, setShowResults] = useState<boolean>(false);
 
   // Calculations
+  const entradaMaxima = Math.round((valorImovel * 0.9) / 5000) * 5000;
+  const entradaConsiderada = Math.min(valorEntrada, entradaMaxima);
+  const entradaPercent = valorImovel > 0 ? (entradaConsiderada / valorImovel) * 100 : 0;
   const custoITBI = valorImovel * 0.03; // ITBI 3% em SP
   const custoRegistroEscritura = valorImovel * 0.015; // Escritura/Registro ~1.5%
   const totalCustosOcultos = custoITBI + custoRegistroEscritura;
   
-  // Estimativa de primeira parcela SAC (80% financiado, 10.5% a.a.)
-  const valorFinanciado = valorImovel * 0.8;
+  // Estimativa de primeira parcela SAC (entrada informada, 10.5% a.a.)
+  const valorFinanciado = Math.max(valorImovel - entradaConsiderada, 0);
   const amortizacaoMensal = valorFinanciado / 360; // 30 anos (360 parcelas)
   const jurosPrimeiroMes = valorFinanciado * (0.105 / 12);
   const primeiraParcelaEst = amortizacaoMensal + jurosPrimeiroMes;
@@ -61,14 +71,14 @@ export default function InteligenciaImobiliaria() {
   const ipaDescription = ipaScore >= 8 
     ? 'O imóvel está em preço justo, o crédito é saudável e o potencial de valorização é alto.'
     : ipaScore >= 5 
-    ? 'Existem riscos mitigáveis. O Dossiê completo lista os pontos de atenção e recomendações.'
+    ? 'Existem riscos mitigáveis. O relatório completo lista os pontos de atenção e recomendações.'
     : 'Compra não recomendada no cenário atual. Risco financeiro elevado.';
 
   // Active Tab for Manila Folder Preview (Desktop)
   const [activeFolderTab, setActiveFolderTab] = useState<number>(0);
 
   // Mobile App Navigation States
-  const [activeMobileTab, setActiveMobileTab] = useState<number>(0); // 0: Início, 1: Scanner, 2: Laudo, 3: Especialista
+  const [activeMobileTab, setActiveMobileTab] = useState<number>(0); // 0: Início, 1: Scanner, 2: Relatório, 3: Especialista
   const [mobileCardIndex, setMobileCardIndex] = useState<number>(0); // Swipe index for Report preview on mobile
 
   const handleStartScan = (e?: React.FormEvent) => {
@@ -95,8 +105,19 @@ export default function InteligenciaImobiliaria() {
     }).format(val);
   };
 
+  const updateValorImovel = (nextValue: number) => {
+    const boundedValue = Math.max(150000, Math.min(3000000, nextValue));
+    const boundedEntrada = Math.round((boundedValue * 0.9) / 5000) * 5000;
+    setValorImovel(boundedValue);
+    setValorEntrada(prev => Math.min(prev, boundedEntrada));
+  };
+
   const adjustValor = (amount: number) => {
-    setValorImovel(prev => Math.max(150000, Math.min(3000000, prev + amount)));
+    updateValorImovel(valorImovel + amount);
+  };
+
+  const adjustEntrada = (amount: number) => {
+    setValorEntrada(prev => Math.max(0, Math.min(entradaMaxima, prev + amount)));
   };
 
   const adjustRenda = (amount: number) => {
@@ -104,9 +125,9 @@ export default function InteligenciaImobiliaria() {
   };
 
   const whatsappMessage = encodeURIComponent(
-    `Olá! Gostaria de agendar a Análise de Viabilidade Imobiliária do meu imóvel de ${formatCurrency(valorImovel)}. Quero saber se cada número está correto.`
+    `Olá! Quero validar se esse imóvel de ${formatCurrency(valorImovel)} cabe no meu orçamento antes de seguir. Posso solicitar o Relatório de Viabilidade?`
   );
-  const whatsappUrl = `https://wa.me/5511999999999?text=${whatsappMessage}`; // Substituir pelo WhatsApp real da Pinheiro Azul
+  const whatsappUrl = `https://wa.me/5511930418684?text=${whatsappMessage}`;
 
   const folders = [
     {
@@ -114,17 +135,17 @@ export default function InteligenciaImobiliaria() {
       title: "Regional",
       tag: "Comparação de m²",
       headline: "O valor pedido condiz com o mercado real?",
-      desc: "Análise técnica do preço por metro quadrado do imóvel anunciado em comparação com as transações registradas em cartório e médias de liquidez dos bairros como Tatuapé, Mooca e Vila Formosa. Identifica se o valor pedido está acima do teto real de mercado.",
+      desc: "Análise técnica do preço por metro quadrado anunciado em comparação com preços reais praticados na região e médias de liquidez de bairros como Tatuapé, Mooca e Vila Formosa. Identifica se o valor pedido está acima do teto real de mercado.",
       metric: "Métrica Regional",
-      val: "Transações em Cartório",
+      val: "Preço real praticado",
       details: "Evita que você compre com preço inflacionado sob o calor emocional."
     },
     {
       code: "02",
       title: "Custos Ocultos",
-      tag: "Impostos & Registro",
+      tag: "Custos de Entrada",
       headline: "Provisione taxas ocultas de transferência imobiliária",
-      desc: "Mapeamento detalhado dos emolumentos cartoriais, ITBI, taxas de avaliação bancária e taxas acessórias exigidas para efetivação jurídica. Sem isso, a compra trava e você corre risco de quebra de contrato por falta de liquidez.",
+      desc: "Estimativa simples do dinheiro que precisa estar reservado antes da assinatura: ITBI, registro, escritura e taxas bancárias. A ideia é evitar surpresa de caixa no momento em que a compra já está andando.",
       metric: "Estimativa Oculta",
       val: "4.5% a 6% do valor",
       details: "Saber exatamente a reserva de caixa obrigatória antes da assinatura."
@@ -152,9 +173,9 @@ export default function InteligenciaImobiliaria() {
     {
       code: "05",
       title: "Veredito",
-      tag: "Parecer Isento",
-      headline: "A opinião honesta do especialista em dados",
-      desc: "Sem pressões de corretores de plantão. Nosso veredito final categoriza a compra em: Aprovado, Com Ressalvas Cruciais (e quais são) ou Reprovado Comercial. Decisão pura com base em dados.",
+      tag: "Decisão clara",
+      headline: "O que fazer com esses números agora?",
+      desc: "Sem pressão para comprar. O veredito mostra se vale seguir, negociar melhor ou pausar antes de colocar sinal, renda e proposta em risco.",
       metric: "Recomendação",
       val: "Selo de Recomendação",
       details: "Opinião livre de comissão de venda para proteger seu capital."
@@ -170,23 +191,23 @@ export default function InteligenciaImobiliaria() {
       <div className="fixed inset-0 lg:hidden flex flex-col justify-between overflow-hidden bg-[#020817] z-50">
         
         {/* Mobile Top Bar */}
-        <div className="border-b border-[#1f8fff]/15 px-4 py-3 flex items-center justify-between bg-[#020817] z-30">
+        <div className="shrink-0 border-b border-[#1f8fff]/15 px-4 py-3 flex items-center justify-between bg-[#020817] z-30">
           <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 border border-[#1f8fff]/30 bg-zinc-900 rounded-lg flex items-center justify-center text-[#1f8fff] font-bold text-[10px]">
-              PA
+            <div className="w-7 h-7 border border-[#1f8fff]/30 bg-zinc-900 rounded-lg flex items-center justify-center overflow-hidden">
+              <img src={logo} alt="Pinheiro Azul" className="h-full w-full object-contain p-0.5" />
             </div>
-            <span className="font-bold text-[10px] tracking-widest text-white uppercase">
+            <span className="font-bold text-[11px] tracking-widest text-white uppercase">
               INTELIGÊNCIA IMOBILIÁRIA
             </span>
           </div>
-          <div className="flex items-center space-x-1.5 text-[8px] text-[#1f8fff]">
+          <div className="flex items-center space-x-1.5 text-[10px] text-[#1f8fff]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#1f8fff] animate-pulse" />
             <span>ZONA LESTE · SP</span>
           </div>
         </div>
 
         {/* Dynamic Mobile View Switcher */}
-        <div className="flex-grow overflow-y-auto p-4 pb-24 scrollbar-none relative">
+        <div className="min-h-0 flex-grow overflow-y-auto p-4 pb-4 scrollbar-none relative">
           
           {/* Subtle background grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(31,143,255,0.01)_1px,transparent_1px),linear-gradient(to_right,rgba(31,143,255,0.01)_1px,transparent_1px)] bg-[size:25px_25px] pointer-events-none" />
@@ -204,43 +225,10 @@ export default function InteligenciaImobiliaria() {
               {/* Tab 0: Home / Início */}
               {activeMobileTab === 0 && (
                 <div className="space-y-6 flex flex-col justify-center min-h-[70vh] py-6">
-                  
-                  {/* Gauge de Comprometimento de Renda */}
-                  <div className="flex flex-col items-center justify-center py-4 bg-zinc-900/40 border border-zinc-800 p-4 rounded-3xl">
-                    <div className="relative w-24 h-24">
-                      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="40" fill="transparent" stroke="#27272a" strokeWidth="8" />
-                        <motion.circle
-                          cx="50" cy="50" r="40" fill="transparent"
-                          stroke={isComprometimentoAlto ? "#ef4444" : "#1f8fff"}
-                          strokeWidth="8" strokeDasharray="251.2"
-                          initial={{ strokeDashoffset: 251.2 }}
-                          animate={{ strokeDashoffset: 251.2 - (251.2 * Math.min(100, comprometeRendaPercent)) / 100 }}
-                          transition={{ duration: 0.8, ease: "easeOut" }}
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                        <span className="text-base font-bold text-white leading-none">
-                          {comprometeRendaPercent.toFixed(0)}%
-                        </span>
-                        <span className="text-[7px] text-zinc-500 uppercase tracking-wider mt-1">
-                          Renda
-                        </span>
-                      </div>
-                    </div>
-                    <div className="mt-3 text-center">
-                      <span className={`text-[9px] font-bold uppercase tracking-wider ${isComprometimentoAlto ? "text-red-400" : "text-emerald-400"}`}>
-                        {isComprometimentoAlto ? "Status: Risco de Reprovação" : "Status: Renda Saudável"}
-                      </span>
-                      <span className="block text-[8px] text-zinc-500 mt-0.5">
-                        Comprometimento recomendado: máx. 30%
-                      </span>
-                    </div>
-                  </div>
 
                   <div className="text-center space-y-4">
                     <div className="inline-flex items-center space-x-1.5 px-3 py-1 border border-[#1f8fff]/20 bg-zinc-900/60 rounded-full">
-                      <span className="text-[9px] text-[#1f8fff] uppercase tracking-wider font-semibold">
+                      <span className="text-[10px] text-[#1f8fff] uppercase tracking-wider font-semibold">
                         Análise de Viabilidade Imobiliária
                       </span>
                     </div>
@@ -250,29 +238,56 @@ export default function InteligenciaImobiliaria() {
                       <span className="text-[#1f8fff]">Cada número importa.</span>
                     </h1>
 
-                    <p className="text-zinc-400 text-xs leading-relaxed px-4">
+                    <p className="text-zinc-300 text-sm leading-relaxed px-4">
                       Comprar imóvel é uma grande decisão. Nossa análise coloca todos os números na mesa pra você decidir com segurança.
                     </p>
                   </div>
 
-                  <div className="border border-zinc-800 bg-zinc-900/50 p-4 rounded-2xl text-[10px] space-y-2">
+                  <div className="border border-zinc-800 bg-zinc-900/50 p-4 rounded-2xl text-xs space-y-2">
                     <div className="flex justify-between border-b border-zinc-800 pb-1.5 font-bold text-white">
-                      <span>Média Regional Tatuapé</span>
-                      <span className="text-[#1f8fff]">R$ 11.200 /m²</span>
+                      <span>Médias Regionais</span>
+                      <span className="text-[#1f8fff]">Zona Leste</span>
                     </div>
-                    <div className="text-zinc-400 leading-normal">
-                      Mapeamos o mercado e custos invisíveis. Dossiê completo por apenas <span className="font-bold text-[#1f8fff]">R$ 147</span>.
+                    <div className="space-y-1.5 text-zinc-300 leading-relaxed">
+                      <div className="flex justify-between">
+                        <span>Anália Franco</span>
+                        <span className="font-bold text-white">R$ 14.500 /m²</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Tatuapé</span>
+                        <span className="font-bold text-[#1f8fff]">R$ 11.200 /m²</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Mooca</span>
+                        <span className="font-bold text-white">R$ 9.800 /m²</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Vila Formosa</span>
+                        <span className="font-bold text-white">R$ 8.500 /m²</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Carrão</span>
+                        <span className="font-bold text-white">R$ 7.900 /m²</span>
+                      </div>
+                    </div>
+                    <div className="border-t border-zinc-800 pt-2 text-zinc-300 leading-relaxed">
+                      Mapeamos o mercado e custos invisíveis. Relatório completo por apenas <span className="font-bold text-[#1f8fff]">R$ 147</span>.
                     </div>
                   </div>
 
                   <div className="pt-4 text-center">
                     <Button 
                       onClick={() => setActiveMobileTab(1)}
-                      className="w-full rounded-2xl bg-[#1f8fff] hover:bg-[#1f8fff]/80 text-white font-bold py-6 uppercase tracking-wider text-xs border-0 transition-colors"
+                      className="w-full rounded-2xl bg-[#1f8fff] hover:bg-[#1f8fff]/80 text-white font-bold py-6 uppercase tracking-wider text-sm border-0 transition-colors"
                     >
                       Iniciar Simulação de Riscos
                     </Button>
                   </div>
+
+                  <a href={whatsappUrl} target="_blank" rel="noreferrer"
+                    className="flex items-center justify-center w-full py-4 bg-emerald-500/10 hover:bg-emerald-500/25 border border-emerald-500 text-emerald-300 font-bold uppercase tracking-wider text-xs transition-colors rounded-2xl">
+                    <MessageSquare className="w-4 h-4 mr-1.5" /> Falar pelo WhatsApp
+                  </a>
 
                 </div>
               )}
@@ -281,7 +296,7 @@ export default function InteligenciaImobiliaria() {
               {activeMobileTab === 1 && (
                 <div className="space-y-6 py-4">
                   <div className="border border-zinc-800 bg-zinc-900 p-5 rounded-3xl relative overflow-hidden">
-                    <div className="text-[10px] font-bold text-[#1f8fff] uppercase tracking-widest border-b border-zinc-800 pb-2 mb-4 flex items-center">
+                    <div className="text-xs font-bold text-[#1f8fff] uppercase tracking-wider border-b border-zinc-800 pb-2 mb-4 flex items-center">
                       <Calculator className="w-3.5 h-3.5 mr-1.5" /> Simulador de Custos & Parcelas
                     </div>
 
@@ -289,31 +304,55 @@ export default function InteligenciaImobiliaria() {
                       
                       {/* Valor do Imóvel */}
                       <div className="space-y-2">
-                        <div className="flex justify-between text-[10px] uppercase text-zinc-400">
+                        <div className="flex justify-between text-xs uppercase text-zinc-300">
                           <span>Valor do Imóvel:</span>
                           <span className="text-white font-bold">{formatCurrency(valorImovel)}</span>
                         </div>
                         <input
                           type="range" min={150000} max={3000000} step={25000}
-                          value={valorImovel} onChange={(e) => setValorImovel(Number(e.target.value))}
+                          value={valorImovel} onChange={(e) => updateValorImovel(Number(e.target.value))}
                           disabled={isScanning}
                           className="w-full h-1 bg-zinc-950 appearance-none cursor-pointer accent-[#1f8fff] rounded-xl"
                         />
                         <div className="flex gap-2 justify-between">
                           <button type="button" onClick={() => adjustValor(-50000)} disabled={isScanning}
-                            className="flex-1 py-1 text-[9px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-400 rounded-xl transition-colors">
+                            className="flex-1 py-1.5 text-[11px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-300 rounded-xl transition-colors">
                             - 50K
                           </button>
                           <button type="button" onClick={() => adjustValor(50000)} disabled={isScanning}
-                            className="flex-1 py-1 text-[9px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-400 rounded-xl transition-colors">
+                            className="flex-1 py-1.5 text-[11px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-300 rounded-xl transition-colors">
                             + 50K
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Entrada */}
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-xs uppercase text-zinc-300">
+                          <span>Entrada disponível:</span>
+                          <span className="text-white font-bold">{formatCurrency(entradaConsiderada)}</span>
+                        </div>
+                        <input
+                          type="range" min={0} max={entradaMaxima} step={5000}
+                          value={entradaConsiderada} onChange={(e) => setValorEntrada(Number(e.target.value))}
+                          disabled={isScanning}
+                          className="w-full h-1 bg-zinc-950 appearance-none cursor-pointer accent-[#1f8fff] rounded-xl"
+                        />
+                        <div className="flex gap-2 justify-between">
+                          <button type="button" onClick={() => adjustEntrada(-10000)} disabled={isScanning}
+                            className="flex-1 py-1.5 text-[11px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-300 rounded-xl transition-colors">
+                            - 10K
+                          </button>
+                          <button type="button" onClick={() => adjustEntrada(10000)} disabled={isScanning}
+                            className="flex-1 py-1.5 text-[11px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-300 rounded-xl transition-colors">
+                            + 10K
                           </button>
                         </div>
                       </div>
 
                       {/* Renda Familiar */}
                       <div className="space-y-2">
-                        <div className="flex justify-between text-[10px] uppercase text-zinc-400">
+                        <div className="flex justify-between text-xs uppercase text-zinc-300">
                           <span>Renda Familiar:</span>
                           <span className="text-white font-bold">{formatCurrency(rendaMensal)}</span>
                         </div>
@@ -325,20 +364,36 @@ export default function InteligenciaImobiliaria() {
                         />
                         <div className="flex gap-2 justify-between">
                           <button type="button" onClick={() => adjustRenda(-1000)} disabled={isScanning}
-                            className="flex-1 py-1 text-[9px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-400 rounded-xl transition-colors">
+                            className="flex-1 py-1.5 text-[11px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-300 rounded-xl transition-colors">
                             - 1K
                           </button>
                           <button type="button" onClick={() => adjustRenda(1000)} disabled={isScanning}
-                            className="flex-1 py-1 text-[9px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-400 rounded-xl transition-colors">
+                            className="flex-1 py-1.5 text-[11px] border border-zinc-800 hover:border-[#1f8fff]/40 bg-black/40 text-zinc-300 rounded-xl transition-colors">
                             + 1K
                           </button>
                         </div>
                       </div>
 
-                      <Button onClick={() => handleStartScan()} disabled={isScanning}
-                        className="w-full rounded-2xl bg-black hover:bg-[#1f8fff] text-[#1f8fff] hover:text-white border border-[#1f8fff]/30 py-5 text-[10px] font-bold uppercase tracking-wider transition-colors">
-                        {isScanning ? "Calculando..." : "Calcular Custos e Riscos"}
-                      </Button>
+                      <div className="flex items-stretch gap-2">
+                        <Button onClick={() => handleStartScan()} disabled={isScanning}
+                          className="flex-1 rounded-2xl bg-black hover:bg-[#1f8fff] text-[#1f8fff] hover:text-white border border-[#1f8fff]/30 py-5 text-xs font-bold uppercase tracking-wider transition-colors">
+                          {isScanning ? "Calculando..." : "Calcular Custos e Riscos"}
+                        </Button>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              type="button"
+                              aria-label="Como o cálculo funciona"
+                              className="w-12 rounded-2xl border border-zinc-800 bg-black/40 text-zinc-400 hover:border-[#1f8fff]/50 hover:text-[#1f8fff] transition-colors flex items-center justify-center"
+                            >
+                              <HelpCircle className="w-4 h-4" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" className="max-w-[240px] bg-zinc-950 border-zinc-800 text-zinc-200 text-[11px] leading-relaxed">
+                            Estimativa preliminar baseada no valor do imóvel, entrada e renda informados. Serve para revelar custos de entrada, parcela provável e risco de comprometimento.
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
 
                     </div>
 
@@ -352,7 +407,7 @@ export default function InteligenciaImobiliaria() {
                               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                               className="absolute top-0 bottom-0 w-16 bg-[#1f8fff] rounded-full" />
                           </div>
-                          <span className="text-[9px] text-[#1f8fff] tracking-widest uppercase animate-pulse">
+                          <span className="text-xs text-[#1f8fff] tracking-wider uppercase animate-pulse">
                             Calculando custos para {formatCurrency(valorImovel)}
                           </span>
                         </motion.div>
@@ -368,10 +423,10 @@ export default function InteligenciaImobiliaria() {
                       {/* IPA Score Card (Mobile) */}
                       <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-3xl">
                         <div className="flex items-center justify-between mb-3">
-                          <span className="text-[9px] text-zinc-500 uppercase tracking-wider font-bold">
+                          <span className="text-[10px] text-zinc-300 uppercase tracking-wider font-bold">
                             Índice Pinheiro Azul (Prévia)
                           </span>
-                          <span className="text-[8px] text-zinc-600">IPA</span>
+                          <span className="text-[10px] text-zinc-400">IPA</span>
                         </div>
                         <div className="flex items-center space-x-4">
                           <div className="relative w-16 h-16 flex-shrink-0">
@@ -389,28 +444,33 @@ export default function InteligenciaImobiliaria() {
                             </div>
                           </div>
                           <div>
-                            <span className="text-xs font-bold" style={{ color: ipaColor }}>{ipaLabel}</span>
-                            <p className="text-[9px] text-zinc-400 leading-relaxed mt-0.5">{ipaDescription}</p>
+                            <span className="text-sm font-bold" style={{ color: ipaColor }}>{ipaLabel}</span>
+                            <p className="text-xs text-zinc-300 leading-relaxed mt-1">{ipaDescription}</p>
                           </div>
                         </div>
-                        <p className="text-[8px] text-zinc-500 mt-3 border-t border-zinc-800 pt-2">
-                          Nota preliminar. O Dossiê completo inclui análise regional, jurídica e de crédito.
+                        <p className="text-[10px] text-zinc-400 mt-3 border-t border-zinc-800 pt-2 leading-relaxed">
+                          Nota preliminar. O relatório completo confere preço, entrada, custos e crédito antes de você seguir.
                         </p>
                       </div>
 
                       {/* Metric cards */}
                       <div className="grid grid-cols-2 gap-4">
                         <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
-                          <span className="text-[8px] text-zinc-500 uppercase block font-bold">Custos Extra Inicial</span>
+                          <span className="text-[10px] text-zinc-300 uppercase block font-bold">Entrada Informada</span>
+                          <span className="text-base font-bold text-white mt-1 block">{formatCurrency(entradaConsiderada)}</span>
+                          <span className="text-[10px] text-zinc-400 block mt-1 leading-tight">{entradaPercent.toFixed(0)}% do valor do imóvel.</span>
+                        </div>
+                        <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
+                          <span className="text-[10px] text-zinc-300 uppercase block font-bold">Custos Extra Inicial</span>
                           <span className="text-base font-bold text-white mt-1 block">{formatCurrency(totalCustosOcultos)}</span>
-                          <span className="text-[7px] text-red-400 block mt-1 leading-none">ITBI e Cartório à vista.</span>
+                          <span className="text-[10px] text-red-300 block mt-1 leading-tight">Custos de entrada à vista.</span>
                         </div>
                         <div className={`bg-zinc-900 border p-4 rounded-2xl ${isComprometimentoAlto ? 'border-red-400/30' : 'border-zinc-800'}`}>
-                          <span className="text-[8px] text-zinc-500 uppercase block font-bold">Renda Comprometida</span>
+                          <span className="text-[10px] text-zinc-300 uppercase block font-bold">Renda Comprometida</span>
                           <span className={`text-base font-bold mt-1 block ${isComprometimentoAlto ? 'text-red-400' : 'text-emerald-400'}`}>
                             {comprometeRendaPercent.toFixed(0)}%
                           </span>
-                          <span className="text-[7px] text-zinc-400 block mt-1 leading-none">
+                          <span className="text-[10px] text-zinc-400 block mt-1 leading-tight">
                             Parcela SAC: {formatCurrency(primeiraParcelaEst)}
                           </span>
                         </div>
@@ -418,7 +478,7 @@ export default function InteligenciaImobiliaria() {
 
                       {/* SVG Chart for Mobile */}
                       <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
-                        <span className="text-[8px] font-bold text-white block mb-3 uppercase tracking-wider">Métricas Comparadas</span>
+                        <span className="text-[10px] font-bold text-white block mb-3 uppercase tracking-wider">Métricas Comparadas</span>
                         <div className="flex justify-center bg-black/30 border border-zinc-900 py-3 px-1 rounded-xl">
                           <svg width="100%" height="110" viewBox="0 0 300 110" preserveAspectRatio="none">
                             {(() => {
@@ -449,7 +509,7 @@ export default function InteligenciaImobiliaria() {
                       {isComprometimentoAlto && (
                         <div className="border border-red-400/30 bg-red-500/5 p-3.5 rounded-2xl flex items-start space-x-2 text-red-400">
                           <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                          <div className="text-[9px] leading-normal">
+                          <div className="text-xs leading-relaxed">
                             <strong>Alerta de parcela:</strong> O comprometimento ultrapassa 30% da renda informada. Alta chance de o banco recusar o crédito ou sobrecarregar seu orçamento mensal.
                           </div>
                         </div>
@@ -457,8 +517,8 @@ export default function InteligenciaImobiliaria() {
 
                       {/* WhatsApp CTA */}
                       <a href={whatsappUrl} target="_blank" rel="noreferrer"
-                        className="flex items-center justify-center w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-bold uppercase tracking-wider text-[10px] transition-colors rounded-2xl">
-                        <MessageSquare className="w-4 h-4 mr-1.5" /> Solicitar Dossiê Completo — R$ 147
+                        className="flex items-center justify-center w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-bold uppercase tracking-wider text-xs transition-colors rounded-2xl">
+                        <MessageSquare className="w-4 h-4 mr-1.5" /> Validar meu imóvel — R$ 147
                       </a>
 
                     </motion.div>
@@ -472,16 +532,16 @@ export default function InteligenciaImobiliaria() {
                 <div className="space-y-6 py-4 flex flex-col justify-between min-h-[68vh]">
                   
                   <div className="text-center space-y-1">
-                    <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest block">
-                      Prévia do Dossiê
+                    <span className="text-xs text-zinc-300 font-bold uppercase tracking-wider block">
+                      Prévia do Relatório
                     </span>
-                    <span className="text-[9px] text-zinc-600 block">
+                    <span className="text-[11px] text-zinc-400 block">
                       Deslize para inspecionar os tópicos da análise.
                     </span>
                   </div>
 
                   {/* Card Stack */}
-                  <div className="relative w-full h-[280px] flex items-center justify-center">
+                  <div className="relative w-full h-[380px] flex items-center justify-center">
                     <AnimatePresence mode="popLayout">
                       {folders.map((folder, idx) => {
                         if (idx !== mobileCardIndex) return null;
@@ -491,37 +551,37 @@ export default function InteligenciaImobiliaria() {
                             animate={{ scale: 1, y: 0, opacity: 1 }}
                             exit={{ scale: 0.95, y: -5, opacity: 0 }}
                             transition={{ duration: 0.25 }}
-                            className="absolute inset-x-0 h-full bg-zinc-950 border border-zinc-800 p-6 flex flex-col justify-between shadow-2xl rounded-3xl">
+                            className="absolute inset-x-0 h-full bg-zinc-950 border border-zinc-800 p-5 flex flex-col justify-between shadow-2xl rounded-3xl">
                             
-                            <div className="absolute top-[-10px] left-6 bg-zinc-950 border-t border-x border-zinc-800 h-[11px] px-3 text-[7px] font-bold text-[#1f8fff] tracking-widest rounded-t-lg">
+                            <div className="absolute top-[-10px] left-6 bg-zinc-950 border-t border-x border-zinc-800 h-[14px] px-3 text-[10px] font-bold text-[#1f8fff] tracking-wider rounded-t-lg">
                               {folder.code}
                             </div>
 
                             <div className="space-y-3 pt-2">
                               <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
-                                <span className="text-[8px] text-zinc-500 font-bold uppercase tracking-wider">
+                                <span className="text-[10px] text-zinc-300 font-bold uppercase tracking-wider">
                                   {folder.tag}
                                 </span>
-                                <span className="text-[8px] text-[#1f8fff] font-bold">
+                                <span className="text-[10px] text-[#1f8fff] font-bold">
                                   Pág {idx + 1} de 5
                                 </span>
                               </div>
-                              <h4 className="text-xs font-bold text-white uppercase tracking-tight">
+                              <h4 className="text-sm font-bold text-white uppercase tracking-tight leading-snug">
                                 {folder.headline}
                               </h4>
-                              <p className="text-zinc-400 text-[10px] leading-relaxed">
+                              <p className="text-zinc-300 text-xs leading-relaxed">
                                 {folder.desc}
                               </p>
                             </div>
 
-                            <div className="border-t border-zinc-900 pt-3 flex justify-between text-[8px]">
+                            <div className="border-t border-zinc-900 pt-3 grid grid-cols-2 gap-4 text-[10px]">
                               <div>
-                                <span className="text-zinc-600 block uppercase">Metodologia</span>
-                                <span className="text-white font-bold mt-0.5 block">{folder.val}</span>
+                                <span className="text-zinc-400 block uppercase font-bold">Metodologia</span>
+                                <span className="text-white font-bold mt-1 block leading-snug">{folder.val}</span>
                               </div>
                               <div className="text-right">
-                                <span className="text-zinc-600 block uppercase">Finalidade</span>
-                                <span className="text-zinc-400 mt-0.5 block">{folder.details}</span>
+                                <span className="text-zinc-400 block uppercase font-bold">Finalidade</span>
+                                <span className="text-zinc-300 mt-1 block leading-snug">{folder.details}</span>
                               </div>
                             </div>
                           </motion.div>
@@ -537,7 +597,7 @@ export default function InteligenciaImobiliaria() {
                       className="w-10 h-10 border border-zinc-800 bg-zinc-900 rounded-xl flex items-center justify-center text-zinc-400 disabled:opacity-30 disabled:pointer-events-none hover:text-white transition-colors">
                       <ChevronLeft className="w-5 h-5" />
                     </button>
-                    <span className="text-[9px] text-zinc-500 font-bold uppercase">
+                    <span className="text-[11px] text-zinc-400 font-bold uppercase">
                       Página {mobileCardIndex + 1} / 5
                     </span>
                     <button type="button" disabled={mobileCardIndex === folders.length - 1}
@@ -563,21 +623,21 @@ export default function InteligenciaImobiliaria() {
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[9px] text-[#1f8fff] font-bold tracking-widest uppercase">
+                      <span className="text-[10px] text-[#1f8fff] font-bold tracking-wider uppercase">
                         Equipe de Análise
                       </span>
                       <h3 className="text-sm font-bold text-white uppercase">Time Pinheiro Azul</h3>
-                      <p className="text-zinc-500 text-[8px] uppercase tracking-wider">
+                      <p className="text-zinc-400 text-[10px] uppercase tracking-wider">
                         Análise de Dados & Estratégia Patrimonial
                       </p>
                     </div>
 
-                    <p className="text-zinc-400 text-[10px] leading-relaxed text-left">
-                      Nossa análise de viabilidade imobiliária audita os dados de precificação regional, custos de transferência e fluxos de parcelamento com total precisão e independência. O Dossiê garante que você tome a decisão certa com base em dados de mercado reais.
+                    <p className="text-zinc-300 text-xs leading-relaxed text-left">
+                      A análise organiza preço, taxas e parcelamento em uma orientação clara. Você entende o risco antes de avançar com sinal, financiamento ou proposta.
                     </p>
 
                     <div className="flex justify-center gap-1.5 pt-2">
-                      <span className="text-[8px] text-zinc-400 bg-black border border-zinc-800 px-2 py-0.5 uppercase rounded-full">
+                      <span className="text-[10px] text-zinc-300 bg-black border border-zinc-800 px-2 py-1 uppercase rounded-full">
                         ZL Especialista
                       </span>
                     </div>
@@ -585,7 +645,7 @@ export default function InteligenciaImobiliaria() {
                   </div>
 
                   <a href={whatsappUrl} target="_blank" rel="noreferrer"
-                    className="flex items-center justify-center w-full py-4.5 bg-emerald-500 hover:bg-emerald-400 text-white font-bold uppercase tracking-wider text-[10px] transition-colors rounded-2xl">
+                    className="flex items-center justify-center w-full py-4.5 bg-emerald-500 hover:bg-emerald-400 text-white font-bold uppercase tracking-wider text-xs transition-colors rounded-2xl">
                     <MessageSquare className="w-4 h-4 mr-1.5" /> Falar com o Especialista no WhatsApp
                   </a>
 
@@ -598,30 +658,30 @@ export default function InteligenciaImobiliaria() {
         </div>
 
         {/* Mobile Bottom Navigation Bar */}
-        <div className="fixed bottom-4 left-4 right-4 h-16 bg-zinc-900/80 backdrop-blur-xl border border-[#1f8fff]/20 rounded-2xl flex items-center justify-around px-2 z-40 shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
+        <div className="shrink-0 mx-4 mb-4 h-16 bg-zinc-900/80 backdrop-blur-xl border border-[#1f8fff]/20 rounded-2xl flex items-center justify-around px-2 z-40 shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
           
           <button onClick={() => setActiveMobileTab(0)}
-            className={`flex flex-col items-center justify-center w-14 h-12 transition-all rounded-xl ${activeMobileTab === 0 ? 'text-[#1f8fff]' : 'text-zinc-500'}`}>
+            className={`flex flex-col items-center justify-center w-16 h-12 transition-all rounded-xl ${activeMobileTab === 0 ? 'text-[#1f8fff]' : 'text-zinc-400'}`}>
             <Compass className={`w-5 h-5 transition-transform ${activeMobileTab === 0 ? 'scale-110' : ''}`} />
-            <span className="text-[8px] tracking-wider uppercase mt-1 font-bold">Início</span>
+            <span className="text-[10px] tracking-wide uppercase mt-1 font-bold">Início</span>
           </button>
 
           <button onClick={() => setActiveMobileTab(1)}
-            className={`flex flex-col items-center justify-center w-14 h-12 transition-all rounded-xl ${activeMobileTab === 1 ? 'text-[#1f8fff]' : 'text-zinc-500'}`}>
+            className={`flex flex-col items-center justify-center w-16 h-12 transition-all rounded-xl ${activeMobileTab === 1 ? 'text-[#1f8fff]' : 'text-zinc-400'}`}>
             <Calculator className={`w-5 h-5 transition-transform ${activeMobileTab === 1 ? 'scale-110' : ''}`} />
-            <span className="text-[8px] tracking-wider uppercase mt-1 font-bold">Simular</span>
+            <span className="text-[10px] tracking-wide uppercase mt-1 font-bold">Simular</span>
           </button>
 
           <button onClick={() => setActiveMobileTab(2)}
-            className={`flex flex-col items-center justify-center w-14 h-12 transition-all rounded-xl ${activeMobileTab === 2 ? 'text-[#1f8fff]' : 'text-zinc-500'}`}>
+            className={`flex flex-col items-center justify-center w-16 h-12 transition-all rounded-xl ${activeMobileTab === 2 ? 'text-[#1f8fff]' : 'text-zinc-400'}`}>
             <FileCheck className={`w-5 h-5 transition-transform ${activeMobileTab === 2 ? 'scale-110' : ''}`} />
-            <span className="text-[8px] tracking-wider uppercase mt-1 font-bold">Dossiê</span>
+            <span className="text-[10px] tracking-wide uppercase mt-1 font-bold">Relatório</span>
           </button>
 
           <button onClick={() => setActiveMobileTab(3)}
-            className={`flex flex-col items-center justify-center w-14 h-12 transition-all rounded-xl ${activeMobileTab === 3 ? 'text-[#1f8fff]' : 'text-zinc-500'}`}>
+            className={`flex flex-col items-center justify-center w-16 h-12 transition-all rounded-xl ${activeMobileTab === 3 ? 'text-[#1f8fff]' : 'text-zinc-400'}`}>
             <User className={`w-5 h-5 transition-transform ${activeMobileTab === 3 ? 'scale-110' : ''}`} />
-            <span className="text-[8px] tracking-wider uppercase mt-1 font-bold">Especialista</span>
+            <span className="text-[10px] tracking-wide uppercase mt-1 font-bold">Especialista</span>
           </button>
 
         </div>
@@ -634,7 +694,7 @@ export default function InteligenciaImobiliaria() {
       <div className="hidden lg:block">
         
         {/* Navigation Header */}
-        <header className="sticky top-0 z-50 bg-[#020817]/80 backdrop-blur-md border-b border-[#1f8fff]/15 px-6 py-5">
+        <header className="hidden">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-9 h-9 border border-[#1f8fff]/30 bg-zinc-900 rounded-xl flex items-center justify-center text-[#1f8fff] font-bold text-xs shadow-[0_0_12px_rgba(31,143,255,0.2)]">
@@ -649,12 +709,6 @@ export default function InteligenciaImobiliaria() {
                 </span>
               </div>
             </div>
-            <div className="flex items-center space-x-6">
-              <a href="#simulador"
-                className="px-4 py-2 border border-[#1f8fff]/30 rounded-full bg-[#1f8fff]/5 hover:bg-[#1f8fff]/20 text-[#1f8fff] text-xs font-semibold tracking-wider transition-colors">
-                Acessar Simulador
-              </a>
-            </div>
           </div>
         </header>
 
@@ -663,11 +717,11 @@ export default function InteligenciaImobiliaria() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(31,143,255,0.03)_2px,transparent_2px),linear-gradient(to_right,rgba(31,143,255,0.03)_2px,transparent_2px)] bg-[size:150px_150px] pointer-events-none" />
 
         {/* Main Content Layout */}
-        <main className="max-w-7xl mx-auto px-6 pt-16 relative z-10 lg:grid lg:grid-cols-12 lg:gap-12 min-h-screen">
+        <main className="max-w-7xl mx-auto px-6 pt-10 relative z-10 lg:grid lg:grid-cols-12 lg:gap-12 min-h-screen">
           
           {/* Left Column */}
           <section 
-            className="lg:col-span-5 lg:sticky lg:top-24 lg:h-fit lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto flex flex-col justify-between mb-16 lg:mb-0"
+            className="lg:col-span-5 lg:sticky lg:top-10 lg:h-fit lg:max-h-[calc(100vh-80px)] lg:overflow-y-auto flex flex-col justify-between mb-16 lg:mb-0"
             style={{ scrollbarWidth: 'none' }}>
             <div className="space-y-8 relative">
               <div className="absolute -left-6 top-16 text-8xl font-black text-transparent opacity-5 select-none pointer-events-none tracking-widest leading-none w-full uppercase" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.3)' }}>
@@ -693,7 +747,7 @@ export default function InteligenciaImobiliaria() {
               </p>
 
               <div className="pt-2 flex items-center space-x-4">
-                <span className="text-[11px] text-zinc-400 uppercase tracking-wider block">Dossiê completo:</span>
+                <span className="text-[11px] text-zinc-400 uppercase tracking-wider block">Relatório completo:</span>
                 <span className="text-sm font-bold text-white uppercase tracking-wider bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-xl">
                   R$ 147 fixos
                 </span>
@@ -758,7 +812,7 @@ export default function InteligenciaImobiliaria() {
                   <Search className="w-4 h-4 mr-2 text-[#1f8fff]" /> Scanner de Viabilidade Financeira
                 </h2>
                 <p className="text-[11px] text-zinc-400 mt-1">
-                  Ajuste os parâmetros para auditar juros e custos invisíveis da compra.
+                  Informe três números para enxergar custos de entrada, parcela estimada e risco de renda.
                 </p>
               </div>
 
@@ -773,13 +827,33 @@ export default function InteligenciaImobiliaria() {
                     </span>
                   </div>
                   <input id="range-valor-d" type="range" min={150000} max={3000000} step={25000}
-                    value={valorImovel} onChange={(e) => setValorImovel(Number(e.target.value))}
+                    value={valorImovel} onChange={(e) => updateValorImovel(Number(e.target.value))}
                     disabled={isScanning}
                     className="w-full h-1.5 bg-zinc-950 appearance-none cursor-pointer accent-[#1f8fff] rounded-xl" />
                   <div className="flex justify-between text-[10px] text-zinc-500">
                     <span>R$ 150 mil</span>
                     <span>R$ 1.5 M</span>
                     <span>R$ 3.0 M</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex justify-between text-xs">
+                    <Label htmlFor="range-entrada-d" className="text-zinc-300 uppercase tracking-wider">
+                      Entrada Disponível:
+                    </Label>
+                    <span className="text-[#1f8fff] font-bold text-sm bg-black px-2 py-0.5 border border-zinc-800 rounded-xl">
+                      {formatCurrency(entradaConsiderada)}
+                    </span>
+                  </div>
+                  <input id="range-entrada-d" type="range" min={0} max={entradaMaxima} step={5000}
+                    value={entradaConsiderada} onChange={(e) => setValorEntrada(Number(e.target.value))}
+                    disabled={isScanning}
+                    className="w-full h-1.5 bg-zinc-950 appearance-none cursor-pointer accent-[#1f8fff] rounded-xl" />
+                  <div className="flex justify-between text-[10px] text-zinc-500">
+                    <span>R$ 0</span>
+                    <span>{entradaPercent.toFixed(0)}% do imóvel</span>
+                    <span>{formatCurrency(entradaMaxima)}</span>
                   </div>
                 </div>
 
@@ -803,20 +877,36 @@ export default function InteligenciaImobiliaria() {
                   </div>
                 </div>
 
-                <Button type="submit" disabled={isScanning}
-                  className="w-full rounded-2xl bg-black hover:bg-[#1f8fff] text-[#1f8fff] hover:text-white border border-[#1f8fff]/30 py-6 text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center space-x-2">
-                  {isScanning ? (
-                    <>
-                      <span className="w-2 h-2 bg-emerald-500 animate-ping mr-2 rounded-full" />
-                      <span>Calculando ITBI e emolumentos cartórios SP...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Search className="w-4 h-4 mr-2" />
-                      <span>Calcular Custos e Riscos</span>
-                    </>
-                  )}
-                </Button>
+                <div className="flex items-stretch gap-3">
+                  <Button type="submit" disabled={isScanning}
+                    className="flex-1 rounded-2xl bg-black hover:bg-[#1f8fff] text-[#1f8fff] hover:text-white border border-[#1f8fff]/30 py-6 text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center space-x-2">
+                    {isScanning ? (
+                      <>
+                        <span className="w-2 h-2 bg-emerald-500 animate-ping mr-2 rounded-full" />
+                        <span>Calculando custos de entrada em SP...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Search className="w-4 h-4 mr-2" />
+                        <span>Calcular Custos e Riscos</span>
+                      </>
+                    )}
+                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        aria-label="Como o cálculo funciona"
+                        className="w-14 rounded-2xl border border-zinc-800 bg-black/40 text-zinc-400 hover:border-[#1f8fff]/50 hover:text-[#1f8fff] transition-colors flex items-center justify-center"
+                      >
+                        <HelpCircle className="w-5 h-5" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-xs bg-zinc-950 border-zinc-800 text-zinc-200 text-xs leading-relaxed">
+                      Estimativa preliminar baseada no valor do imóvel, entrada e renda informados. Serve para revelar custos de entrada, parcela provável e risco de comprometimento.
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               </form>
 
               <AnimatePresence>
@@ -832,7 +922,7 @@ export default function InteligenciaImobiliaria() {
                       Calculando custos para {formatCurrency(valorImovel)}
                     </div>
                     <div className="text-[10px] text-zinc-400">
-                      Projetando curva SAC e ITBI em SP...
+                      Estimando parcela, ITBI e reserva de caixa...
                     </div>
                   </motion.div>
                 )}
@@ -848,10 +938,19 @@ export default function InteligenciaImobiliaria() {
                     
                     <div className="flex items-center space-x-2 text-xs font-bold text-white">
                       <span className="w-1.5 h-1.5 bg-[#1f8fff] rounded-full" />
-                      <span>Parecer de Viabilidade Preliminar</span>
+                      <span>Resumo preliminar da compra</span>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-3xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-12 h-0.5 bg-[#1f8fff]" />
+                        <div className="text-zinc-400 text-[11px] uppercase font-bold tracking-wider">Entrada Informada</div>
+                        <div className="text-2xl font-bold text-white mt-1">{formatCurrency(entradaConsiderada)}</div>
+                        <div className="text-[11px] text-zinc-300 mt-3 leading-relaxed border-t border-zinc-800/60 pt-2.5">
+                          Financiamento estimado: <span className="font-bold">{formatCurrency(valorFinanciado)}</span>. Entrada equivale a <span className="font-bold">{entradaPercent.toFixed(0)}%</span> do imóvel.
+                        </div>
+                      </div>
+
                       <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-3xl relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-12 h-0.5 bg-[#1f8fff]" />
                         <div className="text-zinc-400 text-[11px] uppercase font-bold tracking-wider">Custo Invisível à Vista</div>
@@ -865,8 +964,11 @@ export default function InteligenciaImobiliaria() {
                       <div className={`bg-zinc-900 border p-5 rounded-3xl relative overflow-hidden ${isComprometimentoAlto ? 'border-red-400/30' : 'border-zinc-800'}`}>
                         <div className={`absolute top-0 left-0 w-12 h-0.5 ${isComprometimentoAlto ? 'bg-red-400' : 'bg-emerald-400'}`} />
                         <div className="text-zinc-400 text-[11px] uppercase font-bold tracking-wider">Parcela SAC / Renda</div>
-                        <div className={`text-2xl font-bold mt-1 ${isComprometimentoAlto ? 'text-red-400' : 'text-emerald-400'}`}>
-                          {comprometeRendaPercent.toFixed(1)}% Comprometimento
+                        <div className={`text-2xl font-bold mt-1 leading-tight ${isComprometimentoAlto ? 'text-red-400' : 'text-emerald-400'}`}>
+                          {comprometeRendaPercent.toFixed(1)}%
+                        </div>
+                        <div className={`text-sm font-bold leading-tight break-words ${isComprometimentoAlto ? 'text-red-400' : 'text-emerald-400'}`}>
+                          Comprometimento da renda
                         </div>
                         <div className="text-[11px] text-zinc-300 mt-3 leading-relaxed border-t border-zinc-800/60 pt-2.5">
                           Primeira parcela: <span className="font-bold">{formatCurrency(primeiraParcelaEst)}</span>. 
@@ -964,7 +1066,7 @@ export default function InteligenciaImobiliaria() {
                       </div>
                       
                       <p className="text-[10px] text-zinc-500 mt-4 border-t border-zinc-800 pt-3">
-                        Nota preliminar baseada nos dados informados. O Dossiê completo inclui análise regional detalhada, verificação jurídica e simulação de crédito real.
+                        Nota preliminar baseada nos dados informados. O relatório completo confere preço, entrada, custos e crédito antes de você seguir.
                       </p>
                     </div>
 
@@ -975,11 +1077,11 @@ export default function InteligenciaImobiliaria() {
                         <span className="text-xs font-bold text-white uppercase tracking-wider">Recomendação de Análise Completa</span>
                       </div>
                       <p className="text-zinc-300 text-sm leading-relaxed">
-                        O Dossiê de Viabilidade audita esses números confrontando com a base cartorial específica do endereço do imóvel na Zona Leste e analisando a saúde de indexadores da sua proposta de crédito.
+                        O Relatório de Viabilidade confere esses números com o endereço do imóvel, entrada, custos de entrada e riscos do financiamento para você decidir sem chute.
                       </p>
                       <a href={whatsappUrl} target="_blank" rel="noreferrer"
                         className="flex items-center justify-center border border-emerald-500 bg-emerald-500/5 hover:bg-emerald-500/25 text-emerald-400 font-bold px-8 py-5 text-sm uppercase tracking-wider transition-colors w-full rounded-2xl">
-                        <MessageSquare className="w-4 h-4 mr-2" /> Solicitar Dossiê de Viabilidade — R$ 147
+                        <MessageSquare className="w-4 h-4 mr-2" /> Validar meu imóvel — R$ 147
                       </a>
                     </div>
                   </motion.div>
@@ -991,7 +1093,7 @@ export default function InteligenciaImobiliaria() {
             <div className="border border-zinc-800 bg-zinc-900 p-6 rounded-3xl relative overflow-hidden">
               <div className="border-b border-zinc-800 pb-3 mb-6">
                 <h2 className="text-lg font-bold text-white tracking-wider flex items-center">
-                  <FileText className="w-4 h-4 mr-2 text-[#1f8fff]" /> O que o Dossiê Esclarece
+                  <FileText className="w-4 h-4 mr-2 text-[#1f8fff]" /> O que fica claro no relatório
                 </h2>
               </div>
               <div className="relative">
@@ -1042,22 +1144,22 @@ export default function InteligenciaImobiliaria() {
                 <div className="flex items-start space-x-4 relative z-10">
                   <div className="w-10 h-10 border border-[#1f8fff]/20 bg-zinc-950 rounded-xl flex items-center justify-center text-[#1f8fff] text-xs font-bold">1</div>
                   <div className="space-y-1">
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">Submissão</h4>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">Envio simples</h4>
                     <p className="text-xs text-zinc-300">Você envia o link do anúncio ou espelho de parcelamento recebido via WhatsApp.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4 relative z-10">
                   <div className="w-10 h-10 border border-emerald-500/20 bg-zinc-950 rounded-xl flex items-center justify-center text-emerald-400 text-xs font-bold">2</div>
                   <div className="space-y-1">
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">Cruzamento</h4>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">Conferência</h4>
                     <p className="text-xs text-zinc-300">Cruzamos com o histórico regional de vendas, estimamos a curva SAC de juros e provisionamos impostos.</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4 relative z-10">
                   <div className="w-10 h-10 border border-violet-500/20 bg-zinc-950 rounded-xl flex items-center justify-center text-violet-400 text-xs font-bold">3</div>
                   <div className="space-y-1">
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">Dossiê</h4>
-                    <p className="text-xs text-zinc-300">Entregamos o Dossiê técnico conclusivo com parecer independente do analista em até 48h.</p>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">Relatório</h4>
+                    <p className="text-xs text-zinc-300">Você recebe uma orientação objetiva para seguir, negociar ou pausar a compra em até 48h.</p>
                   </div>
                 </div>
               </div>
@@ -1070,10 +1172,10 @@ export default function InteligenciaImobiliaria() {
                   <ShieldCheck className="w-8 h-8 text-[#1f8fff]" />
                 </div>
                 <div className="space-y-2">
-                  <span className="text-[10px] text-[#1f8fff] font-bold tracking-wider uppercase">Responsabilidade Analítica</span>
+                  <span className="text-[10px] text-[#1f8fff] font-bold tracking-wider uppercase">Clareza para decidir</span>
                   <h3 className="text-base font-bold text-white uppercase tracking-wide">Time Pinheiro Azul</h3>
                   <p className="text-xs text-zinc-300 leading-relaxed font-light">
-                    Nossa análise de viabilidade imobiliária audita os dados de precificação regional, custos de transferência e fluxos de parcelamento com total precisão e independência. O Dossiê garante que você tome a decisão certa com base em dados de mercado reais.
+                    A análise organiza preço regional, custos de transferência e parcelamento em uma decisão prática. O objetivo é reduzir incerteza antes de você comprometer renda, sinal ou proposta.
                   </p>
                 </div>
               </div>
@@ -1086,7 +1188,7 @@ export default function InteligenciaImobiliaria() {
               </h2>
               <a href={whatsappUrl} target="_blank" rel="noreferrer"
                 className="inline-flex items-center justify-center border border-emerald-500 bg-emerald-500/5 hover:bg-emerald-500/25 text-emerald-400 font-bold px-8 py-5 text-sm uppercase tracking-wider transition-all duration-300 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-                <MessageSquare className="w-4 h-4 mr-2" /> Solicitar Dossiê do Meu Imóvel — R$ 147
+                <MessageSquare className="w-4 h-4 mr-2" /> Validar meu imóvel — R$ 147
               </a>
             </div>
 
@@ -1099,7 +1201,7 @@ export default function InteligenciaImobiliaria() {
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] text-zinc-500">
             <p>© {new Date().getFullYear()} Inteligência Imobiliária · Pinheiro Azul</p>
             <p className="max-w-md text-right md:text-left leading-relaxed text-[10px]">
-              Dossiê opinativo técnico de viabilidade financeira de mercado.
+              Relatório orientativo de viabilidade financeira de mercado.
             </p>
           </div>
         </footer>

@@ -405,9 +405,10 @@ export default function Inteligencia6() {
   const whatsappMsg = encodeURIComponent(
     `Olá! Quero solicitar a Análise de Viabilidade Imobiliária (R$ 147). Imóvel: ${brl(valorImovel)}.`
   );
-  const whatsappUrl = `https://wa.me/5511999999999?text=${whatsappMsg}`;
+  const whatsappUrl = `https://wa.me/5511930418684?text=${whatsappMsg}`;
 
-  // ── Conceito 4: ref para seção 05 (laudo materializa) ──
+  // refs de scroll para animações e revelações
+  const calcRef = useRef<HTMLElement>(null);
   const darkRef = useRef<HTMLDivElement>(null);
   const darkInView = useInView(darkRef, { once: true, amount: 0.25 });
 
@@ -539,18 +540,274 @@ export default function Inteligencia6() {
         .dc-module-row:hover { background: rgba(0,0,0,0.025); }
         .dc-module-row:hover .dc-mod-num { color: var(--dc-accent); }
 
+        .dc-consult-section {
+          background: linear-gradient(180deg, var(--dc-bg2) 0%, #F1ECE4 100%);
+        }
+        .dc-consult-wrap {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 108px 40px;
+        }
+        .dc-consult-layout {
+          display: grid;
+          grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+          gap: 72px;
+          align-items: center;
+        }
+        .dc-consult-title {
+          max-width: 680px;
+          color: var(--dc-ink);
+          margin: 0;
+          font-size: clamp(34px, 4.1vw, 62px);
+          font-weight: 800;
+          line-height: 1.08;
+          letter-spacing: -0.025em;
+        }
+        .dc-consult-panel {
+          border-left: 1px solid var(--dc-rule);
+          padding-left: 40px;
+        }
+        .dc-consult-rule {
+          width: 48px;
+          height: 3px;
+          background: var(--dc-accent);
+          border-radius: 2px;
+          margin: 0 0 28px;
+          transform-origin: left center;
+        }
+        .dc-consult-copy {
+          font-size: 16px;
+          line-height: 1.75;
+          color: var(--dc-muted);
+          margin: 0 0 16px;
+        }
+        .dc-consult-note {
+          font-size: 14px;
+          line-height: 1.65;
+          color: var(--dc-muted);
+          margin: 0 0 36px;
+        }
+        .dc-consult-cta {
+          display: flex;
+          gap: 14px;
+          flex-wrap: wrap;
+          align-items: center;
+        }
+        .dc-consult-meta {
+          font-size: 13px;
+          color: var(--dc-muted);
+        }
+        .dc-mobile-impact {
+          display: none;
+        }
+
         @media (max-width: 640px) {
-          .dc-2col  { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .dc-3col  { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .dc-2col-calc { grid-template-columns: 1fr !important; gap: 2px !important; }
+          .dc-page {
+            background: #F6F1EA !important;
+          }
+          .dc-nav {
+            padding: 18px 22px !important;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            background: rgba(246,241,234,0.88);
+            backdrop-filter: blur(10px);
+          }
+          .dc-nav .dc-btn {
+            padding: 9px 14px !important;
+            font-size: 12px !important;
+          }
+          .dc-section {
+            max-width: none !important;
+            padding: 72px 22px !important;
+          }
+          .dc-hero {
+            min-height: calc(100svh - 70px);
+            padding: 58px 22px 88px !important;
+            display: flex;
+            align-items: center;
+          }
+          .dc-display {
+            font-size: clamp(40px, 13vw, 56px);
+            line-height: 1.04;
+            letter-spacing: -0.025em;
+          }
+          .dc-h1 {
+            font-size: clamp(30px, 9.6vw, 42px);
+            line-height: 1.08;
+            letter-spacing: -0.022em;
+          }
+          .dc-h2 {
+            font-size: clamp(23px, 7vw, 32px);
+          }
+          .dc-body {
+            font-size: 15px;
+            line-height: 1.7;
+          }
+          .dc-2col,
+          .dc-3col,
+          .dc-2col-calc {
+            grid-template-columns: 1fr !important;
+            gap: 28px !important;
+          }
+          .dc-btn {
+            min-height: 48px;
+            justify-content: center;
+          }
+          .dc-hero .dc-btn,
+          .dc-consult-cta .dc-btn {
+            width: 100%;
+          }
+          .dc-hero .dc-body {
+            margin-top: 10px;
+            margin-bottom: 24px !important;
+          }
+          .dc-transfer-card {
+            border-radius: 18px !important;
+            padding: 30px 22px !important;
+            box-shadow: inset 0 0 0 1px rgba(23,23,23,0.04);
+          }
+          .dc-module-row {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+            padding: 22px 18px !important;
+            margin-bottom: 12px;
+            background: rgba(237,232,223,0.78);
+            border-radius: 14px;
+          }
+          .dc-module-row .dc-mod-num {
+            color: var(--dc-accent) !important;
+          }
+          .dc-module-row .dc-body {
+            font-size: 14px !important;
+          }
+          .dc-calc-field {
+            padding: 18px 0 8px;
+            border-top: 1px solid var(--dc-rule);
+          }
+          .dc-input-field {
+            font-size: clamp(34px, 12vw, 46px);
+            line-height: 1;
+          }
+          .dc-range {
+            height: 4px;
+            margin-top: 18px;
+          }
+          .dc-range::-webkit-slider-thumb {
+            width: 22px;
+            height: 22px;
+          }
+          .dc-range::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+          }
+          .dc-calc-card {
+            border-radius: 18px !important;
+            padding: 30px 22px !important;
+          }
+          .dc-calc-card + .dc-calc-card {
+            margin-top: 10px;
+          }
+          .dc-mobile-impact {
+            display: block;
+            position: sticky;
+            top: 68px;
+            z-index: 4;
+            margin: -28px 0 28px;
+            padding: 16px 16px 14px;
+            border-radius: 18px;
+            background: rgba(246,241,234,0.92);
+            border: 1px solid rgba(216,210,200,0.9);
+            box-shadow: 0 14px 36px rgba(30,42,43,0.10);
+            backdrop-filter: blur(12px);
+          }
+          .dc-mobile-impact-top {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 14px;
+          }
+          .dc-mobile-impact-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: lowercase;
+            color: var(--dc-muted);
+          }
+          .dc-mobile-impact-value {
+            font-size: 34px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.025em;
+            font-variant-numeric: tabular-nums;
+          }
+          .dc-mobile-impact-track {
+            height: 5px;
+            margin-top: 12px;
+            border-radius: 999px;
+            background: #DED8CF;
+            overflow: hidden;
+          }
+          .dc-mobile-impact-fill {
+            height: 100%;
+            border-radius: inherit;
+            transition: width 180ms ease, background 180ms ease;
+          }
+          .dc-mobile-impact-status {
+            margin: 10px 0 0;
+            font-size: 12px;
+            line-height: 1.35;
+            font-weight: 700;
+          }
+          .dc-consult-wrap {
+            padding: 78px 22px;
+          }
+          .dc-consult-layout {
+            grid-template-columns: 1fr;
+            gap: 30px;
+          }
+          .dc-consult-title {
+            font-size: clamp(31px, 9.6vw, 42px);
+            line-height: 1.1;
+          }
+          .dc-consult-panel {
+            border-left: 0;
+            border-top: 1px solid var(--dc-rule);
+            padding: 28px 0 0;
+          }
+          .dc-consult-copy {
+            font-size: 17px;
+            line-height: 1.55;
+            color: var(--dc-ink);
+          }
+          .dc-consult-meta {
+            width: 100%;
+            text-align: center;
+          }
+          .dc-dark-section > div {
+            padding: 76px 22px !important;
+          }
+          .dc-dark-section .dc-display {
+            font-size: clamp(54px, 19vw, 76px);
+          }
+          .dc-dark-section .dc-2col {
+            gap: 36px !important;
+          }
+          .dc-footer {
+            padding: 24px 22px !important;
+            align-items: flex-start !important;
+          }
         }
         @media (max-width: 900px) and (min-width: 641px) {
           .dc-3col { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+          .dc-consult-layout { grid-template-columns: 1fr; gap: 44px; }
+          .dc-consult-panel { border-left: 0; border-top: 1px solid var(--dc-rule); padding: 36px 0 0; max-width: 620px; }
         }
       `}</style>
 
       <div
         ref={pageRef}
+        className="dc-page"
         style={{
           backgroundColor: 'var(--dc-bg)',
           color: 'var(--dc-ink)',
@@ -561,10 +818,14 @@ export default function Inteligencia6() {
         }}
       >
         {/* ── background full-page: tubo + moedas + porquinho ─────────── */}
-        <CoinPiggyBackground pageRef={pageRef as React.RefObject<HTMLElement>} />
+        <CoinPiggyBackground
+          pageRef={pageRef as React.RefObject<HTMLElement>}
+          pigEndRef={calcRef as React.RefObject<HTMLElement>}
+        />
 
         {/* ── nav ──────────────────────────────────────────────────────── */}
         <motion.nav
+          className="dc-nav"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -590,7 +851,7 @@ export default function Inteligencia6() {
 
         {/* ── ( 01 ) hero ──────────────────────────────────────────────── */}
         {/* Conceito 1 — Revelação Mascarada */}
-        <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px 120px' }}>
+        <section className="dc-section dc-hero" style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px 120px' }}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -627,7 +888,7 @@ export default function Inteligencia6() {
               </p>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
                 <a href="#calcular" className="dc-btn">calcular agora →</a>
-                <span style={{ fontSize: '13px', color: 'var(--dc-muted)' }}>r$ 147 · entrega em 48h</span>
+                <span style={{ fontSize: '13px', color: 'var(--dc-muted)' }}>r$ 147 · análise independente</span>
               </div>
             </motion.div>
           </div>
@@ -637,7 +898,7 @@ export default function Inteligencia6() {
 
         {/* ── ( 02 ) o problema ────────────────────────────────────────── */}
         {/* Conceito 2 — Contador que Acusa */}
-        <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px' }}>
+        <section className="dc-section" style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px' }}>
           <SectionReveal>
             <SectionLabel number="02" label="o que toda compra inclui" />
 
@@ -667,6 +928,7 @@ export default function Inteligencia6() {
 
               {/* card contador */}
               <div
+                className="dc-transfer-card"
                 ref={cardRef}
                 style={{
                   background: 'var(--dc-bg2)',
@@ -752,7 +1014,7 @@ export default function Inteligencia6() {
         <hr className="dc-rule-line" />
 
         {/* ── ( 03 ) o que analisamos ──────────────────────────────────── */}
-        <section style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px' }}>
+        <section className="dc-section" style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px' }}>
           <SectionReveal>
             <SectionLabel number="03" label="cinco perguntas" />
 
@@ -837,7 +1099,7 @@ export default function Inteligencia6() {
 
         {/* ── ( 04 ) calculadora ───────────────────────────────────────── */}
         {/* Conceito 3 — Termômetro de Risco */}
-        <section id="calcular" style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px' }}>
+        <section ref={calcRef} id="calcular" className="dc-section" style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px' }}>
           <SectionReveal>
             <SectionLabel number="04" label="calcule agora" />
 
@@ -849,13 +1111,55 @@ export default function Inteligencia6() {
               stagger={0.04}
             />
 
+            <div className="dc-mobile-impact" aria-live="polite">
+              <div className="dc-mobile-impact-top">
+                <span className="dc-mobile-impact-label">comprometimento estimado</span>
+                <span
+                  className="dc-mobile-impact-value"
+                  style={{
+                    color:
+                      statusRenda === 'safe' ? '#1a7a38'
+                        : statusRenda === 'warn' ? '#b45309'
+                        : 'var(--dc-accent)',
+                  }}
+                >
+                  {(Math.round(comprometimento * 10) / 10).toFixed(1).replace('.', ',')}%
+                </span>
+              </div>
+              <div className="dc-mobile-impact-track">
+                <div
+                  className="dc-mobile-impact-fill"
+                  style={{
+                    width: `${Math.min(Math.max(comprometimento, 0), 100)}%`,
+                    background:
+                      statusRenda === 'safe' ? '#1a7a38'
+                        : statusRenda === 'warn' ? '#b45309'
+                        : 'var(--dc-accent)',
+                  }}
+                />
+              </div>
+              <p
+                className="dc-mobile-impact-status"
+                style={{
+                  color:
+                    statusRenda === 'safe' ? '#1a7a38'
+                      : statusRenda === 'warn' ? '#b45309'
+                      : 'var(--dc-accent)',
+                }}
+              >
+                {statusRenda === 'safe' && 'dentro do limite seguro.'}
+                {statusRenda === 'warn' && 'próximo ao limite. ajuste entrada ou renda para comparar.'}
+                {statusRenda === 'danger' && 'acima de 30%. ajuste entrada ou renda para ver o impacto.'}
+              </p>
+            </div>
+
             {/* inputs */}
             <div
               className="dc-3col"
               style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', marginBottom: '80px' }}
             >
               {/* ── valor do imóvel ── */}
-              <div>
+              <div className="dc-calc-field">
                 <p style={{
                   fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em',
                   textTransform: 'lowercase', color: 'var(--dc-muted)', marginBottom: '12px'
@@ -902,7 +1206,7 @@ export default function Inteligencia6() {
               </div>
 
               {/* ── valor de entrada ── */}
-              <div>
+              <div className="dc-calc-field">
                 <p style={{
                   fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em',
                   textTransform: 'lowercase', color: 'var(--dc-muted)', marginBottom: '12px'
@@ -958,7 +1262,7 @@ export default function Inteligencia6() {
               </div>
 
               {/* ── renda familiar ── */}
-              <div>
+              <div className="dc-calc-field">
                 <p style={{
                   fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em',
                   textTransform: 'lowercase', color: 'var(--dc-muted)', marginBottom: '12px'
@@ -1012,6 +1316,7 @@ export default function Inteligencia6() {
             >
               {/* custos de transferência */}
               <div
+                className="dc-calc-card"
                 style={{
                   background: 'var(--dc-bg2)',
                   borderRadius: '24px 4px 4px 24px',
@@ -1038,6 +1343,7 @@ export default function Inteligencia6() {
 
               {/* comprometimento + termômetro */}
               <div
+                className="dc-calc-card"
                 style={{
                   background: 'var(--dc-bg2)',
                   borderRadius: '4px 24px 24px 4px',
@@ -1097,9 +1403,57 @@ export default function Inteligencia6() {
           </SectionReveal>
         </section>
 
-        {/* ── ( 05 ) dark CTA — O Laudo Materializa ───────────────────── */}
+        <hr className="dc-rule-line" />
+
+        {/* ── ( 05 ) consultoria — a oferta ─────────────────────────────── */}
+        <section className="dc-consult-section">
+          <SectionReveal>
+            <div className="dc-consult-wrap">
+              <SectionLabel number="05" label="consultoria" />
+
+              <div className="dc-consult-layout">
+                <MaskedHeadline
+                  text="tem um imóvel em vista ou já iniciou a contratação? vamos olhar juntos, número por número."
+                  className="dc-consult-title"
+                  wordDuration={0.42}
+                  stagger={0.04}
+                />
+
+                <div className="dc-consult-panel">
+                  <motion.div
+                    className="dc-consult-rule"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+                  />
+
+                  <p className="dc-consult-copy">
+                    você no controle da decisão, com os números organizados e um parecer claro antes de assinar.
+                  </p>
+
+                  <p className="dc-consult-note">
+                    você não precisa decidir agora. mas ter os números na mão muda tudo.
+                  </p>
+
+                  <div className="dc-consult-cta">
+                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="dc-btn"
+                      style={{ fontSize: '14px', padding: '14px 26px' }}>
+                      solicitar análise →
+                    </a>
+                    <span className="dc-consult-meta">
+                      r$ 147 · via whatsapp · parecer documentado
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SectionReveal>
+        </section>
+
+        {/* ── ( 06 ) dark CTA — O Laudo Materializa ───────────────────── */}
         {/* Conceito 4: entrada com perspectiva 3D, como um documento colocado sobre a mesa */}
-        <section ref={darkRef} style={{ background: 'var(--dc-dark)', overflow: 'hidden' }}>
+        <section ref={darkRef} className="dc-dark-section" style={{ background: 'var(--dc-dark)', overflow: 'hidden' }}>
           <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '96px 40px' }}>
 
             <motion.div
@@ -1107,7 +1461,7 @@ export default function Inteligencia6() {
               animate={darkInView ? { opacity: 1 } : {}}
               transition={{ duration: 0.4 }}
             >
-              <SectionLabel number="05" label="laudo completo" light />
+              <SectionLabel number="06" label="laudo completo" light />
             </motion.div>
 
             <div
@@ -1132,7 +1486,7 @@ export default function Inteligencia6() {
                   lineHeight: 1.65, maxWidth: '400px'
                 }}>
                   análise independente. sem comissão. sem conflito de interesse.
-                  entregamos um documento com os cinco pontos avaliados em até 48 horas.
+                  entregamos um documento com os cinco pontos avaliados.
                 </p>
               </motion.div>
 
@@ -1186,7 +1540,7 @@ export default function Inteligencia6() {
                     solicitar laudo →
                   </a>
                   <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
-                    via whatsapp · entrega em até 48h
+                    via whatsapp · parecer documentado
                   </span>
                 </motion.div>
               </div>
@@ -1195,7 +1549,7 @@ export default function Inteligencia6() {
         </section>
 
         {/* ── footer ────────────────────────────────────────────────────── */}
-        <footer style={{
+        <footer className="dc-footer" style={{
           background: 'var(--dc-dark2)',
           padding: '28px 40px',
           display: 'flex',

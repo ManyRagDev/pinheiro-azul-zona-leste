@@ -134,7 +134,7 @@ const ContactSection = () => {
             {/* WhatsApp CTA */}
             <Button 
               className="w-full bg-green-600 hover:bg-green-700 text-white text-lg py-6"
-              onClick={() => window.open('https://wa.me/5511987654321', '_blank')}
+              onClick={() => window.open('https://wa.me/5511930418684', '_blank')}
             >
               <MessageSquare className="mr-2" size={20} />
               Fale pelo WhatsApp

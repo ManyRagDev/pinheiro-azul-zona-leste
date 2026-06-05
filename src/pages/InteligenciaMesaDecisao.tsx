@@ -81,7 +81,7 @@ export default function InteligenciaMesaDecisao() {
       valorImovel
     )}. Renda familiar: ${formatCurrency(rendaMensal)}.`
   );
-  const whatsappUrl = `https://wa.me/5511999999999?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/5511930418684?text=${whatsappMessage}`;
 
   return (
     <div className="min-h-screen bg-[#15100b] text-stone-200 antialiased">

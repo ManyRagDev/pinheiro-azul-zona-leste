@@ -117,7 +117,7 @@ export function ContactAurora() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.5 }}
-              onClick={() => window.open('https://wa.me/5511987654321', '_blank')}
+              onClick={() => window.open('https://wa.me/5511930418684', '_blank')}
               className="group relative inline-flex items-center gap-3 px-7 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] overflow-hidden"
             >
               <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-10" />

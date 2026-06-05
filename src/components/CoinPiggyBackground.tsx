@@ -20,26 +20,37 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 interface Props {
   pageRef: React.RefObject<HTMLElement>;
+  pigEndRef?: React.RefObject<HTMLElement>;
 }
 
 const NUM_COINS = 2;
 const STAGGER   = 0.30;   // gap entre as 2 moedas
 const TRAVEL    = 0.68;   // percurso completo — ~25% mais lento que 0.52
 
-export function CoinPiggyBackground({ pageRef }: Props) {
-  const [dims, setDims] = useState<{ w: number; h: number } | null>(null);
+export function CoinPiggyBackground({ pageRef, pigEndRef }: Props) {
+  const [dims, setDims] = useState<{ w: number; h: number; endY: number } | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   // Mede a página depois de renderizar
   useLayoutEffect(() => {
     const measure = () => {
       const el = pageRef.current;
-      if (el) setDims({ w: el.offsetWidth || 1280, h: el.scrollHeight || 5000 });
+      if (!el) return;
+
+      const pageBox = el.getBoundingClientRect();
+      const endBox = pigEndRef?.current?.getBoundingClientRect();
+      const sectionEndY = endBox ? endBox.bottom - pageBox.top : el.scrollHeight * 0.74;
+
+      setDims({
+        w: el.offsetWidth || 1280,
+        h: el.scrollHeight || 5000,
+        endY: sectionEndY,
+      });
     };
     const t = setTimeout(measure, 450); // aguarda React terminar de montar
     window.addEventListener('resize', measure);
     return () => { clearTimeout(t); window.removeEventListener('resize', measure); };
-  }, []);
+  }, [pageRef, pigEndRef]);
 
   // GSAP: monta a timeline depois que as dimensões estão prontas
   useEffect(() => {
@@ -54,9 +65,9 @@ export function CoinPiggyBackground({ pageRef }: Props) {
         scrollTrigger: {
           trigger: pageRef.current,
           scrub: 1.5,
-          // começa quando a hero sai (~10% do scroll total) e vai até onde o pig está (~75%)
+          // começa quando a hero sai e termina no fechamento da seção-alvo
           start: `${dims.h * 0.10}px top`,
-          end:   `${dims.h * 0.75}px top`,
+          end:   `${dims.endY}px top`,
         },
       });
 
@@ -75,9 +86,12 @@ export function CoinPiggyBackground({ pageRef }: Props) {
         }, t);
         // entra no slot
         tl.to(coin, {
-          scale: 0, opacity: 0, y: '+=14',
-          duration: 0.07, ease: 'power2.in',
-        }, t + TRAVEL - 0.02);
+          scale: 0,
+          opacity: 0,
+          transformOrigin: 'center center',
+          duration: 0.08,
+          ease: 'power2.in',
+        }, t + TRAVEL);
         // slot pisca dourado
         tl.to('#cpig-slot-fill', { fill: '#F9CE45', duration: 0.04 }, t + TRAVEL);
         tl.to('#cpig-slot-fill', { fill: '#1E2A2B', duration: 0.14 }, t + TRAVEL + 0.04);
@@ -97,24 +111,74 @@ export function CoinPiggyBackground({ pageRef }: Props) {
   }, [dims]);
 
   if (!dims) return null;
-  const { w, h } = dims;
+  const { w, h, endY } = dims;
+  const isMobile = w <= 640;
 
-  // Helper: coordenada como % da página
-  const p = (xp: number, yp: number) => `${(w * xp).toFixed(1)} ${(h * yp).toFixed(1)}`;
+  const xy = (x: number, y: number) => `${x.toFixed(1)} ${y.toFixed(1)}`;
+  const catmullRomPath = (points: Array<[number, number]>) => {
+    const d = [`M ${xy(points[0][0], points[0][1])}`];
+
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[Math.max(0, i - 1)];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[Math.min(points.length - 1, i + 2)];
+      const cp1: [number, number] = [
+        p1[0] + (p2[0] - p0[0]) / 6,
+        p1[1] + (p2[1] - p0[1]) / 6,
+      ];
+      const cp2: [number, number] = [
+        p2[0] - (p3[0] - p1[0]) / 6,
+        p2[1] - (p3[1] - p1[1]) / 6,
+      ];
+
+      d.push(`C ${xy(cp1[0], cp1[1])} ${xy(cp2[0], cp2[1])} ${xy(p2[0], p2[1])}`);
+    }
+
+    return d.join(' ');
+  };
 
   // ── Ponto final do tubo = coin slot do pig ───────────────────────────────
-  const slotX = w * 0.48;
-  const slotY = h * 0.74;        // y do slot
-  const pigCY = slotY + 96;      // centro do corpo do pig (slot está 96px acima)
+  const slotX = w * (isMobile ? 0.58 : 0.48);
+  const PIG_W = isMobile ? 168 : 220;
+  const PIG_H = isMobile ? 210 : 275;
+  const slotOffsetY = PIG_H * 0.30;
+  const pigBottomPadding = isMobile ? 18 : 24;
+  const slotY = Math.max(h * 0.18, endY - (PIG_H - slotOffsetY) - pigBottomPadding);
 
   // ── Caminho S-curve ──────────────────────────────────────────────────────
-  // Começa abaixo da hero (15% da página), termina no slot do pig (74%)
-  const tubePath = [
-    `M ${p(0.64, 0.15)}`,
-    `C ${p(0.92, 0.22)} ${p(0.08, 0.31)} ${p(0.20, 0.42)}`,
-    `C ${p(0.34, 0.52)} ${p(0.85, 0.57)} ${p(0.70, 0.64)}`,
-    `C ${p(0.55, 0.70)} ${p(0.40, 0.73)} ${slotX.toFixed(1)} ${slotY.toFixed(1)}`,
-  ].join(' ');
+  // Spline contínua: mantém o movimento orgânico do "worm" sem pontas nas emendas.
+  const tubePath = catmullRomPath(
+    isMobile
+      ? [
+          [w * 0.72, h * 0.14],
+          [w * 0.34, h * 0.24],
+          [w * 0.78, h * 0.36],
+          [w * 0.28, h * 0.50],
+          [w * 0.58, h * 0.62],
+          [slotX - w * 0.18, slotY - 190],
+          [slotX - w * 0.07, slotY - 84],
+          [slotX, slotY],
+        ]
+      : [
+          [w * 0.62, h * 0.15],
+          [w * 0.68, h * 0.25],
+          [w * 0.58, h * 0.38],
+          [w * 0.42, h * 0.49],
+          [w * 0.24, h * 0.56],
+          [w * 0.35, h * 0.63],
+          [w * 0.49, h * 0.69],
+          [slotX - w * 0.13, slotY - 154],
+          [slotX - w * 0.04, slotY - 72],
+          [slotX, slotY],
+        ]
+  );
+
+  const tubeWidths = isMobile
+    ? { glow: 86, outer: 62, body: 46, inner: 30, highlight: 13 }
+    : { glow: 144, outer: 102, body: 75, inner: 48, highlight: 21 };
+  const coinW = isMobile ? 42 : 52;
+  const coinH = isMobile ? 52 : 65;
 
   return (
     <div
@@ -192,19 +256,19 @@ export function CoinPiggyBackground({ pageRef }: Props) {
 
         {/* ── TUBO (camadas de stroke = profundidade visual) ───── */}
         {/* Ambient glow externo — strokeWidth +50% */}
-        <path d={tubePath} stroke="#C0B8AE" strokeWidth="144" fill="none"
+        <path d={tubePath} stroke="#C0B8AE" strokeWidth={tubeWidths.glow} fill="none"
           strokeLinecap="round" opacity="0.06"/>
         {/* Parede externa */}
-        <path d={tubePath} stroke="#BEB6AA" strokeWidth="102" fill="none"
+        <path d={tubePath} stroke="#BEB6AA" strokeWidth={tubeWidths.outer} fill="none"
           strokeLinecap="round" opacity="0.10"/>
         {/* Corpo do tubo */}
-        <path d={tubePath} stroke="#CEC8BE" strokeWidth="75" fill="none"
+        <path d={tubePath} stroke="#CEC8BE" strokeWidth={tubeWidths.body} fill="none"
           strokeLinecap="round" opacity="0.12"/>
         {/* Interior claro */}
-        <path d={tubePath} stroke="#E4DFDA" strokeWidth="48" fill="none"
+        <path d={tubePath} stroke="#E4DFDA" strokeWidth={tubeWidths.inner} fill="none"
           strokeLinecap="round" opacity="0.13"/>
         {/* Highlight central */}
-        <path d={tubePath} stroke="#F0ECE7" strokeWidth="21" fill="none"
+        <path d={tubePath} stroke="#F0ECE7" strokeWidth={tubeWidths.highlight} fill="none"
           strokeLinecap="round" opacity="0.11"/>
 
         {/* Path invisível para MotionPathPlugin */}
@@ -215,8 +279,6 @@ export function CoinPiggyBackground({ pageRef }: Props) {
             Slot estimado em ~45% x, ~30% y da imagem = (99, 83) do canto superior esq.
             Ajuste slotOffsetX/Y se o slot não alinhar perfeitamente. */}
         {(() => {
-          const PIG_W = 220;
-          const PIG_H = 275;   // mantém proporção 1080:1350 ≈ 0.8
           const slotOffsetX = PIG_W * 0.45;  // ~99px da esquerda
           const slotOffsetY = PIG_H * 0.30;  // ~83px do topo
           const imgX = slotX - slotOffsetX;
@@ -252,10 +314,10 @@ export function CoinPiggyBackground({ pageRef }: Props) {
           <g key={i} className="cpig-coin-bg" style={{ opacity: 0 }}>
             <image
               href={coinPng}
-              x={-26}
-              y={-32}
-              width={52}
-              height={65}
+              x={-coinW / 2}
+              y={-coinH / 2}
+              width={coinW}
+              height={coinH}
             />
           </g>
         ))}
