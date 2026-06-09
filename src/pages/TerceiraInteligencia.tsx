@@ -5,11 +5,9 @@ import {
   AlertTriangle,
   ArrowRight,
   Calculator,
-  Check,
   CheckCircle2,
   CircleDollarSign,
   Compass,
-  FileCheck2,
   Gauge,
   Home,
   Info,
@@ -18,12 +16,11 @@ import {
   WalletCards,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { AdaptiveMiniReport } from "@/components/terceiraInteligencia/AdaptiveMiniReport";
 import { BrutalSlider } from "@/components/terceiraInteligencia/BrutalSlider";
 import {
   calculateScenario,
   formatCurrency,
-  getRecommendation,
-  type PurchaseMoment,
 } from "@/lib/inteligenciaScenario";
 
 const WHATSAPP = "5511930418684";
@@ -37,13 +34,6 @@ const tabs = [
 ] as const;
 
 type TabId = (typeof tabs)[number]["id"];
-
-const momentOptions: Array<{ id: PurchaseMoment; label: string }> = [
-  { id: "entendendo", label: "Estou começando a entender" },
-  { id: "organizando", label: "Quero me organizar antes de procurar" },
-  { id: "procurando", label: "Já estou procurando imóveis" },
-  { id: "negociando", label: "Já encontrei um imóvel" },
-];
 
 function MetricCard({
   label,
@@ -79,7 +69,6 @@ export default function TerceiraInteligencia() {
   const [monthlyIncome, setMonthlyIncome] = useState(9000);
   const [showResults, setShowResults] = useState(false);
   const [activeTab, setActiveTab] = useState<TabId>("cenario");
-  const [moment, setMoment] = useState<PurchaseMoment>();
   const resultsRef = useRef<HTMLElement>(null);
 
   const maximumDownPayment = Math.max(5000, Math.floor(propertyValue / 5000) * 5000);
@@ -87,8 +76,6 @@ export default function TerceiraInteligencia() {
     () => calculateScenario({ propertyValue, downPayment, monthlyIncome }),
     [propertyValue, downPayment, monthlyIncome]
   );
-  const recommendation = getRecommendation(result, moment);
-
   const updatePropertyValue = (value: number) => {
     setPropertyValue(value);
     setDownPayment((current) => Math.min(current, value));
@@ -100,14 +87,6 @@ export default function TerceiraInteligencia() {
       resultsRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     });
   };
-
-  const whatsappMessage = encodeURIComponent(
-    `Olá! Fiz meu diagnóstico em /3inteligencia. Valor do imóvel: ${formatCurrency(
-      propertyValue
-    )}; entrada: ${formatCurrency(downPayment)}; renda: ${formatCurrency(
-      monthlyIncome
-    )}. Meu cenário foi "${result.levelLabel}". Gostaria de conversar sobre o próximo passo.`
-  );
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#f4f0e8] text-[#06192c] selection:bg-[#e43d30] selection:text-white">
@@ -464,57 +443,7 @@ export default function TerceiraInteligencia() {
                       )}
 
                       {activeTab === "proximo" && (
-                        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-                          <div>
-                            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#e43d30]">Refinamento opcional</p>
-                            <h3 className="mt-3 text-3xl font-black uppercase leading-none">Qual frase parece mais com você hoje?</h3>
-                            <p className="mt-4 text-sm leading-relaxed text-[#415064]">
-                              Essa resposta só ajusta a orientação. Seu diagnóstico já está disponível.
-                            </p>
-                            <div className="mt-6 space-y-2">
-                              {momentOptions.map((option) => (
-                                <button
-                                  key={option.id}
-                                  type="button"
-                                  onClick={() => setMoment(option.id)}
-                                  className={`flex w-full items-center gap-3 border border-[#06192c] px-4 py-3 text-left text-xs font-black transition ${
-                                    moment === option.id ? "bg-[#f3d35b] shadow-[4px_4px_0_#06192c]" : "bg-white hover:bg-[#f4f0e8]"
-                                  }`}
-                                >
-                                  <span
-                                    className={`grid h-5 w-5 shrink-0 place-items-center border border-[#06192c] ${
-                                      moment === option.id ? "bg-[#e43d30] text-white" : "bg-white"
-                                    }`}
-                                  >
-                                    {moment === option.id && <Check size={13} />}
-                                  </span>
-                                  {option.label}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="border border-[#06192c] bg-[#28c7ba] p-6 shadow-[7px_7px_0_#e43d30] sm:p-8">
-                            <span className="inline-flex items-center gap-2 border border-[#06192c] bg-[#fffdf7] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em]">
-                              <FileCheck2 size={14} />
-                              Próximo passo recomendado
-                            </span>
-                            <h3 className="mt-6 text-3xl font-black uppercase leading-[0.95]">{recommendation.title}</h3>
-                            <p className="mt-5 text-sm font-medium leading-relaxed">{recommendation.description}</p>
-                            <a
-                              href={`https://wa.me/${WHATSAPP}?text=${whatsappMessage}`}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="mt-7 inline-flex w-full items-center justify-between border border-[#06192c] bg-[#06192c] px-5 py-4 text-sm font-black uppercase text-white transition hover:bg-[#e43d30] sm:w-auto sm:min-w-[300px]"
-                            >
-                              {recommendation.cta}
-                              <ArrowRight size={18} />
-                            </a>
-                            <p className="mt-5 border-t border-[#06192c]/35 pt-4 text-xs font-bold leading-relaxed">
-                              {recommendation.alternative}
-                            </p>
-                          </div>
-                        </div>
+                        <AdaptiveMiniReport result={result} reduceMotion={reduceMotion} />
                       )}
                     </motion.div>
                   </AnimatePresence>
@@ -531,7 +460,7 @@ export default function TerceiraInteligencia() {
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-[#28c7ba]">Você continua no controle</p>
                 <p className="mt-2 max-w-2xl text-xl font-black uppercase leading-tight sm:text-2xl">
-                  A Pinheiro Azul orienta. Você decide como seguir, quando avançar e com quem comprar.
+                  A Pinheiro Azul orienta. Você decide como seguir, quando avançar e como comprar.
                 </p>
               </div>
             </div>
@@ -550,9 +479,17 @@ export default function TerceiraInteligencia() {
       </main>
 
       <footer className="px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 border-t border-[#06192c] pt-6 text-xs font-bold text-[#415064] sm:flex-row sm:items-center sm:justify-between">
-          <span>Pinheiro Azul · Inteligência imobiliária na Zona Leste de São Paulo</span>
-          <span>Estimativa educativa, sem promessa de aprovação.</span>
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 border-t border-[#06192c] pt-6 text-xs font-bold text-[#415064] sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <span>Pinheiro Azul · Inteligência imobiliária na Zona Leste de São Paulo</span>
+            <span className="mt-1 block">Estimativa educativa, sem promessa de aprovação.</span>
+          </div>
+          <nav aria-label="Links legais" className="flex flex-wrap gap-3 uppercase">
+            <Link to="/privacidade" className="hover:underline">Privacidade</Link>
+            <Link to="/tratamento-de-dados" className="hover:underline">Dados e IA</Link>
+            <Link to="/direitos-lgpd" className="hover:underline">LGPD</Link>
+            <Link to="/termos" className="hover:underline">Termos</Link>
+          </nav>
         </div>
       </footer>
     </div>

@@ -234,10 +234,11 @@ const Contact = () => {
                     </Button>
 
                     <p className="text-sm text-muted-foreground text-center">
-                      Ao enviar este formulário, você concorda com nossa{" "}
+                      Usaremos seus dados para responder à mensagem. Consulte nossa{" "}
                       <a href="/privacidade" className="text-brand-accent hover:underline">
                         Política de Privacidade
-                      </a>
+                      </a>{" "}
+                      e os <a href="/termos" className="text-brand-accent hover:underline">Termos de Uso</a>.
                     </p>
                   </form>
                 </CardContent>

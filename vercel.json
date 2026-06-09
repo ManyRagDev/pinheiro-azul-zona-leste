@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/mini-relatorio.ts": {
+      "maxDuration": 10
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",

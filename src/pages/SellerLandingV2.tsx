@@ -329,6 +329,12 @@ function FormSection() {
               {isSubmitting ? "Salvando..." : "Avaliar meu imóvel"}
               <ArrowRight size={18} />
             </Button>
+            <p className="mt-4 text-xs leading-relaxed text-white/65">
+              Usaremos os dados para avaliar sua solicitação e entrar em contato. Consulte a{" "}
+              <a href="/privacidade" className="font-bold text-white underline">Privacidade</a>
+              {" "}e os{" "}
+              <a href="/termos" className="font-bold text-white underline">Termos de uso</a>.
+            </p>
           </form>
         </div>
       </div>

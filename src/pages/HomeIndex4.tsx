@@ -81,6 +81,7 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
     { href: "/upgrade-moradia", label: "Upgrade" },
     { href: "/investimento", label: "Investimento" },
     { href: "/blog", label: "Blog" },
+    { href: "/legal", label: "Privacidade e dados" },
   ];
 
   return (
@@ -94,7 +95,7 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -109,7 +110,7 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
         <button
           type="button"
           onClick={onOpenDiagnostic}
-          className="hidden items-center gap-2 bg-[#e43d30] px-4 py-3 text-sm font-black uppercase text-white transition hover:bg-[#06192c] md:inline-flex"
+          className="hidden items-center gap-2 bg-[#e43d30] px-4 py-3 text-sm font-black uppercase text-white transition hover:bg-[#06192c] lg:inline-flex"
         >
           Receber diagnóstico
           <ArrowRight size={16} />
@@ -117,7 +118,7 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
 
         <button
           type="button"
-          className="grid h-10 w-10 place-items-center border border-[#06192c] md:hidden"
+          className="grid h-10 w-10 place-items-center border border-[#06192c] lg:hidden"
           onClick={() => setOpen((value) => !value)}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
         >
@@ -126,7 +127,7 @@ function TopNav({ onOpenDiagnostic }: { onOpenDiagnostic: () => void }) {
       </div>
 
       {open && (
-        <div className="grid gap-2 border-t border-[#06192c]/10 bg-[#f4f0e8] px-4 py-4 md:hidden">
+        <div className="grid gap-2 border-t border-[#06192c]/10 bg-[#f4f0e8] px-4 py-4 lg:hidden">
           {links.map((link) => (
             <Link key={link.href} to={link.href} onClick={() => setOpen(false)} className="border border-[#06192c]/15 px-4 py-3 text-sm font-bold">
               {link.label}
@@ -799,9 +800,18 @@ export default function HomeIndex4() {
       </main>
 
       <footer className="bg-[#f4f0e8] px-4 py-10 text-[#06192c] sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 border-t border-[#06192c] pt-8 md:flex-row md:items-center md:justify-between">
-          <strong className="uppercase tracking-[0.18em]">Pinheiro Azul</strong>
-          <span className="text-sm text-[#415064]">Corretagem especializada na Zona Leste de São Paulo.</span>
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 border-t border-[#06192c] pt-8 md:flex-row md:items-center md:justify-between">
+          <div>
+            <strong className="uppercase tracking-[0.18em]">Pinheiro Azul</strong>
+            <span className="mt-1 block text-sm text-[#415064]">Corretagem especializada na Zona Leste de São Paulo.</span>
+          </div>
+          <nav aria-label="Links legais" className="flex flex-wrap gap-x-4 gap-y-2 text-xs font-black uppercase">
+            <Link to="/privacidade" className="hover:underline">Privacidade</Link>
+            <Link to="/tratamento-de-dados" className="hover:underline">Tratamento de dados</Link>
+            <Link to="/direitos-lgpd" className="hover:underline">Direitos LGPD</Link>
+            <Link to="/cookies" className="hover:underline">Cookies</Link>
+            <Link to="/termos" className="hover:underline">Termos</Link>
+          </nav>
         </div>
       </footer>
 

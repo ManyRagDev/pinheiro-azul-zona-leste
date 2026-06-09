@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:full": "npx vercel dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
+    "test:inteligencia": "node --experimental-strip-types --test src/lib/inteligenciaScenario.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {

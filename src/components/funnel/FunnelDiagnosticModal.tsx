@@ -256,6 +256,12 @@ export function FunnelDiagnosticModal({
                 />
               </div>
             </div>
+            <p className="text-xs leading-relaxed text-[#5a6472]">
+              Ao enviar, você autoriza o uso dos dados para entregar o diagnóstico e responder ao contato. Consulte a{" "}
+              <a href="/privacidade" className="font-bold underline">Privacidade</a>
+              {" "}e os{" "}
+              <a href="/termos" className="font-bold underline">Termos de uso</a>.
+            </p>
           </div>
         )}
 

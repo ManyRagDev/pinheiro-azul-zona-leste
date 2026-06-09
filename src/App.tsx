@@ -8,6 +8,11 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
+import LegalHub from "./pages/LegalHub";
+import DataProcessing from "./pages/DataProcessing";
+import DataRights from "./pages/DataRights";
+import CookiePolicy from "./pages/CookiePolicy";
+import TermsOfUse from "./pages/TermsOfUse";
 import NotFound from "./pages/NotFound";
 import HomeIndex4 from "./pages/HomeIndex4";
 import PrimeiroImovelV2 from "./pages/PrimeiroImovelV2";
@@ -52,7 +57,12 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contato" element={<Contact />} />
+          <Route path="/legal" element={<LegalHub />} />
           <Route path="/privacidade" element={<Privacy />} />
+          <Route path="/tratamento-de-dados" element={<DataProcessing />} />
+          <Route path="/direitos-lgpd" element={<DataRights />} />
+          <Route path="/cookies" element={<CookiePolicy />} />
+          <Route path="/termos" element={<TermsOfUse />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
