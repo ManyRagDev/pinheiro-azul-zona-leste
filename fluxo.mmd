@@ -1,0 +1,67 @@
+```mermaid
+flowchart TD
+    A["Iniciar Scanner"] --> B["Informar renda familiar"]
+    B --> C["Informar entrada disponível"]
+    C --> D["Informar valor pretendido do imóvel"]
+    D --> E["Exibir cenário financeiro preliminar"]
+
+    E --> F{"Em que momento da compra você está?"}
+
+    F -->|Só quero entender| G{"Qual é sua principal dúvida?"}
+    G -->|Financiamento ou MCMV| H["Conteúdo gratuito sobre financiamento"]
+    G -->|Entrada e outros custos| I["Conteúdo gratuito sobre custos"]
+    G -->|Documentação| J["Checklist gratuito"]
+    G -->|Todo o processo| K["Recomendar Guia Prático"]
+
+    F -->|Quero me organizar| L{"O que mais impede você de avançar?"}
+    L -->|Não sei quanto posso pagar| M{"Quer analisar seu caso com alguém?"}
+    L -->|Preciso formar a entrada| N["Plano gratuito de preparação"]
+    L -->|Dúvidas sobre MCMV| O{"Prefere aprender sozinho?"}
+    L -->|Não sei quais documentos organizar| P["Recomendar Guia Prático"]
+    L -->|Não sei por onde começar| O
+
+    M -->|Sim| Q["Recomendar Consultoria Online"]
+    M -->|Prefiro organizar sozinho| K
+
+    O -->|Sim| K
+    O -->|Quero orientação personalizada| Q
+
+    F -->|Quero comprar nos próximos meses| R{"Como gostaria de conduzir a compra?"}
+    R -->|Por conta própria| S{"Já sabe como organizar financiamento e documentos?"}
+    R -->|Quero montar um plano| Q
+    R -->|Quero ajuda na busca e nas visitas| T["Recomendar Assessoria Completa"]
+
+    S -->|Sim| U["Checklist avançado ou Guia Prático"]
+    S -->|Ainda tenho dúvidas| Q
+
+    F -->|Já estou procurando imóveis| V{"Você já começou a visitar imóveis?"}
+    V -->|Ainda estou pesquisando| W{"Que tipo de ajuda procura?"}
+    V -->|Estou agendando visitas| X{"Quer acompanhamento nas visitas?"}
+    V -->|Já visitei algumas opções| Y{"Onde mais precisa de ajuda?"}
+
+    W -->|Organizar critérios e orçamento| Q
+    W -->|Encontrar e comparar opções| T
+    W -->|Prefiro seguir sozinho| U
+
+    X -->|Sim| T
+    X -->|Não, apenas orientação| Q
+
+    Y -->|Comparar opções| Q
+    Y -->|Entender custos e propostas| Q
+    Y -->|Financiamento e documentos| Q
+    Y -->|Visitas e negociação| T
+
+    H --> Z["Entregar Mapa de Compra"]
+    I --> Z
+    J --> Z
+    K --> Z
+    N --> Z
+    P --> Z
+    Q --> Z
+    T --> Z
+    U --> Z
+
+    Z --> AA["Explicar por que esse próximo passo foi recomendado"]
+    AA --> AB["Apresentar um CTA principal"]
+    AB --> AC["Mostrar uma alternativa mais acessível discretamente"]
+```

@@ -20,6 +20,9 @@ import InteligenciaImobiliaria3 from "./pages/InteligenciaImobiliaria3";
 import InteligenciaImobiliaria4 from "./pages/InteligenciaImobiliaria4";
 import Inteligencia5 from "./pages/Inteligencia5";
 import Inteligencia6 from "./pages/Inteligencia6";
+import PrimeiraInteligencia from "./pages/PrimeiraInteligencia";
+import SegundaInteligencia from "./pages/SegundaInteligencia";
+import TerceiraInteligencia from "./pages/TerceiraInteligencia";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +45,9 @@ const App = () => (
           <Route path="/inteligencia4" element={<InteligenciaImobiliaria4 />} />
           <Route path="/inteligencia5" element={<Inteligencia5 />} />
           <Route path="/inteligencia6" element={<Inteligencia6 />} />
+          <Route path="/1inteligencia" element={<PrimeiraInteligencia />} />
+          <Route path="/2inteligencia" element={<SegundaInteligencia />} />
+          <Route path="/3inteligencia" element={<TerceiraInteligencia />} />
           <Route path="/sobre" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />

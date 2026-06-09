@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="2200" dy="1800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Scanner Pinheiro Azul: direcionamento adaptativo" style="text;html=1;align=center;verticalAlign=middle;fontSize=24;fontStyle=1;fontColor=#123A63;" vertex="1" parent="1">
+          <mxGeometry x="790" y="20" width="820" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="start" value="Iniciar Scanner" style="ellipse;whiteSpace=wrap;html=1;fillColor=#123A63;fontColor=#FFFFFF;strokeColor=#0B2845;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="90" width="300" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="income" value="Informar renda familiar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F1FA;strokeColor=#2F75B5;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="190" width="300" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="downPayment" value="Informar entrada disponível" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F1FA;strokeColor=#2F75B5;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="290" width="300" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="propertyValue" value="Informar valor pretendido do imóvel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F1FA;strokeColor=#2F75B5;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="390" width="300" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="scenario" value="Exibir cenário financeiro preliminar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DDEBF7;strokeColor=#2F75B5;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="490" width="300" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="moment" value="Em que momento da compra você está?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="610" width="360" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="doubt" value="Qual é sua principal dúvida?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="70" y="820" width="300" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="blocker" value="O que mais impede você de avançar?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="590" y="820" width="300" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="conduct" value="Como gostaria de conduzir a compra?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="820" width="300" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="visiting" value="Você já começou a visitar imóveis?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="1810" y="820" width="300" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="freeFinance" value="Conteúdo gratuito sobre financiamento" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0D9;strokeColor=#70AD47;" vertex="1" parent="1">
+          <mxGeometry x="10" y="1050" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="freeCosts" value="Conteúdo gratuito sobre custos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0D9;strokeColor=#70AD47;" vertex="1" parent="1">
+          <mxGeometry x="260" y="1050" width="220" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="freeChecklist" value="Checklist gratuito" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0D9;strokeColor=#70AD47;" vertex="1" parent="1">
+          <mxGeometry x="10" y="1160" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="guide" value="Recomendar Guia Prático" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0D9;strokeColor=#70AD47;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="1160" width="220" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="personalHelp" value="Quer analisar seu caso com alguém?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1020" width="260" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="preparation" value="Plano gratuito de preparação" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0D9;strokeColor=#70AD47;" vertex="1" parent="1">
+          <mxGeometry x="780" y="1040" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="selfLearning" value="Prefere aprender sozinho?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1180" width="260" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="onlineConsulting" value="Recomendar Consultoria Online" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4D6;strokeColor=#C55A11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="1190" width="230" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="knowsProcess" value="Já sabe organizar financiamento e documentos?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="1030" width="280" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="advancedGuide" value="Checklist avançado ou Guia Prático" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0D9;strokeColor=#70AD47;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="1190" width="280" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="fullAdvisory" value="Recomendar Assessoria Completa" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9EAD3;strokeColor=#38761D;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="1060" width="260" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="helpType" value="Que tipo de ajuda procura?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="1020" width="250" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="visitSupport" value="Quer acompanhamento nas visitas?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="2010" y="1020" width="250" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="mainHelp" value="Onde mais precisa de ajuda?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="2010" y="1190" width="250" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="map" value="Entregar Mapa de Compra" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DDEBF7;strokeColor=#2F75B5;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="1390" width="300" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="reason" value="Explicar por que esse próximo passo foi recomendado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DDEBF7;strokeColor=#2F75B5;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="1500" width="300" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="cta" value="Apresentar um CTA principal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#123A63;fontColor=#FFFFFF;strokeColor=#0B2845;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="1610" width="300" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="alternative" value="Mostrar discretamente uma alternativa mais acessível" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F3F3;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="1710" width="300" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="start" target="income"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="income" target="downPayment"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="downPayment" target="propertyValue"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="propertyValue" target="scenario"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="scenario" target="moment"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e6" value="Só quero entender" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="moment" target="doubt"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="Quero me organizar" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="moment" target="blocker"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="Comprar nos próximos meses" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="moment" target="conduct"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" value="Já estou procurando" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="moment" target="visiting"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e10" value="Financiamento ou MCMV" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="doubt" target="freeFinance"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" value="Entrada e outros custos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="doubt" target="freeCosts"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" value="Documentação" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="doubt" target="freeChecklist"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" value="Todo o processo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="doubt" target="guide"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e14" value="Não sei quanto posso pagar" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="blocker" target="personalHelp"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" value="Preciso formar a entrada" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="blocker" target="preparation"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e16" value="Dúvidas sobre MCMV / não sei por onde começar" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="blocker" target="selfLearning"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e17" value="Documentos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="blocker" target="guide"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e18" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="personalHelp" target="onlineConsulting"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e19" value="Prefiro sozinho" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="personalHelp" target="guide"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e20" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="selfLearning" target="guide"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e21" value="Quero orientação" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="selfLearning" target="onlineConsulting"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e22" value="Por conta própria" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="conduct" target="knowsProcess"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e23" value="Quero montar um plano" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="conduct" target="onlineConsulting"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e24" value="Ajuda na busca e visitas" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="conduct" target="fullAdvisory"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e25" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="knowsProcess" target="advancedGuide"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e26" value="Ainda tenho dúvidas" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="knowsProcess" target="onlineConsulting"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e27" value="Ainda pesquisando" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="visiting" target="helpType"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e28" value="Agendando visitas" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="visiting" target="visitSupport"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e29" value="Já visitei opções" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="visiting" target="mainHelp"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e30" value="Critérios e orçamento" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="helpType" target="onlineConsulting"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e31" value="Encontrar e comparar opções" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="helpType" target="fullAdvisory"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e32" value="Prefiro seguir sozinho" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="helpType" target="advancedGuide"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e33" value="Sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="visitSupport" target="fullAdvisory"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e34" value="Não, apenas orientação" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="visitSupport" target="onlineConsulting"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e35" value="Comparar / custos / documentos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="mainHelp" target="onlineConsulting"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e36" value="Visitas e negociação" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="mainHelp" target="fullAdvisory"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2F75B5;" edge="1" parent="1" source="freeFinance" target="map"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2F75B5;" edge="1" parent="1" source="freeCosts" target="map"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2F75B5;" edge="1" parent="1" source="freeChecklist" target="map"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2F75B5;" edge="1" parent="1" source="guide" target="map"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2F75B5;" edge="1" parent="1" source="preparation" target="map"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2F75B5;" edge="1" parent="1" source="onlineConsulting" target="map"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2F75B5;" edge="1" parent="1" source="advancedGuide" target="map"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2F75B5;" edge="1" parent="1" source="fullAdvisory" target="map"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="map" target="reason"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="reason" target="cta"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="cta" target="alternative"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+</mxGraphModel>
