@@ -56,7 +56,7 @@ export function buildDeterministicReport(
     opening: `${decision.primaryStrength} Com apenas três valores e poucas respostas, já foi possível localizar onde sua decisão ganha mais clareza.`,
     financial_reading: `Para um imóvel de ${formatCurrency(result.propertyValue)}, a entrada informada de ${formatCurrency(
       result.consideredDownPayment
-    )} representa ${result.downPaymentPercent.toFixed(0)}% do valor. A primeira parcela educativa ficou próxima de ${formatCurrency(
+    )} representa ${result.downPaymentPercent.toFixed(0)}% do valor. A primeira parcela estimada ficou próxima de ${formatCurrency(
       result.estimatedFirstPayment
     )}, equivalente a cerca de ${result.incomeCommitment.toFixed(0)}% da renda familiar informada.`,
     main_discovery: decision.mainBottleneck,

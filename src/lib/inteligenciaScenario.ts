@@ -92,7 +92,7 @@ export interface QuestionOption<T extends string> {
 
 export const REFERENCE_CONTEXT = {
   referenceDate: "2026-06-09",
-  calculationMethod: "Estimativa educativa SAC em 360 meses",
+  calculationMethod: "Primeira parcela estimada pelo sistema SAC em 360 meses",
   annualRatePercent: 10.5,
   initialCostPercent: 4.5,
   downPaymentPercent: 20,
@@ -259,7 +259,7 @@ export function calculateScenario({
   const clearPoints = [
     `A entrada informada representa ${downPaymentPercent.toFixed(0)}% do valor do imóvel.`,
     `O valor restante a financiar seria de aproximadamente ${formatCurrency(financedValue)}.`,
-    `A primeira parcela educativa ficaria perto de ${formatCurrency(estimatedFirstPayment)}.`,
+    `A primeira parcela estimada ficaria perto de ${formatCurrency(estimatedFirstPayment)}.`,
   ];
 
   const attentionPoints: string[] = [];
@@ -270,7 +270,7 @@ export function calculateScenario({
   }
   if (incomeCommitment > REFERENCE_CONTEXT.incomeCommitmentPercent) {
     attentionPoints.push(
-      `A parcela estimada compromete ${incomeCommitment.toFixed(0)}% da renda, acima da referência educativa de ${REFERENCE_CONTEXT.incomeCommitmentPercent}%.`
+      `A primeira parcela estimada compromete ${incomeCommitment.toFixed(0)}% da renda, acima da referência educativa de ${REFERENCE_CONTEXT.incomeCommitmentPercent}%.`
     );
   }
   attentionPoints.push(
@@ -355,7 +355,7 @@ const decisionContent: Record<
   formacao_entrada: {
     strength: (result) =>
       result.incomeCommitment <= REFERENCE_CONTEXT.incomeCommitmentPercent
-        ? "A renda informada comporta a parcela educativa dentro da referência utilizada."
+        ? "A renda informada comporta a primeira parcela estimada dentro da referência utilizada."
         : "Você já transformou a intenção em números concretos para poder ajustar o plano.",
     bottleneck: (result) =>
       result.downPaymentGap > 0
@@ -379,7 +379,7 @@ const decisionContent: Record<
   ajuste_orcamento: {
     strength: () => "Os dados informados já permitem identificar o ajuste mais importante antes da busca.",
     bottleneck: (result) =>
-      `A primeira parcela educativa representa cerca de ${result.incomeCommitment.toFixed(0)}% da renda informada.`,
+      `A primeira parcela estimada representa cerca de ${result.incomeCommitment.toFixed(0)}% da renda informada.`,
     recommended: "gratuito",
     accessible: "gratuito",
     steps: (result) => [
@@ -401,7 +401,7 @@ const decisionContent: Record<
     ],
   },
   pronto_para_confirmar: {
-    strength: () => "Entrada, parcela educativa e renda formam uma base inicial mais próxima das referências usadas.",
+    strength: () => "Entrada, primeira parcela estimada e renda formam uma base inicial mais próxima das referências usadas.",
     bottleneck: () => "O cenário ainda precisa ser confirmado por simulação oficial e critérios de compra.",
     recommended: "guia",
     accessible: "gratuito",

@@ -4,6 +4,33 @@
       "maxDuration": 10
     }
   },
+  "redirects": [
+    {
+      "source": "/casa-:path*",
+      "destination": "https://business.pinheiroazul.com.br/casa-:path*",
+      "permanent": true
+    },
+    {
+      "source": "/apartamento-:path*",
+      "destination": "https://business.pinheiroazul.com.br/apartamento-:path*",
+      "permanent": true
+    },
+    {
+      "source": "/sobrado-:path*",
+      "destination": "https://business.pinheiroazul.com.br/sobrado-:path*",
+      "permanent": true
+    },
+    {
+      "source": "/studio-:path*",
+      "destination": "https://business.pinheiroazul.com.br/studio-:path*",
+      "permanent": true
+    },
+    {
+      "source": "/sala-:path*",
+      "destination": "https://business.pinheiroazul.com.br/sala-:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

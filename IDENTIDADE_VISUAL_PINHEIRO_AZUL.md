@@ -33,99 +33,33 @@ Graficamente, a marca se expressa através de **três sentimentos-alvo**:
 
 ## 🌈 Sistema de Cores (HEX & HSL)
 
-O sistema de cores da Pinheiro Azul está dividido em dois universos perfeitamente harmonizados: a **Paleta Institucional Clássica (Tema Claro)**, focada em seriedade, clareza e elegância; e a **Paleta Premium Digital (Tema Escuro Bento)**, voltada para landing pages de alta conversão, sensação futurista, profundidade e apelo visual imediato.
+O sistema de cores da Pinheiro Azul é de alto contraste e fundamentado na estética neubrutalista, ideal para interfaces dinâmicas, legibilidade de dados e apelo visual premium.
 
-### 1. Paleta de Cores Core (Cromática)
+### Paleta de Cores Oficial (Kit da Marca)
 
-Estas são as cores de marca que dão personalidade à Pinheiro Azul. Os códigos foram convertidos com precisão matemática para HEX, baseados na implementação HSL do ecossistema técnico.
+Estas são as cores oficiais da marca Pinheiro Azul, com seus valores HEX e HSL correspondentes para aplicação digital e impressa:
 
-| Cor | Nome Técnico | HEX | HSL | Aplicação e Psicologia |
-| :--- | :--- | :--- | :--- | :--- |
-| <img src="https://via.placeholder.com/15/003366/000000?text=+" width="15" height="15" /> | **Azul Pinheiro Profundo** | `#003366` | `210 100% 20%` | **Cor Primária da Marca.** Representa a robustez, segurança jurídica e autoridade patrimonial. Usada em títulos, cabeçalhos, botões principais de tema claro e rodapés institucionais. |
-| <img src="https://via.placeholder.com/15/1f8fff/000000?text=+" width="15" height="15" /> | **Azul Celeste Elétrico** | `#1f8fff` | `210 100% 56%` | **Cor de Acento.** Representa tecnologia, o Índice Pinheiro Azul™ e dados de valorização. Usada em links, ícones, badges, botões secundários, bordas ativas e focos interativos. |
-| <img src="https://via.placeholder.com/15/f5f5f5/000000?text=+" width="15" height="15" /> | **Branco Gelo Premium** | `#f5f5f5` | `0 0% 96%` | **Cor de Fundo / Suporte.** Traz o respiro, minimalismo e sofisticação. Usada como fundo de páginas claras, separadores sutis e fundos de cards institucionais. |
-| <img src="https://via.placeholder.com/15/2a333c/000000?text=+" width="15" height="15" /> | **Grafite Mineral (Text)** | `#2a333c` | `210 17% 20%` | **Cor de Texto Principal.** Um cinza escuro com fundo azulado que reduz a fadiga ocular em comparação ao preto puro. Usado para parágrafos longos, labels e textos auxiliares claros. |
-
----
-
-### 2. Paleta Digital de Alta Performance (Bento Dark Mode)
-
-Para as landing pages de alta conversão baseadas no estilo Bento Grid e com forte apelo visual SaaS, a paleta de suporte de tom escuro deve seguir a tabela abaixo, inspirada nas melhores práticas de design moderno (Linear, Vercel).
-
-| Cor | Nome Técnico | HEX | HSL | Aplicação e Função |
-| :--- | :--- | :--- | :--- | :--- |
-| <img src="https://via.placeholder.com/15/020817/000000?text=+" width="15" height="15" /> | **Fundo Espacial (Dark)** | `#020817` | `222 84% 5%` | **Fundo Absoluto (Dark Mode).** Um azul ultra escuro quase preto que traz mistério, contraste e valoriza os elementos luminosos. |
-| <img src="https://via.placeholder.com/15/09090b/000000?text=+" width="15" height="15" /> | **Fundo Bento Primário** | `#09090b` | `240 6% 4%` | Fundo para o corpo da página e Bento Grids secundários. |
-| <img src="https://via.placeholder.com/15/18181b/000000?text=+" width="15" height="15" /> | **Fundo Bento Card** | `#18181b` | `240 6% 10%` | **Fundo de Cartões Bento.** Fundo interno de cada compartimento ou caixa, criando a ilusão de relevo e separação. |
-| <img src="https://via.placeholder.com/15/27272a/000000?text=+" width="15" height="15" /> | **Fundo Hover / Separador** | `#27272a` | `240 5% 16%` | Usado para divisores, bordas de cards escuros e estados de hover/foco. |
-| <img src="https://via.placeholder.com/15/fafafa/000000?text=+" width="15" height="15" /> | **Texto Título (Dark)** | `#fafafa` | `0 0% 98%` | Usado para contrastar títulos contra o fundo escuro. |
-| <img src="https://via.placeholder.com/15/a1a1aa/000000?text=+" width="15" height="15" /> | **Texto Corpo (Dark)** | `#a1a1aa` | `240 5% 65%` | Usado para parágrafos longos em fundo escuro. Nunca use branco puro para não ofuscar o leitor. |
-
----
-
-### 3. Cores de Suporte e Alertas
-
-| Cor | Uso | HEX | HSL |
-| :--- | :--- | :--- | :--- |
-| <img src="https://via.placeholder.com/15/22c55e/000000?text=+" width="15" height="15" /> | **Sucesso / WhatsApp** | `#22c55e` | `142 76% 45%` | Confirmações, botões de contato imediato via WhatsApp e leads qualificados. |
-| <img src="https://via.placeholder.com/15/eab308/000000?text=+" width="15" height="15" /> | **Alerta Moderado** | `#eab308` | `43 96% 48%` | Avisos importantes e dados de transição financeira. |
-| <img src="https://via.placeholder.com/15/facc15/000000?text=+" width="15" height="15" /> | **Ratings / Estrelas** | `#facc15` | `48 96% 53%` | Avaliações de clientes e pontuações máximas de depoimentos. |
-
----
-
-## ✍️ Tipografia & Hierarquia
-
-A tipografia da Pinheiro Azul deve transmitir **precisão técnica e elegância contemporânea**. A combinação de fontes é baseada em tipos geométricos sans-serif limpos que garantem excelente legibilidade em telas de alta densidade de pixels.
-
-### Fontes Recomendadas
-1.  **Outfit** ou **Geist**: Para grandes títulos marcantes, headlines de Hero e dados numéricos marcantes (como os valores do Índice Pinheiro Azul™).
-2.  **Inter** ou **Satoshi**: Para corpo de texto, labels, botões e formulários de diagnóstico.
-3.  **Sistema (Fallback):** `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`.
-
-### Hierarquia de Tamanhos (Responsiva)
-
-Para manter a consistência de leitura de cima a baixo, respeite sempre a seguinte tabela estrutural:
-
-| Nível | Desktop (Tamanho / Line-Height) | Mobile (Tamanho / Line-Height) | Peso (Weight) | Casos de Uso |
-| :--- | :--- | :--- | :--- | :--- |
-| **H1 (Hero)** | `text-7xl` (72px / 1.1) | `text-5xl` (48px / 1.15) | Bold (700) | Headline principal da Home e Landing Pages. |
-| **H2 (Seção)** | `text-5xl` (48px / 1.2) | `text-3xl` (30px / 1.25) | Bold (700) | Títulos das seções de conversão e metodologia. |
-| **H3 (Card)** | `text-3xl` (30px / 1.3) | `text-2xl` (24px / 1.35) | Bold (700) | Títulos internos de Cards grandes e Bento Grids. |
-| **H4 (Subtítulo)**| `text-xl` (20px / 1.4) | `text-lg` (18px / 1.4) | Semibold (600) | Subtítulos de apoio abaixo de H1/H2 e cabeçalhos menores. |
-| **Body (Corpo)** | `text-base` (16px / 1.6) | `text-base` (16px / 1.6) | Normal (400) | Texto corrido de parágrafos. Máximo de 4 linhas por bloco. |
-| **Small (Legenda)**| `text-sm` (14px / 1.5) | `text-sm` (14px / 1.5) | Normal (400) | Rótulos de formulário, tags, rodapés e metadados. |
-
-### Espaçamento de Letras (Letter Spacing)
-*   Para títulos (**H1, H2, H3**): Use `tracking-tight` (redução sutil de espaçamento, cerca de `-0.02em` a `-0.05em`) para criar um bloco de texto coeso e moderno.
-*   Para tags e rótulos pequenos em maiúsculas: Use `tracking-wider` ou `tracking-widest` (cerca de `0.05em` a `0.1em`) para aumentar o respiro de elementos técnicos.
+| Amostra | Cor | Nome Técnico | HEX | HSL | Aplicação e Psicologia |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| <img src="https://via.placeholder.com/15/06192c/000000?text=+" width="15" height="15" /> | **Azul Escuro** | `brand-navy` | `#06192c` | `210 76% 10%` | **Cor Base / Texto e Contornos.** Traz solidez, confiança e autoridade. Usado em todos os textos principais, cabeçalhos, contornos de cards e botões. |
+| <img src="https://via.placeholder.com/15/f4f0c8/000000?text=+" width="15" height="15" /> | **Bege Claro** | `brand-beige` | `#f4f0c8` | `55 65% 87%` | **Cor de Fundo Principal.** Substitui o branco puro como cor de fundo das páginas, criando uma atmosfera retrô neubrutalista confortável e sofisticada. |
+| <img src="https://via.placeholder.com/15/28c7ba/000000?text=+" width="15" height="15" /> | **Teal** | `brand-teal` | `#28c7ba` | `175 67% 47%` | **Cor de Acento / Status.** Representa a precisão tecnológica do Índice Pinheiro Azul™ e dados territoriais. Usado em status de sucesso, badges, cards de acento e sombras rígidas. |
+| <img src="https://via.placeholder.com/15/fffdf7/000000?text=+" width="15" height="15" /> | **Branco Quente** | `brand-cream` | `#fffdf7` | `45 100% 98%` | **Cor de Suporte / Fundo Interno.** Um creme off-white limpo e aconchegante usado como fundo interno de cards e áreas de conteúdo de destaque. |
+| <img src="https://via.placeholder.com/15/e84c4c/000000?text=+" width="15" height="15" /> | **Vermelho Coral** | `brand-coral` | `#e84c4c` | `0 78% 60%` | **Cor de Ação / Alta Prioridade.** Usada para botões de conversão imediata (CTA como "Receber diagnóstico") e alertas críticos. |
+| <img src="https://via.placeholder.com/15/e8b84c/000000?text=+" width="15" height="15" /> | **Amarelo Mostarda** | `brand-mustard` | `#e8b84c` | `42 78% 60%` | **Cor de Destaque / Hover.** Usado em botões secundários, badges de categorias e sombras planas projetadas (drop shadow rígida). |
 
 ---
 
 ## 📐 Estilo de Traços, Bordas e Cantos
 
-A Pinheiro Azul expressa o "Zelo" e a "Tecnologia" através da curvatura perfeita dos seus elementos e na sutileza dos contornos que delimitam o espaço.
+A Pinheiro Azul expressa sua dualidade entre a precisão técnica e o acolhimento humano por meio de contornos marcantes e transições geométricas.
 
-### 1. A Escala de Cantos Arredondados (Border Radius)
+### 1. Elementos de Estilo Core
 
-> [!IMPORTANT]
-> **REGRA DE OURO:** É expressamente proibido o uso de cantos retos (`rounded-none`) ou pontas agressivas. Até mesmo o menor elemento (como um badge ou input) deve possuir curvatura suave para transmitir segurança e amabilidade.
-
-```
-┌──────────────────────────────────────────────────────────┐
-│ rounded-3xl (24px) - Cards de Grandes Seções / Bento     │
-│  ┌────────────────────────────────────────────────────┐  │
-│  │ rounded-2xl (16px) - Cartões Médios / Imagens       │  │
-│  │  ┌──────────────────────────────────────────────┐  │  │
-│  │  │ rounded-xl (12px) - Inputs / Badges          │  │  │
-│  │  └──────────────────────────────────────────────┘  │  │
-│  └────────────────────────────────────────────────────┘  │
-└──────────────────────────────────────────────────────────┘
-```
-
-*   **`rounded-3xl` (24px):** Usado para contornos de seções Bento Grid e cartões principais que delimitam os grandes temas do site.
-*   **`rounded-2xl` (16px):** Usado para cartões médios de listagem de cenários de vida, imagens principais e blocos de depoimentos.
-*   **`rounded-xl` (12px):** Usado para campos de entrada de texto (inputs) de formulários, caixas de dropdowns e botões de tamanho médio.
-*   **`rounded-full` (9999px):** Reservado para os botões de ação (CTAs) de formato pílula, avatares e pequenas tags indicadoras (como categorias do blog).
+*   **Cantos Arredondados (para Cards de Acento):** Utilizados em cards e blocos específicos (como o bloco Teal) para trazer amabilidade e dinamismo. A escala recomendada é `rounded-xl` (12px) ou `rounded-2xl` (16px).
+*   **Painéis Escuros (com Cantos Retos):** Cartões e painéis com fundo em Azul Escuro (#06192c) devem manter cantos retos de 90º (`rounded-none`), gerando uma estética estrutural forte e firme.
+*   **Linhas Finas como Separadores:** Todas as divisões, linhas de grade de fundo e bordas de contorno devem utilizar uma espessura fina de `1px` com a cor Azul Escuro (#06192c), garantindo a legibilidade neubrutalista limpa.
+*   **Sombras Sólidas Planas (Flat Drop Shadows):** Deslocamento plano sem desfoque (blur-0) de 4px ou 8px usando a cor correspondente de acento ou o próprio Azul Escuro.
 
 ---
 
@@ -186,88 +120,53 @@ Crie profundidade no fundo escuro adicionando "orbes" de cores borradas nas seç
 *   **Configuração:** Divs posicionadas de forma absoluta com `bg-blue-600/10` ou `bg-violet-600/10`, com bordas arredondadas máximas e efeito blur extremo (`blur-3xl`).
 
 ### 3. Gradientes de Texto (Text Gradients)
-Destaque palavras-chave específicas em headlines para direcionar a leitura e quebrar a sobriedade.
-*   **Gradiente Claro:** Do **Azul Pinheiro Profundo** (`#003366`) para o **Azul Celeste Elétrico** (`#1f8fff`).
-*   **Gradiente Escuro:** Do **Azul Celeste Elétrico** (`#1f8fff`) para o Violeta Premium (`#8b5cf6`).
-*   **Classes recomendadas:** `bg-gradient-to-r from-brand-accent to-violet-500 bg-clip-text text-transparent`.
-
-### 4. Sombras Elegantes (Shadow Depths)
-*   **Sombra de Acento (Botões e Cards Selecionados):** `--shadow-elegant` — uma sombra suave colorida utilizando o tom azul com opacidade controlada (`shadow-blue-500/20`), dando leveza e sustentação ao botão ativo. Nunca use sombras pretas sólidas.
-*   **Sombra de Cartão Comum:** `--shadow-card` — sombra sutil cinza/azulada com 8% de opacidade (`shadow-brand-primary/8`).
-
----
-
-## 🚫 Regras de Integridade da Marca (Do's & Don'ts)
+Destaque ## 🚫 Regras de Integridade da Marca (Do's & Don'ts)
 
 > [!WARNING]
-> Para garantir que a essência visual não seja diluída ou adulterada por aplicações incorretas, siga rigidamente as proibições e recomendações a seguir.
+> Para manter o alto impacto visual e evitar a descaracterização do estilo neubrutalista da Pinheiro Azul, siga estritamente estas diretrizes.
 
 ### O que NUNCA fazer (Don'ts)
-*   ❌ **NUNCA** utilize a paleta de cinzas padrão do Tailwind (`bg-gray-900` ou `bg-slate-900`). **Use a família Zinc** (`zinc-950`, `zinc-900`) para o cinza-escuro e a base de azul profundo da marca para fundos neutros.
-*   ❌ **NUNCA** deixe cantos retos (`rounded-none`) em botões, campos de digitação ou bordas de seções.
-*   ❌ **NUNCA** misture mais de três fontes diferentes. Atenha-se à combinação de *Outfit* (títulos) + *Inter* (corpo).
-*   ❌ **NUNCA** utilize sombras pretas puras (`shadow-black`) de alta intensidade sobre fundo escuro. Utilize sombras difusas com tinturas azuis ou violetas para simular emanação real de luz.
-*   ❌ **NUNCA** use texto em branco puro (`#ffffff`) para blocos de texto muito extensos. Dê preferência ao cinza mineral suave (`#a1a1aa` ou `text-zinc-400`) para evitar ofuscamento.
-*   ❌ **NUNCA** coloque formulários gigantescos com mais de 3 campos logo na primeira dobra do site. Reduza a fricção inicial direcionando para a página interna de `/diagnostico`.
+*   ❌ **NUNCA** utilize sombras suaves com desfoque cinza comum (sombras realistas). A marca usa **sombras sólidas projetadas (flat drop shadows)** sem desfoque (blur-0).
+*   ❌ **NUNCA** use cantos arredondados em painéis escuros ou layouts estruturais principais. Os **painéis escuros devem manter cantos retos de 90º** para garantir a solidez visual.
+*   ❌ **NUNCA** use gradientes de cores nas caixas. O preenchimento deve ser sempre de cores planas (flat design).
+*   ❌ **NUNCA** use fontes serifadas ou fontes geométricas leves para os títulos principais. Use sempre a tipografia institucional **Telegraf Bold** em caixa alta.
+*   ❌ **NUNCA** use texto em branco puro sobre o fundo Bege Claro (#f4f0c8). O contraste de leitura padrão deve ser garantido pelo Azul Escuro (#06192c).
 
 ### O que SEMPRE fazer (Do's)
-*   ✅ **SEMPRE** acompanhe botões de Call To Action (CTA) por ícones indicativos elegantes (como setas indicando avanço `ArrowRight` ou ícone de pesquisa `Search`).
-*   ✅ **SEMPRE** respeite a regra de no máximo 4 linhas de texto por parágrafo no corpo das páginas para incentivar a leitura.
-*   ✅ **SEMPRE** ative micro-interações de transição suave em todos os estados de hover (`duration-300` ou `duration-500`).
-*   ✅ **SEMPRE** assegure-se de que o contraste das cores atende às diretrizes de acessibilidade WCAG (mínimo de `4.5:1` para texto comum).
+*   ✅ **SEMPRE** utilize contornos pretos / azul escuro (#06192c) de `1px` ou `2px` para delimitar todos os cards, botões e elementos interativos.
+*   ✅ **SEMPRE** utilize a tipografia **Telegraf Bold** para títulos expressivos, garantindo peso visual marcante.
+*   ✅ **SEMPRE** aplique cantos arredondados (`rounded-xl` ou `rounded-2xl`) em cards coloridos de acento (como os em Teal) para criar contraste com os painéis escuros de cantos retos.
+*   ✅ **SEMPRE** use linhas finas de `1px` em Azul Escuro (#06192c) como separadores limpos de conteúdo.
 
 ---
 
 ## 💻 Código Pronto & Tokens (CSS/Tailwind)
 
-Para facilitar a replicação exata desta identidade visual em qualquer projeto web moderno, utilize os arquivos de configuração abaixo.
+Utilize os padrões abaixo para manter a consistência da marca Pinheiro Azul nos arquivos de configuração do seu projeto web.
 
 ### 1. Declaração de Variáveis Core (`src/index.css`)
 
-Substitua ou adicione estas variáveis de root no seu arquivo global de estilos para injetar a essência da Pinheiro Azul:
+Injete as cores oficiais do Kit da Marca e os tokens de sombra plana no seu arquivo global de estilos:
 
 ```css
 @layer base {
   :root {
-    /* Pinheiro Azul Cores Oficiais - Light Theme */
-    --background: 0 0% 100%;
-    --foreground: 210 17% 20%;      /* #2a333c */
+    /* Cores Oficiais da Marca - Pinheiro Azul Kit */
+    --background: 55 65% 87%;         /* #f4f0c8 - Bege Claro */
+    --foreground: 210 76% 10%;        /* #06192c - Azul Escuro */
 
-    --primary: 210 100% 20%;        /* #003366 - Azul Pinheiro Profundo */
-    --primary-foreground: 0 0% 100%;
+    --primary: 210 76% 10%;           /* #06192c - Azul Escuro */
+    --primary-foreground: 45 100% 98%;/* #fffdf7 - Branco Quente */
 
-    --accent: 210 100% 56%;         /* #1f8fff - Azul Celeste Elétrico */
-    --accent-foreground: 0 0% 100%;
-
-    --brand-primary: 210 100% 20%;
-    --brand-accent: 210 100% 56%;
-    --brand-light: 0 0% 96%;        /* #f5f5f5 */
-    --brand-text: 210 17% 20%;      /* #2a333c */
+    --accent-teal: 175 67% 47%;       /* #28c7ba - Teal */
+    --accent-coral: 0 78% 60%;        /* #e84c4c - Vermelho Coral */
+    --accent-mustard: 42 78% 60%;      /* #e8b84c - Amarelo Mostarda */
+    --brand-cream: 45 100% 98%;       /* #fffdf7 - Branco Quente */
     
-    /* Gradientes */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-primary)), hsl(var(--brand-accent)));
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--brand-light)));
-    
-    /* Sombras Elegantes com Matiz Azul */
-    --shadow-elegant: 0 10px 30px -10px hsl(var(--brand-primary) / 0.1);
-    --shadow-card: 0 4px 20px -4px hsl(var(--brand-primary) / 0.08);
-    
-    /* Transição Padrão Suave */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --radius: 1.5rem;               /* 24px padrão */
-  }
-
-  .dark {
-    /* Tema Premium Dark (Bento Style) */
-    --background: 222.2 84% 4.9%;   /* #020817 - Fundo Espacial */
-    --foreground: 210 40% 98%;      /* Off-White */
-
-    --card: 240 6% 10%;             /* #18181b - Fundo Bento Card */
-    --card-foreground: 210 40% 98%;
-
-    --border: 240 5% 16%;           /* #27272a - Divisor Bento */
-    --input: 240 5% 16%;
-    --ring: 210 100% 56%;           /* #1f8fff */
+    /* Sombras Planas Rígidas (Neubrutalism Flat Shadows) */
+    --shadow-brutal-navy: 4px 4px 0px 0px #06192c;
+    --shadow-brutal-coral: 6px 6px 0px 0px #e84c4c;
+    --shadow-brutal-mustard: 6px 6px 0px 0px #e8b84c;
   }
 }
 ```
@@ -276,33 +175,37 @@ Substitua ou adicione estas variáveis de root no seu arquivo global de estilos 
 
 ### 2. Configuração do Arquivo `tailwind.config.ts`
 
-Garanta que o mapeamento de tokens de cor do Tailwind esteja estendido para aceitar a nomenclatura semântica da marca:
+Atualize a extensão de temas do seu Tailwind para suportar as cores do novo Kit da Marca:
 
 ```typescript
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "#06192c",
+        input: "#06192c",
+        ring: "#28c7ba",
+        background: "#f4f0c8",
+        foreground: "#06192c",
         brand: {
-          primary: "hsl(var(--brand-primary))", // #003366
-          accent: "hsl(var(--brand-accent))",   // #1f8fff
-          light: "hsl(var(--brand-light))",     // #f5f5f5
-          text: "hsl(var(--brand-text))",       // #2a333c
+          navy: "#06192c",       // Azul Escuro (Texto, Bordas, Painéis)
+          beige: "#f4f0c8",      // Bege Claro (Fundo Principal)
+          teal: "#28c7ba",       // Teal (Acento, Status, Cards Suaves)
+          cream: "#fffdf7",      // Branco Quente (Fundo Interno de Cards)
+          coral: "#e84c4c",      // Vermelho Coral (CTA Principal)
+          mustard: "#e8b84c",    // Amarelo Mostarda (Destaque, Sombra)
         },
       },
-      borderRadius: {
-        '3xl': '1.5rem',  // 24px
-        '2xl': '1rem',    // 16px
-        'xl': '0.75rem',  // 12px
+      fontFamily: {
+        sans: ["Telegraf", "Inter", "sans-serif"],
+      },
+      boxShadow: {
+        brutal: "4px 4px 0px 0px #06192c",
+        "brutal-coral": "6px 6px 0px 0px #e84c4c",
+        "brutal-mustard": "6px 6px 0px 0px #e8b84c",
       },
     },
   },
@@ -311,53 +214,41 @@ export default {
 
 ---
 
-### 3. Exemplo Prático: Cartão Bento Interativo Premium
+### 3. Exemplo Prático: Card de Métrica Neubrutalista Real
 
-Utilize este componente estrutural React + Tailwind para criar caixas Bento perfeitamente alinhadas com a linguagem visual de alta performance:
+Componente React + Tailwind de exemplo correspondente às métricas da Mesa de Decisão da Pinheiro Azul:
 
 ```tsx
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, TrendingUp } from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
-export function BentoCardInvestidor() {
+interface MetricCardProps {
+  label: string;
+  value: string;
+  note: string;
+  tone: 'navy' | 'beige' | 'teal' | 'cream' | 'coral' | 'mustard';
+}
+
+export function MetricCard({ label, value, note, tone }: MetricCardProps) {
+  const tones = {
+    navy: 'bg-[#06192c] text-white rounded-none',
+    beige: 'bg-[#f4f0c8] text-[#06192c] rounded-none',
+    teal: 'bg-[#28c7ba] text-[#06192c] rounded-2xl', // Cantos arredondados para o Teal
+    cream: 'bg-[#fffdf7] text-[#06192c] rounded-none',
+    coral: 'bg-[#e84c4c] text-white rounded-none',
+    mustard: 'bg-[#e8b84c] text-[#06192c] rounded-none',
+  };
+
   return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3 }}
-      className="relative group overflow-hidden rounded-3xl bg-zinc-900 border border-zinc-800 p-8 hover:border-brand-accent/50 transition-colors shadow-2xl"
-    >
-      {/* Luz ambiente de fundo (Gradient Orb interno) */}
-      <div className="absolute -right-20 -top-20 w-48 h-48 bg-brand-accent/10 rounded-full blur-3xl group-hover:bg-brand-accent/20 transition-all duration-500" />
-      
-      {/* Cabeçalho do Card */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-brand-accent/10 flex items-center justify-center text-brand-accent">
-          <TrendingUp size={24} />
-        </div>
-        <span className="text-xs font-semibold text-brand-accent uppercase tracking-widest bg-brand-accent/10 px-3 py-1 rounded-full">
-          Índice 8.7
-        </span>
-      </div>
-
-      {/* Conteúdo */}
-      <h3 className="text-2xl font-bold text-white mb-2 tracking-tight group-hover:text-brand-accent transition-colors">
-        Tese de Investimento Tatuapé
-      </h3>
-      <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-        O bairro com maior liquidez e apreciação projetada da Zona Leste para os próximos 12 meses. Compre na curva de aceleração patrimonial.
-      </p>
-
-      {/* Ação / Link */}
-      <div className="flex items-center text-sm font-semibold text-white group-hover:text-brand-accent transition-colors">
-        <span>Explorar Dados Territorial</span>
-        <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-1 transition-transform" />
-      </div>
-    </motion.div>
+    <article className={`border-2 border-[#06192c] p-5 shadow-brutal transition-transform hover:-translate-y-0.5 ${tones[tone]}`}>
+      <p className="text-[10px] font-black uppercase tracking-[0.16em] opacity-80">{label}</p>
+      <p className="mt-3 text-2xl font-black leading-none tabular-nums">{value}</p>
+      <p className="mt-4 border-t border-[#06192c]/20 pt-3 text-xs leading-relaxed opacity-90">{note}</p>
+    </article>
   );
 }
 ```
 
 ---
 
-*Manual estruturado e revisado com base no DNA técnico e estético oficial da Pinheiro Azul imobiliária digital. Em caso de dúvidas sobre aplicações em novos canais, consulte o comitê de marca do projeto.*
+*Manual estruturado e revisado com base no Kit de Marca oficial e no DNA estético Neubrutalista da Pinheiro Azul.*

@@ -305,7 +305,7 @@ export default function TerceiraInteligencia() {
                       tone="yellow"
                     />
                     <MetricCard
-                      label="Primeira parcela educativa"
+                      label="Primeira parcela estimada"
                       value={formatCurrency(result.estimatedFirstPayment)}
                       note={`${result.incomeCommitment.toFixed(0)}% da renda familiar informada`}
                       tone={result.incomeCommitment > 30 ? "coral" : "cream"}
